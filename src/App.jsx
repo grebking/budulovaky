@@ -1,108 +1,54 @@
 import React, { useEffect, useState } from 'react'
 import { usePrivy } from '@privy-io/react-auth'
 
-function formatChainName(chainType) {
-  if (!chainType) return 'Wallet'
-  return chainType.charAt(0).toUpperCase() + chainType.slice(1)
-}
-
-function shortenAddress(address) {
-  if (!address || address.length < 12) return address
-  return `${address.slice(0, 6)}...${address.slice(-4)}`
-}
-
-const depositButtonStyle = {
-  position: 'fixed',
-  top: '20px',
-  left: '20px',
-  zIndex: 99999,
-  padding: '14px 32px',
-  fontSize: '18px',
-  fontWeight: '700',
-  color: '#ffffff',
-  backgroundColor: '#16a34a',
-  border: 'none',
-  borderRadius: '10px',
-  cursor: 'pointer',
-  boxShadow: '0 4px 14px rgba(0,0,0,0.35)',
-}
-
-const loginButtonStyle = {
-  position: 'fixed',
-  top: '20px',
-  right: '20px',
-  zIndex: 99999,
-  padding: '12px 24px',
-  fontSize: '16px',
-  fontWeight: '600',
-  color: '#111827',
-  backgroundColor: '#ffffff',
-  border: '2px solid #111827',
-  borderRadius: '10px',
-  cursor: 'pointer',
-  boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
-}
-
 function App() {
-  const { login, logout, authenticated, user } = usePrivy()
+  const { login, logout, authenticated } = usePrivy()
   const [showDeposit, setShowDeposit] = useState(false)
-  const [copiedAddress, setCopiedAddress] = useState(null)
-
-  const wallets = user?.wallets ?? []
 
   useEffect(() => {
-    document.getElementById('static-deposit-btn')?.remove()
-  }, [])
+    const depositBtn = document.getElementById('deposit-btn')
+    const loginBtn = document.getElementById('login-btn')
 
-  const handleLogin = async () => {
-    try {
-      await login()
-    } catch (error) {
-      console.error('Login failed:', error)
+    if (loginBtn) {
+      loginBtn.textContent = authenticated ? 'Logout' : 'Login'
     }
-  }
 
-  const handleLogout = async () => {
-    try {
-      setShowDeposit(false)
-      await logout()
-    } catch (error) {
-      console.error('Logout failed:', error)
+    const onDepositClick = async () => {
+      if (!authenticated) {
+        try {
+          await login()
+        } catch (error) {
+          console.error('Login failed:', error)
+        }
+        return
+      }
+      setShowDeposit(true)
     }
-  }
 
-  const handleDepositClick = async () => {
-    if (!authenticated) {
-      await handleLogin()
-      return
+    const onLoginClick = async () => {
+      try {
+        if (authenticated) {
+          setShowDeposit(false)
+          await logout()
+        } else {
+          await login()
+        }
+      } catch (error) {
+        console.error('Auth failed:', error)
+      }
     }
-    setShowDeposit(true)
-  }
 
-  const handleCopy = async (address) => {
-    try {
-      await navigator.clipboard.writeText(address)
-      setCopiedAddress(address)
-      setTimeout(() => setCopiedAddress(null), 2000)
-    } catch (error) {
-      console.error('Copy failed:', error)
+    depositBtn?.addEventListener('click', onDepositClick)
+    loginBtn?.addEventListener('click', onLoginClick)
+
+    return () => {
+      depositBtn?.removeEventListener('click', onDepositClick)
+      loginBtn?.removeEventListener('click', onLoginClick)
     }
-  }
+  }, [authenticated, login, logout])
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', position: 'relative' }}>
-      <button type="button" onClick={handleDepositClick} style={depositButtonStyle}>
-        DEPOSIT
-      </button>
-
-      <button
-        type="button"
-        onClick={authenticated ? handleLogout : handleLogin}
-        style={loginButtonStyle}
-      >
-        {authenticated ? 'Logout' : 'Login'}
-      </button>
-
+    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
       <main
         style={{
           minHeight: '100vh',
@@ -140,7 +86,7 @@ function App() {
             alignItems: 'center',
             justifyContent: 'center',
             padding: '16px',
-            zIndex: 100000,
+            zIndex: 2147483646,
           }}
           onClick={() => setShowDeposit(false)}
         >
@@ -150,7 +96,7 @@ function App() {
               borderRadius: '12px',
               boxShadow: '0 20px 40px rgba(0,0,0,0.25)',
               width: '100%',
-              maxWidth: '520px',
+              maxWidth: '480px',
               padding: '24px',
               textAlign: 'left',
             }}
@@ -161,11 +107,11 @@ function App() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                marginBottom: '24px',
+                marginBottom: '16px',
               }}
             >
               <h2 style={{ fontSize: '1.5rem', fontWeight: '300', color: '#1f2937', margin: 0 }}>
-                Your Wallets
+                Deposit
               </h2>
               <button
                 type="button"
@@ -183,90 +129,9 @@ function App() {
                 ×
               </button>
             </div>
-
-            <p style={{ fontSize: '14px', color: '#4b5563', marginBottom: '16px' }}>
-              Send funds to any of your wallet addresses below.
+            <p style={{ fontSize: '15px', color: '#4b5563', margin: 0 }}>
+              Deposit options coming soon.
             </p>
-
-            {wallets.length === 0 ? (
-              <p
-                style={{
-                  padding: '16px',
-                  backgroundColor: '#f9fafb',
-                  borderRadius: '8px',
-                  fontSize: '14px',
-                  color: '#4b5563',
-                  margin: 0,
-                }}
-              >
-                No wallets yet.
-              </p>
-            ) : (
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '12px' }}>
-                {wallets.map((wallet) => (
-                  <li
-                    key={`${wallet.chainType}-${wallet.address}`}
-                    style={{
-                      padding: '16px',
-                      backgroundColor: '#f9fafb',
-                      borderRadius: '8px',
-                      border: '1px solid #f3f4f6',
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        marginBottom: '8px',
-                      }}
-                    >
-                      <span style={{ fontSize: '14px', fontWeight: '600', color: '#1f2937' }}>
-                        {formatChainName(wallet.chainType)}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: '11px',
-                          color: '#6b7280',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.05em',
-                        }}
-                      >
-                        {wallet.walletClientType || 'embedded'}
-                      </span>
-                    </div>
-                    <p
-                      style={{
-                        fontSize: '14px',
-                        fontFamily: 'monospace',
-                        color: '#374151',
-                        wordBreak: 'break-all',
-                        margin: '0 0 12px 0',
-                      }}
-                    >
-                      {wallet.address}
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => handleCopy(wallet.address)}
-                      style={{
-                        fontSize: '14px',
-                        padding: '6px 16px',
-                        backgroundColor: '#111827',
-                        color: '#ffffff',
-                        border: 'none',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {copiedAddress === wallet.address
-                        ? 'Copied!'
-                        : `Copy ${shortenAddress(wallet.address)}`}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
         </div>
       )}
