@@ -8,9 +8,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <PrivyProvider
       appId="cmsqukzij01a40cl5fqa0nli6"
-      clientId="client-WY6cEKbhNMHsx3W68bSBvHmzm8vTHH3UvEjrxa4VwyoJ1"
+      clientId="client-WY6cEKbhNMHsx3W68bSBvHmzm8vTHH3UvEjXpgPbYhBsE"
       config={{
-        loginMethods: ['email', 'google', 'twitter', 'discord', 'github', 'wallet'],
+        loginMethods: ['email', 'google', 'twitter', 'discord', 'github'],
         appearance: {
           theme: 'dark',
           accentColor: '#8B5CF6',
