@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { createPortal } from 'react-dom'
 import { usePrivy } from '@privy-io/react-auth'
-import { useFundWallet, useSolanaWallets } from '@privy-io/react-auth/solana'
+import {
+  useFundWallet,
+  useSolanaFundingPlugin,
+  useSolanaWallets,
+} from '@privy-io/react-auth/solana'
 
 function getSolanaWalletAccounts(user) {
   return (
@@ -14,10 +17,13 @@ function getSolanaWalletAccounts(user) {
 }
 
 function App() {
+  useSolanaFundingPlugin()
+
   const { login, logout, authenticated, ready, user } = usePrivy()
   const { ready: solanaReady, wallets, createWallet } = useSolanaWallets()
   const { fundWallet } = useFundWallet()
   const [depositLoading, setDepositLoading] = useState(false)
+  const [depositError, setDepositError] = useState(null)
 
   const solanaAddress = useMemo(() => {
     if (wallets[0]?.address) return wallets[0].address
@@ -38,13 +44,6 @@ function App() {
     })
   }, [ready, authenticated, solanaReady, hasSolanaWallet, createWallet])
 
-  const ensureSolanaWallet = useCallback(async () => {
-    if (solanaAddress) return solanaAddress
-
-    const wallet = await createWallet()
-    return wallet.address
-  }, [createWallet, solanaAddress])
-
   const handleLogin = async () => {
     try {
       await login()
@@ -61,30 +60,72 @@ function App() {
     }
   }
 
+  const openPrivyDeposit = useCallback(
+    async (address) => {
+      const fundingConfig = {
+        defaultFundingMethod: 'manual',
+      }
+
+      const connectedWallet = wallets.find((wallet) => wallet.address === address)
+
+      if (connectedWallet?.fund) {
+        await connectedWallet.fund(fundingConfig)
+        return
+      }
+
+      await fundWallet(address, fundingConfig)
+    },
+    [fundWallet, wallets],
+  )
+
   const handleDeposit = async () => {
+    setDepositError(null)
     setDepositLoading(true)
+
     try {
-      const address = await ensureSolanaWallet()
-      await fundWallet(address)
+      if (!solanaReady) {
+        throw new Error('Wallet is still loading. Please wait a moment and try again.')
+      }
+
+      let address = solanaAddress
+
+      if (!address) {
+        const wallet = await createWallet()
+        address = wallet.address
+      }
+
+      if (!address) {
+        throw new Error('No Solana wallet found. Try logging out and back in.')
+      }
+
+      await openPrivyDeposit(address)
     } catch (error) {
+      const message =
+        error?.message ||
+        'Could not open deposit. Check that funding is enabled in your Privy dashboard.'
+      setDepositError(message)
       console.error('Deposit flow failed:', error)
     } finally {
       setDepositLoading(false)
     }
   }
 
-  const topBar = createPortal(
-    <div className="fixed top-0 right-0 z-[99999] p-6 pointer-events-none">
-      <div className="flex items-center gap-3 pointer-events-auto">
+  return (
+    <div className="h-full bg-white flex flex-col">
+      <header className="flex items-center justify-end gap-3 p-6 shrink-0">
         {authenticated ? (
           <>
             <button
               type="button"
               onClick={handleDeposit}
-              disabled={!ready || depositLoading}
+              disabled={!ready || !solanaReady || depositLoading}
               className="px-8 py-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50"
             >
-              {depositLoading ? 'Opening...' : 'Deposit'}
+              {depositLoading
+                ? 'Opening...'
+                : !solanaReady
+                  ? 'Loading wallet...'
+                  : 'Deposit'}
             </button>
             <button
               type="button"
@@ -105,16 +146,9 @@ function App() {
             {!ready ? 'Loading...' : 'Login'}
           </button>
         )}
-      </div>
-    </div>,
-    document.body,
-  )
+      </header>
 
-  return (
-    <>
-      {topBar}
-
-      <main className="h-full bg-white flex flex-col items-center justify-center px-6 overflow-hidden">
+      <main className="flex-1 flex flex-col items-center justify-center px-6 overflow-hidden">
         <div className="text-center max-w-2xl">
           <p className="text-sm uppercase tracking-[0.2em] text-gray-400 mb-4">Coming soon</p>
 
@@ -126,9 +160,15 @@ function App() {
             Deposit SOL, get matched into surprise mini-games, and wager against other players.
             Every round is a new game — you never know what&apos;s next.
           </p>
+
+          {depositError && (
+            <p className="mt-6 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+              {depositError}
+            </p>
+          )}
         </div>
       </main>
-    </>
+    </div>
   )
 }
 
