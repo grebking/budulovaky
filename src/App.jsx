@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { usePrivy } from '@privy-io/react-auth'
 
 function formatChainName(chainType) {
@@ -49,6 +49,10 @@ function App() {
   const [copiedAddress, setCopiedAddress] = useState(null)
 
   const wallets = user?.wallets ?? []
+
+  useEffect(() => {
+    document.getElementById('static-deposit-btn')?.remove()
+  }, [])
 
   const handleLogin = async () => {
     try {
