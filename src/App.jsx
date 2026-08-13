@@ -1,10 +1,52 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { usePrivy } from '@privy-io/react-auth'
+import { useWallets } from '@privy-io/react-auth/solana'
+
+function getWalletLabel(account) {
+  if (account.type === 'smart_wallet') return 'Smart Wallet'
+  if (account.walletClientType === 'privy') return 'Embedded Wallet'
+  if (account.walletClientType) return account.walletClientType
+  return 'Wallet'
+}
+
+function getChainLabel(chainType) {
+  if (chainType === 'solana') return 'Solana'
+  if (chainType === 'ethereum') return 'Ethereum'
+  return chainType || 'Unknown'
+}
 
 function App() {
-  const { login, logout, authenticated, ready } = usePrivy()
+  const { login, logout, authenticated, ready, user } = usePrivy()
+  const { ready: walletsReady, wallets } = useWallets()
   const [showDeposit, setShowDeposit] = useState(false)
+  const [copiedAddress, setCopiedAddress] = useState(null)
+
+  const walletAddresses = useMemo(() => {
+    const byAddress = new Map()
+
+    user?.linkedAccounts
+      ?.filter((account) => account.type === 'wallet' || account.type === 'smart_wallet')
+      .forEach((account) => {
+        byAddress.set(account.address, {
+          address: account.address,
+          label: getWalletLabel(account),
+          chain: getChainLabel(account.chainType),
+        })
+      })
+
+    wallets.forEach((wallet) => {
+      if (!byAddress.has(wallet.address)) {
+        byAddress.set(wallet.address, {
+          address: wallet.address,
+          label: wallet.standardWallet?.name || 'Connected Wallet',
+          chain: 'Solana',
+        })
+      }
+    })
+
+    return Array.from(byAddress.values())
+  }, [user, wallets])
 
   const handleLogin = async () => {
     try {
@@ -31,16 +73,28 @@ function App() {
     setShowDeposit(true)
   }
 
+  const handleCopyAddress = async (address) => {
+    try {
+      await navigator.clipboard.writeText(address)
+      setCopiedAddress(address)
+      window.setTimeout(() => setCopiedAddress(null), 2000)
+    } catch (error) {
+      console.error('Copy failed:', error)
+    }
+  }
+
   const topBar = createPortal(
-    <div className="fixed top-0 left-0 right-0 z-[99999] flex items-center justify-between px-6 py-6 pointer-events-none">
-      <button
-        type="button"
-        onClick={handleDepositClick}
-        disabled={!ready}
-        className="pointer-events-auto px-8 py-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 shadow-lg"
-      >
-        Deposit
-      </button>
+    <div className="fixed top-0 left-0 right-0 z-[99999] flex items-center justify-end gap-3 px-6 py-6 pointer-events-none">
+      {authenticated && (
+        <button
+          type="button"
+          onClick={handleDepositClick}
+          disabled={!ready}
+          className="pointer-events-auto px-8 py-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 shadow-lg"
+        >
+          Deposit
+        </button>
+      )}
 
       <button
         type="button"
@@ -89,9 +143,43 @@ function App() {
                 ×
               </button>
             </div>
-            <p className="text-sm text-gray-600">
-              Deposit options coming soon.
+            <p className="text-sm text-gray-600 mb-4">
+              Send crypto to any of your wallet addresses below.
             </p>
+
+            {!walletsReady ? (
+              <p className="text-sm text-gray-500">Loading wallets...</p>
+            ) : walletAddresses.length === 0 ? (
+              <p className="text-sm text-gray-500">
+                No wallet addresses found on this account yet.
+              </p>
+            ) : (
+              <div className="space-y-3">
+                {walletAddresses.map((wallet) => (
+                  <div
+                    key={wallet.address}
+                    className="rounded-lg border border-gray-200 p-4"
+                  >
+                    <div className="flex items-center justify-between gap-3 mb-2">
+                      <div>
+                        <p className="text-sm font-medium text-gray-800">{wallet.label}</p>
+                        <p className="text-xs text-gray-500">{wallet.chain}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleCopyAddress(wallet.address)}
+                        className="px-3 py-1.5 text-sm bg-gray-900 text-white rounded-md hover:bg-gray-700 transition-colors"
+                      >
+                        {copiedAddress === wallet.address ? 'Copied' : 'Copy'}
+                      </button>
+                    </div>
+                    <p className="text-sm text-gray-700 break-all font-mono">
+                      {wallet.address}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

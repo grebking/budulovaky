@@ -16,6 +16,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           accentColor: '#676FFF',
           walletChainType: 'solana-only',
         },
+        embeddedWallets: {
+          solana: {
+            createOnLogin: 'users-without-wallets',
+          },
+        },
       }}
     >
       <App />
