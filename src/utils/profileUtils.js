@@ -63,6 +63,14 @@ export function daysUntilNameChange(profile) {
   return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)))
 }
 
+export function normalizeUsernameParam(raw) {
+  return String(raw ?? '')
+    .replace(/^@+/, '')
+    .trim()
+    .toLowerCase()
+}
+
 export function accountPath(username) {
-  return `/account/@${username}`
+  const clean = normalizeUsernameParam(username)
+  return `/account/@${clean}`
 }

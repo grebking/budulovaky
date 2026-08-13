@@ -1,6 +1,11 @@
 import { getSupabase } from '../lib/supabase'
 import { WIN_MULTIPLIER, STARTING_BALANCE } from '../constants/eventTypes'
-import { sanitizeUsername } from '../utils/profileUtils'
+import { normalizeUsernameParam, sanitizeUsername } from '../utils/profileUtils'
+
+/** Prefer these usernames when the user first signs up with a matching email. */
+const PREFERRED_USERNAMES = {
+  'cxmrkt@gmail.com': 'cxmrkt',
+}
 
 export async function fetchProfileByUserId(userId) {
   const supabase = getSupabase()
@@ -20,10 +25,13 @@ export async function fetchProfileByUsername(username) {
   const supabase = getSupabase()
   if (!supabase) throw new Error('Database not configured')
 
+  const clean = normalizeUsernameParam(username)
+  if (!clean) return null
+
   const { data, error } = await supabase
     .from('profiles')
     .select('*')
-    .eq('username', username.toLowerCase())
+    .eq('username', clean)
     .maybeSingle()
 
   if (error) throw error
@@ -44,7 +52,9 @@ export async function ensureProfile(userId, seedLabel) {
   const existing = await fetchProfileByUserId(userId)
   if (existing) return existing
 
-  const base = sanitizeUsername(seedLabel.split('@')[0] || seedLabel || 'player')
+  const email = seedLabel?.toLowerCase?.() ?? ''
+  const preferred = PREFERRED_USERNAMES[email]
+  const base = preferred || sanitizeUsername(seedLabel.split('@')[0] || seedLabel || 'player')
   let username = base
   let suffix = 0
 
