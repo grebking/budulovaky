@@ -11,8 +11,40 @@ function shortenAddress(address) {
   return `${address.slice(0, 6)}...${address.slice(-4)}`
 }
 
+const depositButtonStyle = {
+  position: 'fixed',
+  top: '20px',
+  left: '20px',
+  zIndex: 99999,
+  padding: '14px 32px',
+  fontSize: '18px',
+  fontWeight: '700',
+  color: '#ffffff',
+  backgroundColor: '#16a34a',
+  border: 'none',
+  borderRadius: '10px',
+  cursor: 'pointer',
+  boxShadow: '0 4px 14px rgba(0,0,0,0.35)',
+}
+
+const loginButtonStyle = {
+  position: 'fixed',
+  top: '20px',
+  right: '20px',
+  zIndex: 99999,
+  padding: '12px 24px',
+  fontSize: '16px',
+  fontWeight: '600',
+  color: '#111827',
+  backgroundColor: '#ffffff',
+  border: '2px solid #111827',
+  borderRadius: '10px',
+  cursor: 'pointer',
+  boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
+}
+
 function App() {
-  const { login, logout, authenticated, user, ready } = usePrivy()
+  const { login, logout, authenticated, user } = usePrivy()
   const [showDeposit, setShowDeposit] = useState(false)
   const [copiedAddress, setCopiedAddress] = useState(null)
 
@@ -54,31 +86,41 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white relative">
-      <header className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 py-6 z-10">
-        <button
-          onClick={handleDepositClick}
-          disabled={!ready}
-          className="px-8 py-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 shadow-md"
-        >
-          Deposit
-        </button>
+    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', position: 'relative' }}>
+      <button type="button" onClick={handleDepositClick} style={depositButtonStyle}>
+        DEPOSIT
+      </button>
 
-        <button
-          onClick={authenticated ? handleLogout : handleLogin}
-          disabled={!ready}
-          className="px-6 py-2 bg-white text-gray-900 font-light rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors disabled:opacity-50"
-        >
-          {!ready ? 'Loading...' : authenticated ? 'Logout' : 'Login'}
-        </button>
-      </header>
+      <button
+        type="button"
+        onClick={authenticated ? handleLogout : handleLogin}
+        style={loginButtonStyle}
+      >
+        {authenticated ? 'Logout' : 'Login'}
+      </button>
 
-      <main className="min-h-screen flex items-center justify-center px-6">
-        <div className="text-center">
-          <h1 className="text-6xl font-light text-gray-800 tracking-wide mb-4">
+      <main
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '24px',
+        }}
+      >
+        <div style={{ textAlign: 'center' }}>
+          <h1
+            style={{
+              fontSize: 'clamp(2.5rem, 8vw, 3.75rem)',
+              fontWeight: '300',
+              color: '#1f2937',
+              letterSpacing: '0.05em',
+              marginBottom: '16px',
+            }}
+          >
             Coming Soon
           </h1>
-          <p className="text-xl text-gray-600 font-light">
+          <p style={{ fontSize: '1.25rem', fontWeight: '300', color: '#4b5563' }}>
             The Future of Decentralized Gaming
           </p>
         </div>
@@ -86,53 +128,132 @@ function App() {
 
       {showDeposit && authenticated && (
         <div
-          className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px',
+            zIndex: 100000,
+          }}
           onClick={() => setShowDeposit(false)}
         >
           <div
-            className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 text-left"
+            style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.25)',
+              width: '100%',
+              maxWidth: '520px',
+              padding: '24px',
+              textAlign: 'left',
+            }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-light text-gray-800">Your Wallets</h2>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: '24px',
+              }}
+            >
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '300', color: '#1f2937', margin: 0 }}>
+                Your Wallets
+              </h2>
               <button
+                type="button"
                 onClick={() => setShowDeposit(false)}
-                className="text-gray-500 hover:text-gray-800 text-2xl leading-none"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '28px',
+                  color: '#6b7280',
+                  cursor: 'pointer',
+                  lineHeight: 1,
+                }}
                 aria-label="Close"
               >
                 ×
               </button>
             </div>
 
-            <p className="text-sm text-gray-600 mb-4">
+            <p style={{ fontSize: '14px', color: '#4b5563', marginBottom: '16px' }}>
               Send funds to any of your wallet addresses below.
             </p>
 
             {wallets.length === 0 ? (
-              <p className="p-4 bg-gray-50 rounded-lg text-sm text-gray-600">
+              <p
+                style={{
+                  padding: '16px',
+                  backgroundColor: '#f9fafb',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  color: '#4b5563',
+                  margin: 0,
+                }}
+              >
                 No wallets yet.
               </p>
             ) : (
-              <ul className="space-y-3">
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '12px' }}>
                 {wallets.map((wallet) => (
                   <li
                     key={`${wallet.chainType}-${wallet.address}`}
-                    className="p-4 bg-gray-50 rounded-lg border border-gray-100"
+                    style={{
+                      padding: '16px',
+                      backgroundColor: '#f9fafb',
+                      borderRadius: '8px',
+                      border: '1px solid #f3f4f6',
+                    }}
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-gray-800">
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginBottom: '8px',
+                      }}
+                    >
+                      <span style={{ fontSize: '14px', fontWeight: '600', color: '#1f2937' }}>
                         {formatChainName(wallet.chainType)}
                       </span>
-                      <span className="text-xs text-gray-500 uppercase tracking-wide">
+                      <span
+                        style={{
+                          fontSize: '11px',
+                          color: '#6b7280',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.05em',
+                        }}
+                      >
                         {wallet.walletClientType || 'embedded'}
                       </span>
                     </div>
-                    <p className="text-sm font-mono text-gray-700 break-all mb-3">
+                    <p
+                      style={{
+                        fontSize: '14px',
+                        fontFamily: 'monospace',
+                        color: '#374151',
+                        wordBreak: 'break-all',
+                        margin: '0 0 12px 0',
+                      }}
+                    >
                       {wallet.address}
                     </p>
                     <button
+                      type="button"
                       onClick={() => handleCopy(wallet.address)}
-                      className="text-sm px-4 py-1.5 bg-gray-900 text-white rounded hover:bg-gray-700 transition-colors"
+                      style={{
+                        fontSize: '14px',
+                        padding: '6px 16px',
+                        backgroundColor: '#111827',
+                        color: '#ffffff',
+                        border: 'none',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                      }}
                     >
                       {copiedAddress === wallet.address
                         ? 'Copied!'
