@@ -1,141 +1,101 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { usePrivy } from '@privy-io/react-auth'
 
 function App() {
-  const { login, logout, authenticated } = usePrivy()
+  const { login, logout, authenticated, ready } = usePrivy()
   const [showDeposit, setShowDeposit] = useState(false)
 
-  useEffect(() => {
-    const depositBtn = document.getElementById('deposit-btn')
-    const loginBtn = document.getElementById('login-btn')
-
-    if (loginBtn) {
-      loginBtn.textContent = authenticated ? 'Logout' : 'Login'
+  const handleLogin = async () => {
+    try {
+      await login()
+    } catch (error) {
+      console.error('Login failed:', error)
     }
+  }
 
-    const onDepositClick = async () => {
-      if (!authenticated) {
-        try {
-          await login()
-        } catch (error) {
-          console.error('Login failed:', error)
-        }
-        return
-      }
-      setShowDeposit(true)
+  const handleLogout = async () => {
+    try {
+      setShowDeposit(false)
+      await logout()
+    } catch (error) {
+      console.error('Logout failed:', error)
     }
+  }
 
-    const onLoginClick = async () => {
-      try {
-        if (authenticated) {
-          setShowDeposit(false)
-          await logout()
-        } else {
-          await login()
-        }
-      } catch (error) {
-        console.error('Auth failed:', error)
-      }
+  const handleDepositClick = async () => {
+    if (!authenticated) {
+      await handleLogin()
+      return
     }
+    setShowDeposit(true)
+  }
 
-    depositBtn?.addEventListener('click', onDepositClick)
-    loginBtn?.addEventListener('click', onLoginClick)
+  const topBar = createPortal(
+    <div className="fixed top-0 left-0 right-0 z-[99999] flex items-center justify-between px-6 py-6 pointer-events-none">
+      <button
+        type="button"
+        onClick={handleDepositClick}
+        disabled={!ready}
+        className="pointer-events-auto px-8 py-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 shadow-lg"
+      >
+        Deposit
+      </button>
 
-    return () => {
-      depositBtn?.removeEventListener('click', onDepositClick)
-      loginBtn?.removeEventListener('click', onLoginClick)
-    }
-  }, [authenticated, login, logout])
+      <button
+        type="button"
+        onClick={authenticated ? handleLogout : handleLogin}
+        disabled={!ready}
+        className="pointer-events-auto px-6 py-2 bg-gray-900 text-white font-light rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 shadow-lg"
+      >
+        {!ready ? 'Loading...' : authenticated ? 'Logout' : 'Login'}
+      </button>
+    </div>,
+    document.body,
+  )
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
-      <main
-        style={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '24px',
-        }}
-      >
-        <div style={{ textAlign: 'center' }}>
-          <h1
-            style={{
-              fontSize: 'clamp(2.5rem, 8vw, 3.75rem)',
-              fontWeight: '300',
-              color: '#1f2937',
-              letterSpacing: '0.05em',
-              marginBottom: '16px',
-            }}
-          >
+    <>
+      {topBar}
+
+      <div className="min-h-screen bg-white flex items-center justify-center relative">
+        <div className="text-center px-6">
+          <h1 className="text-6xl font-light text-gray-800 tracking-wide mb-4">
             Coming Soon
           </h1>
-          <p style={{ fontSize: '1.25rem', fontWeight: '300', color: '#4b5563' }}>
+          <p className="text-xl text-gray-600 font-light">
             The Future of Decentralized Gaming
           </p>
         </div>
-      </main>
+      </div>
 
       {showDeposit && authenticated && (
         <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '16px',
-            zIndex: 2147483646,
-          }}
+          className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-[100000]"
           onClick={() => setShowDeposit(false)}
         >
           <div
-            style={{
-              backgroundColor: '#ffffff',
-              borderRadius: '12px',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.25)',
-              width: '100%',
-              maxWidth: '480px',
-              padding: '24px',
-              textAlign: 'left',
-            }}
+            className="bg-white rounded-xl shadow-xl w-full max-w-md p-6 text-left"
             onClick={(e) => e.stopPropagation()}
           >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginBottom: '16px',
-              }}
-            >
-              <h2 style={{ fontSize: '1.5rem', fontWeight: '300', color: '#1f2937', margin: 0 }}>
-                Deposit
-              </h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-2xl font-light text-gray-800">Deposit</h2>
               <button
                 type="button"
                 onClick={() => setShowDeposit(false)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  fontSize: '28px',
-                  color: '#6b7280',
-                  cursor: 'pointer',
-                  lineHeight: 1,
-                }}
+                className="text-gray-500 hover:text-gray-800 text-2xl leading-none"
                 aria-label="Close"
               >
                 ×
               </button>
             </div>
-            <p style={{ fontSize: '15px', color: '#4b5563', margin: 0 }}>
+            <p className="text-sm text-gray-600">
               Deposit options coming soon.
             </p>
           </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
