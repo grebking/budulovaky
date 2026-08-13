@@ -3,41 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+  html,
+  body,
+  #root {
+    @apply h-full overflow-hidden bg-white;
+  }
+
   html {
     @apply antialiased;
   }
 
   body {
-    @apply bg-[#07070f] text-white min-h-screen;
+    @apply bg-white text-gray-900;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  }
-}
-
-@layer utilities {
-  .hero-glow {
-    background:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139, 92, 246, 0.35), transparent),
-      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(59, 130, 246, 0.12), transparent),
-      radial-gradient(ellipse 50% 30% at 10% 80%, rgba(168, 85, 247, 0.1), transparent);
-  }
-
-  .glass-nav {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
-  }
-
-  .glass-card {
-    @apply bg-white/5 backdrop-blur-md border border-white/10;
-  }
-
-  .btn-primary {
-    @apply px-6 py-2.5 bg-violet-600 hover:bg-violet-500 text-white font-medium rounded-xl transition-all duration-200 shadow-lg shadow-violet-900/30 hover:shadow-violet-800/40 disabled:opacity-50 disabled:cursor-not-allowed;
-  }
-
-  .btn-secondary {
-    @apply px-5 py-2.5 glass-card hover:bg-white/10 text-white/90 font-medium rounded-xl transition-all duration-200 disabled:opacity-50;
-  }
-
-  .btn-ghost {
-    @apply px-4 py-2 text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-colors text-sm;
   }
 }
