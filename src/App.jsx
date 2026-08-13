@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { usePrivy } from '@privy-io/react-auth'
-import { useWallets } from '@privy-io/react-auth/solana'
 
 function getWalletLabel(account) {
   if (account.type === 'smart_wallet') return 'Smart Wallet'
@@ -18,7 +17,6 @@ function getChainLabel(chainType) {
 
 function App() {
   const { login, logout, authenticated, ready, user } = usePrivy()
-  const { ready: walletsReady, wallets } = useWallets()
   const [showDeposit, setShowDeposit] = useState(false)
   const [copiedAddress, setCopiedAddress] = useState(null)
 
@@ -35,18 +33,16 @@ function App() {
         })
       })
 
-    wallets.forEach((wallet) => {
-      if (!byAddress.has(wallet.address)) {
-        byAddress.set(wallet.address, {
-          address: wallet.address,
-          label: wallet.standardWallet?.name || 'Connected Wallet',
-          chain: 'Solana',
-        })
-      }
-    })
+    if (user?.wallet?.address && !byAddress.has(user.wallet.address)) {
+      byAddress.set(user.wallet.address, {
+        address: user.wallet.address,
+        label: 'Wallet',
+        chain: getChainLabel(user.wallet.chainType),
+      })
+    }
 
     return Array.from(byAddress.values())
-  }, [user, wallets])
+  }, [user])
 
   const handleLogin = async () => {
     try {
@@ -147,7 +143,7 @@ function App() {
               Send crypto to any of your wallet addresses below.
             </p>
 
-            {!walletsReady ? (
+            {!ready ? (
               <p className="text-sm text-gray-500">Loading wallets...</p>
             ) : walletAddresses.length === 0 ? (
               <p className="text-sm text-gray-500">
