@@ -35,6 +35,14 @@ function App() {
     }
   }
 
+  const handleDepositClick = async () => {
+    if (!authenticated) {
+      await handleLogin()
+      return
+    }
+    setShowDeposit(true)
+  }
+
   const handleCopy = async (address) => {
     try {
       await navigator.clipboard.writeText(address)
@@ -46,32 +54,35 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center relative">
-      <button
-        onClick={authenticated ? handleLogout : handleLogin}
-        disabled={!ready}
-        className="absolute top-6 right-6 px-6 py-2 bg-gray-900 text-white font-light rounded hover:bg-gray-700 transition-colors disabled:opacity-50"
-      >
-        {!ready ? 'Loading...' : authenticated ? 'Logout' : 'Login'}
-      </button>
+    <div className="min-h-screen bg-white relative">
+      <header className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 py-6 z-10">
+        <button
+          onClick={handleDepositClick}
+          disabled={!ready}
+          className="px-8 py-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 shadow-md"
+        >
+          Deposit
+        </button>
 
-      <div className="text-center px-6">
-        <h1 className="text-6xl font-light text-gray-800 tracking-wide mb-4">
-          Coming Soon
-        </h1>
-        <p className="text-xl text-gray-600 font-light mb-8">
-          The Future of Decentralized Gaming
-        </p>
+        <button
+          onClick={authenticated ? handleLogout : handleLogin}
+          disabled={!ready}
+          className="px-6 py-2 bg-white text-gray-900 font-light rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors disabled:opacity-50"
+        >
+          {!ready ? 'Loading...' : authenticated ? 'Logout' : 'Login'}
+        </button>
+      </header>
 
-        {authenticated && (
-          <button
-            onClick={() => setShowDeposit(true)}
-            className="px-8 py-3 bg-gray-900 text-white font-light rounded hover:bg-gray-700 transition-colors"
-          >
-            Deposit
-          </button>
-        )}
-      </div>
+      <main className="min-h-screen flex items-center justify-center px-6">
+        <div className="text-center">
+          <h1 className="text-6xl font-light text-gray-800 tracking-wide mb-4">
+            Coming Soon
+          </h1>
+          <p className="text-xl text-gray-600 font-light">
+            The Future of Decentralized Gaming
+          </p>
+        </div>
+      </main>
 
       {showDeposit && authenticated && (
         <div
@@ -98,9 +109,9 @@ function App() {
             </p>
 
             {wallets.length === 0 ? (
-              <div className="p-4 bg-gray-50 rounded-lg text-sm text-gray-600">
-                Creating your wallets...
-              </div>
+              <p className="p-4 bg-gray-50 rounded-lg text-sm text-gray-600">
+                No wallets yet.
+              </p>
             ) : (
               <ul className="space-y-3">
                 {wallets.map((wallet) => (
