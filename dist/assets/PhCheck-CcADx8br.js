@@ -12,4 +12,3 @@ import{n as g,Y as c,t as r,p as d,O as s,s as u}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;l([s({type:String,reflect:!0})],t.prototype,"size",2);l([s({type:String,reflect:!0})],t.prototype,"weight",2);l([s({type:String,reflect:!0})],t.prototype,"color",2);l([s({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=l([u("ph-check")],t);export{t as PhCheck};
-//# sourceMappingURL=PhCheck-CcADx8br.js.map

@@ -12,4 +12,3 @@ import{n as p,Y as n,t as a,p as m,O as o,s as v}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;H([o({type:String,reflect:!0})],t.prototype,"size",2);H([o({type:String,reflect:!0})],t.prototype,"weight",2);H([o({type:String,reflect:!0})],t.prototype,"color",2);H([o({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=H([v("ph-bank")],t);export{t as PhBank};
-//# sourceMappingURL=PhBank-Dchr4XQJ.js.map

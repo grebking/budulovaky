@@ -12,4 +12,3 @@ import{n as g,Y as d,t as r,p as c,O as i,s as u}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;l([i({type:String,reflect:!0})],t.prototype,"size",2);l([i({type:String,reflect:!0})],t.prototype,"weight",2);l([i({type:String,reflect:!0})],t.prototype,"color",2);l([i({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=l([u("ph-caret-left")],t);export{t as PhCaretLeft};
-//# sourceMappingURL=PhCaretLeft-_aiyH7n1.js.map

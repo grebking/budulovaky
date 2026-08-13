@@ -12,4 +12,3 @@ import{n as Z,Y as g,t as l,p as A,O as i,s as c}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;r([i({type:String,reflect:!0})],t.prototype,"size",2);r([i({type:String,reflect:!0})],t.prototype,"weight",2);r([i({type:String,reflect:!0})],t.prototype,"color",2);r([i({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=r([c("ph-compass")],t);export{t as PhCompass};
-//# sourceMappingURL=PhCompass-CUy3uA7t.js.map

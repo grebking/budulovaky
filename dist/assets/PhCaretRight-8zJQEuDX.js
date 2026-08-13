@@ -12,4 +12,3 @@ import{n,Y as d,t as r,p as c,O as i,s as u}from"./property-C9JG5tag.js";var w=O
       display: contents;
     }
   `;s([i({type:String,reflect:!0})],t.prototype,"size",2);s([i({type:String,reflect:!0})],t.prototype,"weight",2);s([i({type:String,reflect:!0})],t.prototype,"color",2);s([i({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=s([u("ph-caret-right")],t);export{t as PhCaretRight};
-//# sourceMappingURL=PhCaretRight-8zJQEuDX.js.map

@@ -12,4 +12,3 @@ import{n,Y as M,t as r,p as V,O as s,s as g}from"./property-C9JG5tag.js";var H=O
       display: contents;
     }
   `;o([s({type:String,reflect:!0})],t.prototype,"size",2);o([s({type:String,reflect:!0})],t.prototype,"weight",2);o([s({type:String,reflect:!0})],t.prototype,"color",2);o([s({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=o([g("ph-envelope")],t);export{t as PhEnvelope};
-//# sourceMappingURL=PhEnvelope-yUsis6yU.js.map

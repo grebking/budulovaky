@@ -12,4 +12,3 @@ import{n as V,Y as n,t as e,p as g,O as l,s as u}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;o([l({type:String,reflect:!0})],a.prototype,"size",2);o([l({type:String,reflect:!0})],a.prototype,"weight",2);o([l({type:String,reflect:!0})],a.prototype,"color",2);o([l({type:Boolean,reflect:!0})],a.prototype,"mirrored",2);a=o([u("ph-arrow-square-out")],a);export{a as PhArrowSquareOut};
-//# sourceMappingURL=PhArrowSquareOut-NnrK69c5.js.map

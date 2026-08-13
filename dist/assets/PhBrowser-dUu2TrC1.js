@@ -12,4 +12,3 @@ import{n as l,Y as n,t as r,p as g,O as p,s as c}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;s([p({type:String,reflect:!0})],t.prototype,"size",2);s([p({type:String,reflect:!0})],t.prototype,"weight",2);s([p({type:String,reflect:!0})],t.prototype,"color",2);s([p({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=s([c("ph-browser")],t);export{t as PhBrowser};
-//# sourceMappingURL=PhBrowser-dUu2TrC1.js.map

@@ -44,12 +44,21 @@ function BetAdminCard({ bet, onResolved }) {
         <div className="rounded-xl border border-gray-200 p-4 bg-gray-50">
           <p className="text-xs uppercase text-gray-400 mb-1">Side 1 — {bet.side1_label}</p>
           <p className="text-lg font-semibold text-gray-900">
-            {formatMoney(bet.side1Total)} · {bet.side1.length} people
+            {formatMoney(bet.side1Total)} ordered
+            {bet.side1Filled > 0 && (
+              <span className="text-sm font-normal text-gray-500">
+                {' '}
+                · {formatMoney(bet.side1Filled)} filled
+              </span>
+            )}
+            {' · '}
+            {bet.side1.length} people
           </p>
           <ul className="mt-2 text-sm text-gray-600 space-y-1">
             {bet.side1.map((entry) => (
               <li key={entry.id}>
-                {entry.user_label} — {formatMoney(entry.stake)}
+                {entry.user_label} — {formatMoney(entry.stake)} ordered
+                {Number(entry.filled_stake) > 0 && ` (${formatMoney(entry.filled_stake)} filled)`}
               </li>
             ))}
             {bet.side1.length === 0 && <li className="text-gray-400">No entries</li>}
@@ -58,12 +67,21 @@ function BetAdminCard({ bet, onResolved }) {
         <div className="rounded-xl border border-gray-200 p-4 bg-gray-50">
           <p className="text-xs uppercase text-gray-400 mb-1">Side 2 — {bet.side2_label}</p>
           <p className="text-lg font-semibold text-gray-900">
-            {formatMoney(bet.side2Total)} · {bet.side2.length} people
+            {formatMoney(bet.side2Total)} ordered
+            {bet.side2Filled > 0 && (
+              <span className="text-sm font-normal text-gray-500">
+                {' '}
+                · {formatMoney(bet.side2Filled)} filled
+              </span>
+            )}
+            {' · '}
+            {bet.side2.length} people
           </p>
           <ul className="mt-2 text-sm text-gray-600 space-y-1">
             {bet.side2.map((entry) => (
               <li key={entry.id}>
-                {entry.user_label} — {formatMoney(entry.stake)}
+                {entry.user_label} — {formatMoney(entry.stake)} ordered
+                {Number(entry.filled_stake) > 0 && ` (${formatMoney(entry.filled_stake)} filled)`}
               </li>
             ))}
             {bet.side2.length === 0 && <li className="text-gray-400">No entries</li>}

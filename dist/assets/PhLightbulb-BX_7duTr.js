@@ -12,4 +12,3 @@ import{n as v,Y as n,t as e,p as g,O as i,s as Z}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;A([i({type:String,reflect:!0})],a.prototype,"size",2);A([i({type:String,reflect:!0})],a.prototype,"weight",2);A([i({type:String,reflect:!0})],a.prototype,"color",2);A([i({type:Boolean,reflect:!0})],a.prototype,"mirrored",2);a=A([Z("ph-lightbulb")],a);export{a as PhLightbulb};
-//# sourceMappingURL=PhLightbulb-BX_7duTr.js.map

@@ -12,4 +12,3 @@ import{n as p,Y as n,t as e,p as A,O as M,s as m}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;Z([M({type:String,reflect:!0})],a.prototype,"size",2);Z([M({type:String,reflect:!0})],a.prototype,"weight",2);Z([M({type:String,reflect:!0})],a.prototype,"color",2);Z([M({type:Boolean,reflect:!0})],a.prototype,"mirrored",2);a=Z([m("ph-spinner")],a);export{a as PhSpinner};
-//# sourceMappingURL=PhSpinner-BXooDYzU.js.map

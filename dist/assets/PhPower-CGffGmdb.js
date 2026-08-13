@@ -12,4 +12,3 @@ import{n as c,Y as g,t as r,p as d,O as p,s as u}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;o([p({type:String,reflect:!0})],t.prototype,"size",2);o([p({type:String,reflect:!0})],t.prototype,"weight",2);o([p({type:String,reflect:!0})],t.prototype,"color",2);o([p({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=o([u("ph-power")],t);export{t as PhPower};
-//# sourceMappingURL=PhPower-CGffGmdb.js.map

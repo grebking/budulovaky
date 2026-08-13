@@ -7,19 +7,67 @@ import {
   settleBetBalances,
 } from './profileService'
 
+function sumStake(list) {
+  return list.reduce((total, entry) => total + Number(entry.stake), 0)
+}
+
+function sumFilled(list) {
+  return list.reduce((total, entry) => total + Number(entry.filled_stake ?? 0), 0)
+}
+
 function groupEntries(entries = []) {
-  const side1 = entries.filter((entry) => entry.side === 1)
-  const side2 = entries.filter((entry) => entry.side === 2)
-  const sum = (list) => list.reduce((total, entry) => total + Number(entry.stake), 0)
+  const active = entries.filter((entry) => entry.status !== 'cancelled')
+  const side1 = active.filter((entry) => entry.side === 1)
+  const side2 = active.filter((entry) => entry.side === 2)
 
   return {
     side1,
     side2,
-    side1Total: sum(side1),
-    side2Total: sum(side2),
-    totalPool: sum(entries),
-    totalPeople: entries.length,
+    side1Total: sumStake(side1),
+    side2Total: sumStake(side2),
+    side1Filled: sumFilled(side1),
+    side2Filled: sumFilled(side2),
+    totalPool: sumStake(active),
+    totalFilled: sumFilled(active),
+    totalPeople: active.length,
   }
+}
+
+/** Estimate how much of an open order would fill if the bet closed now. */
+export function estimateFill(entry, entries) {
+  if (entry.status === 'cancelled') return 0
+  if (Number(entry.filled_stake) > 0) return Number(entry.filled_stake)
+
+  const active = entries.filter((e) => e.status !== 'cancelled')
+  const side1Total = sumStake(active.filter((e) => e.side === 1))
+  const side2Total = sumStake(active.filter((e) => e.side === 2))
+  const matchable = Math.min(side1Total, side2Total)
+  if (matchable <= 0) return 0
+
+  const mySideTotal = entry.side === 1 ? side1Total : side2Total
+  if (mySideTotal <= 0) return 0
+
+  return Number(entry.stake) * (matchable / mySideTotal)
+}
+
+export function computeEntryFills(entries) {
+  const active = entries.filter((entry) => entry.status !== 'cancelled')
+  const side1 = active.filter((entry) => entry.side === 1)
+  const side2 = active.filter((entry) => entry.side === 2)
+  const side1Total = sumStake(side1)
+  const side2Total = sumStake(side2)
+  const matchable = Math.min(side1Total, side2Total)
+
+  return active.map((entry) => {
+    const requested = Number(entry.stake)
+    if (matchable <= 0) {
+      return { ...entry, filled_stake: 0, refund: requested }
+    }
+
+    const mySideTotal = entry.side === 1 ? side1Total : side2Total
+    const filled = requested * (matchable / mySideTotal)
+    return { ...entry, filled_stake: filled, refund: requested - filled }
+  })
 }
 
 function attachGrouped(bet, allEntries) {
@@ -74,7 +122,7 @@ export async function fetchUserBets(userId) {
   return all.filter(
     (bet) =>
       bet.created_by_id === userId ||
-      bet.entries.some((entry) => entry.user_id === userId),
+      bet.entries.some((entry) => entry.user_id === userId && entry.status !== 'cancelled'),
   )
 }
 
@@ -135,6 +183,8 @@ export async function joinBet({ betId, userId, side, stake }) {
       user_label: profile.username,
       side,
       stake,
+      filled_stake: 0,
+      status: 'active',
     })
     .select()
     .single()
@@ -147,11 +197,68 @@ export async function joinBet({ betId, userId, side, stake }) {
   return data
 }
 
+export async function cancelBetEntry({ entryId, userId }) {
+  const supabase = getSupabase()
+  if (!supabase) throw new Error('Database not configured')
+
+  const { data: entry, error } = await supabase
+    .from('bet_entries')
+    .select('*')
+    .eq('id', entryId)
+    .single()
+
+  if (error) throw error
+  if (entry.user_id !== userId) throw new Error('Not your order.')
+  if (entry.status === 'cancelled') throw new Error('Order already cancelled.')
+
+  const bet = await fetchBet(entry.bet_id)
+  if (!isBetJoinable(bet)) {
+    throw new Error('Cannot cancel — betting is closed for this event.')
+  }
+
+  const { error: updateError } = await supabase
+    .from('bet_entries')
+    .update({
+      status: 'cancelled',
+      cancelled_at: new Date().toISOString(),
+      filled_stake: 0,
+    })
+    .eq('id', entryId)
+
+  if (updateError) throw updateError
+
+  await adjustBalance(userId, Number(entry.stake))
+  return entry
+}
+
+export async function finalizeBetMatching(betId) {
+  const supabase = getSupabase()
+  const bet = await fetchBet(betId)
+  const fills = computeEntryFills(bet.entries)
+
+  for (const entry of fills) {
+    if (entry.status === 'cancelled') continue
+
+    const { error } = await supabase
+      .from('bet_entries')
+      .update({ filled_stake: entry.filled_stake })
+      .eq('id', entry.id)
+
+    if (error) throw error
+
+    if (entry.refund > 0) {
+      await adjustBalance(entry.user_id, entry.refund)
+    }
+  }
+
+  return fetchBet(betId)
+}
+
 export async function resolveBet(betId, winner) {
   const supabase = getSupabase()
   if (!supabase) throw new Error('Database not configured')
 
-  const bet = await fetchBet(betId)
+  const bet = await finalizeBetMatching(betId)
   const status = winner === 'scratch' ? 'scratch' : 'resolved'
 
   await settleBetBalances(bet, bet.entries, winner)

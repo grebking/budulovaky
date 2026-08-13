@@ -12,4 +12,3 @@ import{n as h,Y as p,t,p as n,O as o,s as g}from"./property-C9JG5tag.js";var d=O
       display: contents;
     }
   `;r([o({type:String,reflect:!0})],s.prototype,"size",2);r([o({type:String,reflect:!0})],s.prototype,"weight",2);r([o({type:String,reflect:!0})],s.prototype,"color",2);r([o({type:Boolean,reflect:!0})],s.prototype,"mirrored",2);s=r([g("ph-seal-check")],s);export{s as PhSealCheck};
-//# sourceMappingURL=PhSealCheck-BfG80yKn.js.map

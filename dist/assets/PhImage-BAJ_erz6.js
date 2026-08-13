@@ -12,4 +12,3 @@ import{n as Z,Y as n,t as e,p as A,O as s,s as H}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;l([s({type:String,reflect:!0})],t.prototype,"size",2);l([s({type:String,reflect:!0})],t.prototype,"weight",2);l([s({type:String,reflect:!0})],t.prototype,"color",2);l([s({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=l([H("ph-image")],t);export{t as PhImage};
-//# sourceMappingURL=PhImage-BAJ_erz6.js.map

@@ -12,4 +12,3 @@ import{n as v,Y as n,t,p as g,O as s,s as Z}from"./property-C9JG5tag.js";var c=O
       display: contents;
     }
   `;r([s({type:String,reflect:!0})],h.prototype,"size",2);r([s({type:String,reflect:!0})],h.prototype,"weight",2);r([s({type:String,reflect:!0})],h.prototype,"color",2);r([s({type:Boolean,reflect:!0})],h.prototype,"mirrored",2);h=r([Z("ph-currency-dollar")],h);export{h as PhCurrencyDollar};
-//# sourceMappingURL=PhCurrencyDollar-Cqla3AXT.js.map

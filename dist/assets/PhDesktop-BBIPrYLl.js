@@ -12,4 +12,3 @@ import{n as l,Y as n,t as e,p as v,O as s,s as A}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;h([s({type:String,reflect:!0})],t.prototype,"size",2);h([s({type:String,reflect:!0})],t.prototype,"weight",2);h([s({type:String,reflect:!0})],t.prototype,"color",2);h([s({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=h([A("ph-desktop")],t);export{t as PhDesktop};
-//# sourceMappingURL=PhDesktop-BBIPrYLl.js.map

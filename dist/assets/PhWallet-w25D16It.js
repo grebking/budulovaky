@@ -12,4 +12,3 @@ import{n as A,Y as n,t as a,p as g,O as H,s as c}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;o([H({type:String,reflect:!0})],t.prototype,"size",2);o([H({type:String,reflect:!0})],t.prototype,"weight",2);o([H({type:String,reflect:!0})],t.prototype,"color",2);o([H({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=o([c("ph-wallet")],t);export{t as PhWallet};
-//# sourceMappingURL=PhWallet-w25D16It.js.map

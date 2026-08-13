@@ -12,4 +12,3 @@ import{n as M,Y as m,t as e,p,O as o,s as l}from"./property-C9JG5tag.js";var n=O
       display: contents;
     }
   `;h([o({type:String,reflect:!0})],a.prototype,"size",2);h([o({type:String,reflect:!0})],a.prototype,"weight",2);h([o({type:String,reflect:!0})],a.prototype,"color",2);h([o({type:Boolean,reflect:!0})],a.prototype,"mirrored",2);a=h([l("ph-globe")],a);export{a as PhGlobe};
-//# sourceMappingURL=PhGlobe-DgLxBk5U.js.map

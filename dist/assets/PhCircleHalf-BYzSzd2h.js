@@ -12,4 +12,3 @@ import{n,Y as g,t as r,p as c,O as p,s as V}from"./property-C9JG5tag.js";var m=O
       display: contents;
     }
   `;o([p({type:String,reflect:!0})],t.prototype,"size",2);o([p({type:String,reflect:!0})],t.prototype,"weight",2);o([p({type:String,reflect:!0})],t.prototype,"color",2);o([p({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=o([V("ph-circle-half")],t);export{t as PhCircleHalf};
-//# sourceMappingURL=PhCircleHalf-BYzSzd2h.js.map

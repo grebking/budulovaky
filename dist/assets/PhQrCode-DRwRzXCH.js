@@ -12,4 +12,3 @@ import{n as s,Y as i,t,p as A,O as Z,s as p}from"./property-C9JG5tag.js";var l=O
       display: contents;
     }
   `;r([Z({type:String,reflect:!0})],a.prototype,"size",2);r([Z({type:String,reflect:!0})],a.prototype,"weight",2);r([Z({type:String,reflect:!0})],a.prototype,"color",2);r([Z({type:Boolean,reflect:!0})],a.prototype,"mirrored",2);a=r([p("ph-qr-code")],a);export{a as PhQrCode};
-//# sourceMappingURL=PhQrCode-DRwRzXCH.js.map

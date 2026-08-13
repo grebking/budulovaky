@@ -12,4 +12,3 @@ import{n as A,Y as g,t as r,p as Z,O as p,s as d}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;o([p({type:String,reflect:!0})],t.prototype,"size",2);o([p({type:String,reflect:!0})],t.prototype,"weight",2);o([p({type:String,reflect:!0})],t.prototype,"color",2);o([p({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=o([d("ph-dots-three")],t);export{t as PhDotsThree};
-//# sourceMappingURL=PhDotsThree-BMXCQl-0.js.map

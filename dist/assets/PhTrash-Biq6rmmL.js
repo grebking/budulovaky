@@ -12,4 +12,3 @@ import{n as l,Y as Z,t as e,p as n,O as o,s as M}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;h([o({type:String,reflect:!0})],a.prototype,"size",2);h([o({type:String,reflect:!0})],a.prototype,"weight",2);h([o({type:String,reflect:!0})],a.prototype,"color",2);h([o({type:Boolean,reflect:!0})],a.prototype,"mirrored",2);a=h([M("ph-trash")],a);export{a as PhTrash};
-//# sourceMappingURL=PhTrash-Biq6rmmL.js.map

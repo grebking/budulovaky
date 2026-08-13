@@ -12,4 +12,3 @@ import{n as V,Y as Z,t as e,p as n,O as i,s as A}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;o([i({type:String,reflect:!0})],t.prototype,"size",2);o([i({type:String,reflect:!0})],t.prototype,"weight",2);o([i({type:String,reflect:!0})],t.prototype,"color",2);o([i({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=o([A("ph-credit-card")],t);export{t as PhCreditCard};
-//# sourceMappingURL=PhCreditCard-CWRaUT6F.js.map

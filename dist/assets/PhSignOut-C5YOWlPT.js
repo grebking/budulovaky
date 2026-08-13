@@ -12,4 +12,3 @@ import{n as g,Y as H,t as e,p as c,O as i,s as d}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;h([i({type:String,reflect:!0})],t.prototype,"size",2);h([i({type:String,reflect:!0})],t.prototype,"weight",2);h([i({type:String,reflect:!0})],t.prototype,"color",2);h([i({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=h([d("ph-sign-out")],t);export{t as PhSignOut};
-//# sourceMappingURL=PhSignOut-C5YOWlPT.js.map

@@ -8,6 +8,7 @@ import BetPage from './components/BetPage'
 import HomePage from './components/HomePage'
 import SetupBanner from './components/SetupBanner'
 import { isAdminUser } from './config'
+import { WIN_MULTIPLIER } from './constants/eventTypes'
 import { formatMoney } from './services/betsService'
 import { ensureProfile, fetchProfileByUserId } from './services/profileService'
 import { accountPath } from './utils/profileUtils'
@@ -97,8 +98,8 @@ function App() {
     <div className="h-full bg-white flex flex-col min-h-0">
       <header className="flex items-center justify-between gap-4 p-6 shrink-0 border-b border-gray-100">
         <Link to="/" className="block">
-          <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">Custom Bet</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Virtual bets on anything</p>
+          <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">Cx Mrkt</h1>
+          <p className="text-sm text-gray-500 mt-0.5">Prediction markets · {WIN_MULTIPLIER}× payout</p>
         </Link>
 
         <div className="flex items-center gap-3 shrink-0">

@@ -12,4 +12,3 @@ import{n as m,Y as Z,t as r,p as g,O as p,s as c}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;o([p({type:String,reflect:!0})],t.prototype,"size",2);o([p({type:String,reflect:!0})],t.prototype,"weight",2);o([p({type:String,reflect:!0})],t.prototype,"color",2);o([p({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=o([c("ph-warning-circle")],t);export{t as PhWarningCircle};
-//# sourceMappingURL=PhWarningCircle-BqjT745H.js.map

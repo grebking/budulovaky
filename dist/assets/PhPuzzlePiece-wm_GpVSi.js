@@ -12,4 +12,3 @@ import{n as H,Y as V,t,p as n,O as o,s as c}from"./property-C9JG5tag.js";var v=O
       display: contents;
     }
   `;s([o({type:String,reflect:!0})],a.prototype,"size",2);s([o({type:String,reflect:!0})],a.prototype,"weight",2);s([o({type:String,reflect:!0})],a.prototype,"color",2);s([o({type:Boolean,reflect:!0})],a.prototype,"mirrored",2);a=s([c("ph-puzzle-piece")],a);export{a as PhPuzzlePiece};
-//# sourceMappingURL=PhPuzzlePiece-wm_GpVSi.js.map

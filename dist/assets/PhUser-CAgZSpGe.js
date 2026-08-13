@@ -12,4 +12,3 @@ import{n,Y as g,t as r,p as d,O as p,s as u}from"./property-C9JG5tag.js";var M=O
       display: contents;
     }
   `;s([p({type:String,reflect:!0})],t.prototype,"size",2);s([p({type:String,reflect:!0})],t.prototype,"weight",2);s([p({type:String,reflect:!0})],t.prototype,"color",2);s([p({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=s([u("ph-user")],t);export{t as PhUser};
-//# sourceMappingURL=PhUser-CAgZSpGe.js.map

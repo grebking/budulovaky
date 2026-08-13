@@ -12,4 +12,3 @@ import{n as Z,Y as g,t as r,p as A,O as p,s as m}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;o([p({type:String,reflect:!0})],t.prototype,"size",2);o([p({type:String,reflect:!0})],t.prototype,"weight",2);o([p({type:String,reflect:!0})],t.prototype,"color",2);o([p({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=o([m("ph-info")],t);export{t as PhInfo};
-//# sourceMappingURL=PhInfo-Cr4DhVUE.js.map

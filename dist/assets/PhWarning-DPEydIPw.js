@@ -12,4 +12,3 @@ import{n as Z,Y as g,t as e,p as A,O as s,s as M}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;o([s({type:String,reflect:!0})],a.prototype,"size",2);o([s({type:String,reflect:!0})],a.prototype,"weight",2);o([s({type:String,reflect:!0})],a.prototype,"color",2);o([s({type:Boolean,reflect:!0})],a.prototype,"mirrored",2);a=o([M("ph-warning")],a);export{a as PhWarning};
-//# sourceMappingURL=PhWarning-DPEydIPw.js.map

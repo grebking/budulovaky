@@ -12,4 +12,3 @@ import{n as g,Y as A,t as e,p as L,O as p,s as c}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;l([p({type:String,reflect:!0})],t.prototype,"size",2);l([p({type:String,reflect:!0})],t.prototype,"weight",2);l([p({type:String,reflect:!0})],t.prototype,"color",2);l([p({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=l([c("ph-paper-plane-right")],t);export{t as PhPaperPlaneRight};
-//# sourceMappingURL=PhPaperPlaneRight-BeuCA660.js.map

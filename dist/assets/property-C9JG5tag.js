@@ -25,4 +25,3 @@
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */const zt={attribute:!0,type:String,converter:T,reflect:!1,hasChanged:z},Dt=(r=zt,t,e)=>{const{kind:s,metadata:i}=e;let o=globalThis.litPropertyMetadata.get(i);if(o===void 0&&globalThis.litPropertyMetadata.set(i,o=new Map),o.set(e.name,r),s==="accessor"){const{name:n}=e;return{set(l){const a=t.get.call(this);t.set.call(this,l),this.requestUpdate(n,a,r)},init(l){return l!==void 0&&this.P(n,void 0,r),l}}}if(s==="setter"){const{name:n}=e;return function(l){const a=this[n];t.call(this,l),this.requestUpdate(n,a,r)}}throw Error("Unsupported decorator location: "+s)};function qt(r){return(t,e)=>typeof e=="object"?Dt(r,t,e):((s,i,o)=>{const n=i.hasOwnProperty(o);return i.constructor.createProperty(o,n?kt(jt({},s),{wrapped:!0}):s),n?Object.getOwnPropertyDescriptor(i,o):void 0})(r,t,e)}export{qt as O,Bt as Y,x as n,It as p,Wt as s,Vt as t};
-//# sourceMappingURL=property-C9JG5tag.js.map

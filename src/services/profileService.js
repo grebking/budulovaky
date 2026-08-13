@@ -1,5 +1,5 @@
 import { getSupabase } from '../lib/supabase'
-import { PLATFORM_FEE_PERCENT, STARTING_BALANCE } from '../constants/eventTypes'
+import { WIN_MULTIPLIER, STARTING_BALANCE } from '../constants/eventTypes'
 import { sanitizeUsername } from '../utils/profileUtils'
 
 export async function fetchProfileByUserId(userId) {
@@ -135,36 +135,41 @@ export async function recordBetResult(userId, betId, profit) {
 }
 
 export async function settleBetBalances(bet, entries, winner) {
-  const side1 = entries.filter((e) => e.side === 1)
-  const side2 = entries.filter((e) => e.side === 2)
-  const sum = (list) => list.reduce((t, e) => t + Number(e.stake), 0)
-  const s1 = sum(side1)
-  const s2 = sum(side2)
+  const active = entries.filter((e) => e.status !== 'cancelled')
+  const filled = (entry) => Number(entry.filled_stake ?? 0)
 
   if (winner === 'scratch') {
-    for (const entry of entries) {
-      await adjustBalance(entry.user_id, Number(entry.stake))
+    for (const entry of active) {
+      const amount = filled(entry)
+      if (amount > 0) {
+        await adjustBalance(entry.user_id, amount)
+      }
       await recordBetResult(entry.user_id, bet.id, 0)
     }
     return
   }
 
-  const winners = winner === 'side1' ? side1 : side2
-  const losers = winner === 'side1' ? side2 : side1
-  const loserPool = sum(losers)
-  const winnerPool = sum(winners)
+  const winners = active.filter((e) =>
+    winner === 'side1' ? e.side === 1 : e.side === 2,
+  )
+  const losers = active.filter((e) =>
+    winner === 'side1' ? e.side === 2 : e.side === 1,
+  )
 
   for (const entry of losers) {
-    await recordBetResult(entry.user_id, bet.id, -Number(entry.stake))
+    const amount = filled(entry)
+    if (amount > 0) {
+      await recordBetResult(entry.user_id, bet.id, -amount)
+    }
   }
 
-  if (winnerPool === 0) return
-
   for (const entry of winners) {
-    const share = loserPool * (Number(entry.stake) / winnerPool)
-    const fee = share * (PLATFORM_FEE_PERCENT / 100)
-    const netWin = share - fee
-    await adjustBalance(entry.user_id, Number(entry.stake) + netWin)
-    await recordBetResult(entry.user_id, bet.id, netWin)
+    const amount = filled(entry)
+    if (amount <= 0) continue
+
+    const payout = amount * WIN_MULTIPLIER
+    const profit = payout - amount
+    await adjustBalance(entry.user_id, payout)
+    await recordBetResult(entry.user_id, bet.id, profit)
   }
 }

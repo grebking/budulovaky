@@ -12,4 +12,3 @@ import{n,Y as d,t as r,p as M,O as o,s as c}from"./property-C9JG5tag.js";var u=O
       display: contents;
     }
   `;s([o({type:String,reflect:!0})],t.prototype,"size",2);s([o({type:String,reflect:!0})],t.prototype,"weight",2);s([o({type:String,reflect:!0})],t.prototype,"color",2);s([o({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=s([c("ph-magnifying-glass")],t);export{t as PhMagnifyingGlass};
-//# sourceMappingURL=PhMagnifyingGlass-Mygfryvz.js.map

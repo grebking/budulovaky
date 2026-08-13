@@ -12,4 +12,3 @@ import{n as g,Y as c,t as r,p as Z,O as s,s as d}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;o([s({type:String,reflect:!0})],t.prototype,"size",2);o([s({type:String,reflect:!0})],t.prototype,"weight",2);o([s({type:String,reflect:!0})],t.prototype,"color",2);o([s({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=o([d("ph-clock")],t);export{t as PhClock};
-//# sourceMappingURL=PhClock-UItiXeJq.js.map

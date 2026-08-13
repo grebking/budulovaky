@@ -12,4 +12,3 @@ import{n as V,Y as g,t as e,p as d,O as i,s as u}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;l([i({type:String,reflect:!0})],t.prototype,"size",2);l([i({type:String,reflect:!0})],t.prototype,"weight",2);l([i({type:String,reflect:!0})],t.prototype,"color",2);l([i({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=l([u("ph-arrows-down-up")],t);export{t as PhArrowsDownUp};
-//# sourceMappingURL=PhArrowsDownUp-BjBI4ckC.js.map

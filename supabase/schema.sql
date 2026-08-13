@@ -22,6 +22,9 @@ create table if not exists bet_entries (
   user_label text not null,
   side smallint not null check (side in (1, 2)),
   stake numeric not null check (stake > 0),
+  filled_stake numeric not null default 0 check (filled_stake >= 0),
+  status text not null default 'active' check (status in ('active', 'cancelled')),
+  cancelled_at timestamptz,
   created_at timestamptz not null default now()
 );
 
@@ -36,3 +39,4 @@ create policy "bets update" on bets for update using (true);
 
 create policy "entries read" on bet_entries for select using (true);
 create policy "entries insert" on bet_entries for insert with check (true);
+create policy "entries update" on bet_entries for update using (true);

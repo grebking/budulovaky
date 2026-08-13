@@ -12,4 +12,3 @@ import{n as g,Y as v,t as r,p as c,O as i,s as d}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;s([i({type:String,reflect:!0})],t.prototype,"size",2);s([i({type:String,reflect:!0})],t.prototype,"weight",2);s([i({type:String,reflect:!0})],t.prototype,"color",2);s([i({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=s([d("ph-plus")],t);export{t as PhPlus};
-//# sourceMappingURL=PhPlus-BMjcHjsT.js.map

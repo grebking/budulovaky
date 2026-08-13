@@ -12,4 +12,3 @@ import{n as L,Y as g,t as r,p as d,O as s,s as c}from"./property-C9JG5tag.js";va
       display: contents;
     }
   `;o([s({type:String,reflect:!0})],t.prototype,"size",2);o([s({type:String,reflect:!0})],t.prototype,"weight",2);o([s({type:String,reflect:!0})],t.prototype,"color",2);o([s({type:Boolean,reflect:!0})],t.prototype,"mirrored",2);t=o([c("ph-x")],t);export{t as PhX};
-//# sourceMappingURL=PhX-s-SmVExa.js.map
