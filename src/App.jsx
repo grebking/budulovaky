@@ -62,20 +62,11 @@ function App() {
 
   const openPrivyDeposit = useCallback(
     async (address) => {
-      const fundingConfig = {
+      await fundWallet(address, {
         defaultFundingMethod: 'manual',
-      }
-
-      const connectedWallet = wallets.find((wallet) => wallet.address === address)
-
-      if (connectedWallet?.fund) {
-        await connectedWallet.fund(fundingConfig)
-        return
-      }
-
-      await fundWallet(address, fundingConfig)
+      })
     },
-    [fundWallet, wallets],
+    [fundWallet],
   )
 
   const handleDeposit = async () => {

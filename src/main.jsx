@@ -12,8 +12,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       config={{
         loginMethods: ['email', 'google', 'twitter', 'discord', 'github'],
         appearance: {
-          theme: 'dark',
-          accentColor: '#8B5CF6',
+          theme: 'light',
+          accentColor: '#111827',
           walletChainType: 'solana-only',
           showWalletLoginFirst: false,
         },
