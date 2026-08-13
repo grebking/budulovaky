@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { usePrivy } from '@privy-io/react-auth'
 import { useSolanaWallets } from '@privy-io/react-auth/solana'
+import DepositModal from './components/DepositModal'
+import LaLigaGuess from './components/LaLigaGuess'
 
 function getSolanaWalletAccounts(user) {
   return (
@@ -9,77 +11,6 @@ function getSolanaWalletAccounts(user) {
         (account.type === 'wallet' || account.type === 'smart_wallet') &&
         account.chainType === 'solana',
     ) ?? []
-  )
-}
-
-function DepositModal({ address, onClose }) {
-  const [copied, setCopied] = useState(false)
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(address)}`
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(address)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch (error) {
-      console.error('Failed to copy address:', error)
-    }
-  }
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
-      onClick={onClose}
-    >
-      <div
-        className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
-        onClick={(event) => event.stopPropagation()}
-      >
-        <div className="flex items-start justify-between gap-4 mb-4">
-          <div>
-            <h2 className="text-xl font-medium text-gray-900">Deposit SOL</h2>
-            <p className="mt-1 text-sm text-gray-500">
-              Send SOL on Solana mainnet to your embedded wallet.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-            aria-label="Close"
-          >
-            ✕
-          </button>
-        </div>
-
-        <div className="flex justify-center mb-4">
-          <img
-            src={qrUrl}
-            alt="Wallet address QR code"
-            width={200}
-            height={200}
-            className="rounded-lg border border-gray-200"
-          />
-        </div>
-
-        <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">Your wallet address</p>
-        <p className="text-sm text-gray-900 break-all bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 mb-4">
-          {address}
-        </p>
-
-        <button
-          type="button"
-          onClick={handleCopy}
-          className="w-full px-4 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-700 transition-colors"
-        >
-          {copied ? 'Copied!' : 'Copy address'}
-        </button>
-
-        <p className="mt-4 text-xs text-gray-400 text-center">
-          Funds usually arrive in under a minute. Only send SOL on Solana mainnet.
-        </p>
-      </div>
-    </div>
   )
 }
 
@@ -156,70 +87,71 @@ function App() {
   }
 
   return (
-    <div className="h-full bg-white flex flex-col">
+    <div className="h-full bg-white flex flex-col min-h-0">
       {depositAddress && (
-        <DepositModal
-          address={depositAddress}
-          onClose={() => setDepositAddress(null)}
-        />
+        <DepositModal address={depositAddress} onClose={() => setDepositAddress(null)} />
       )}
 
-      <header className="flex items-center justify-end gap-3 p-6 shrink-0">
-        {authenticated ? (
-          <>
-            <button
-              type="button"
-              onClick={handleDeposit}
-              disabled={!ready || !solanaReady || depositLoading}
-              className="px-8 py-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50"
-            >
-              {depositLoading
-                ? 'Opening...'
-                : !solanaReady
-                  ? 'Loading wallet...'
-                  : 'Deposit'}
-            </button>
-            <button
-              type="button"
-              onClick={handleLogout}
-              disabled={!ready}
-              className="px-6 py-2 bg-gray-900 text-white font-light rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50"
-            >
-              Logout
-            </button>
-          </>
-        ) : (
-          <button
-            type="button"
-            onClick={handleLogin}
-            disabled={!ready}
-            className="px-6 py-2 bg-gray-900 text-white font-light rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50"
-          >
-            {!ready ? 'Loading...' : 'Login'}
-          </button>
-        )}
-      </header>
-
-      <main className="flex-1 flex flex-col items-center justify-center px-6 overflow-hidden">
-        <div className="text-center max-w-2xl">
-          <p className="text-sm uppercase tracking-[0.2em] text-gray-400 mb-4">Coming soon</p>
-
-          <h1 className="text-4xl sm:text-6xl font-light text-gray-900 tracking-tight mb-5">
-            Wager in random games
-          </h1>
-
-          <p className="text-lg sm:text-xl text-gray-500 font-light leading-relaxed">
-            Deposit SOL, get matched into surprise mini-games, and wager against other players.
-            Every round is a new game — you never know what&apos;s next.
+      <header className="flex items-center justify-between gap-4 p-6 shrink-0 border-b border-gray-100">
+        <div>
+          <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">LaLiga Guess</h1>
+          <p className="text-sm text-gray-500 mt-0.5">
+            Bet on player match ratings — find your opponent at the bar.
           </p>
+        </div>
 
-          {depositError && (
-            <p className="mt-6 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
-              {depositError}
-            </p>
+        <div className="flex items-center gap-3 shrink-0">
+          {authenticated ? (
+            <>
+              <button
+                type="button"
+                onClick={handleDeposit}
+                disabled={!ready || !solanaReady || depositLoading}
+                className="px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50"
+              >
+                {depositLoading
+                  ? 'Opening...'
+                  : !solanaReady
+                    ? 'Loading wallet...'
+                    : 'Deposit'}
+              </button>
+              <button
+                type="button"
+                onClick={handleLogout}
+                disabled={!ready}
+                className="px-5 py-2.5 text-sm text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              onClick={handleLogin}
+              disabled={!ready}
+              className="px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50"
+            >
+              {!ready ? 'Loading...' : 'Login'}
+            </button>
           )}
         </div>
-      </main>
+      </header>
+
+      {depositError && (
+        <p className="mx-6 mt-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-3 shrink-0">
+          {depositError}
+        </p>
+      )}
+
+      {authenticated ? (
+        <LaLigaGuess user={user} walletAddress={solanaAddress} />
+      ) : (
+        <div className="flex-1 flex items-center justify-center px-6">
+          <p className="text-gray-500 text-center max-w-md">
+            Login to post a La Liga player bet or take someone&apos;s challenge at the bar.
+          </p>
+        </div>
+      )}
     </div>
   )
 }
