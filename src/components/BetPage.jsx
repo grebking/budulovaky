@@ -4,10 +4,12 @@ import {
   fetchBet,
   formatMoney,
   getBetShareUrl,
+  isBetJoinable,
   joinBet,
 } from '../services/betsService'
+import { accountPath } from '../utils/profileUtils'
 
-export default function BetPage({ userId, userLabel, authenticated, onLogin }) {
+export default function BetPage({ userId, authenticated, onLogin, onBalanceChange }) {
   const { betId } = useParams()
   const [bet, setBet] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -63,8 +65,9 @@ export default function BetPage({ userId, userLabel, authenticated, onLogin }) {
     setJoinLoading(true)
     setError(null)
     try {
-      await joinBet({ betId, userId, userLabel, side, stake })
+      await joinBet({ betId, userId, side, stake })
       await load()
+      onBalanceChange?.()
       setJoinStake('1')
     } catch (err) {
       setError(err.message ?? 'Could not join bet.')
@@ -88,12 +91,13 @@ export default function BetPage({ userId, userLabel, authenticated, onLogin }) {
     )
   }
 
-  const isOpen = bet.status === 'open'
+  const canJoin = isBetJoinable(bet)
+  const creatorName = bet.creator_username ?? bet.created_by_label
 
   return (
     <div className="flex-1 overflow-y-auto px-6 py-6 max-w-3xl">
       <Link to="/" className="text-sm text-gray-500 hover:text-gray-900 mb-4 inline-block">
-        ← All bets
+        ← Home
       </Link>
 
       <div className="rounded-2xl border border-gray-200 bg-white p-6 mb-6">
@@ -103,6 +107,12 @@ export default function BetPage({ userId, userLabel, authenticated, onLogin }) {
             <p className="text-sm text-gray-500 mt-1">
               {bet.event_type} · {new Date(bet.event_date).toLocaleString()}
             </p>
+            <Link
+              to={accountPath(creatorName)}
+              className="text-sm text-gray-600 hover:text-gray-900 mt-1 inline-block"
+            >
+              by @{creatorName}
+            </Link>
           </div>
           <span className="text-xs font-medium px-2 py-1 rounded-full border border-gray-200">
             {bet.status}
@@ -129,7 +139,13 @@ export default function BetPage({ userId, userLabel, authenticated, onLogin }) {
           </p>
           <ul className="mt-3 text-sm text-gray-600 space-y-1">
             {bet.side1.map((entry) => (
-              <li key={entry.id}>{entry.user_label} — {formatMoney(entry.stake)}</li>
+              <li key={entry.id}>
+                <Link to={accountPath(entry.user_label)} className="hover:underline">
+                  @{entry.user_label}
+                </Link>
+                {' — '}
+                {formatMoney(entry.stake)}
+              </li>
             ))}
           </ul>
         </div>
@@ -140,7 +156,13 @@ export default function BetPage({ userId, userLabel, authenticated, onLogin }) {
           </p>
           <ul className="mt-3 text-sm text-gray-600 space-y-1">
             {bet.side2.map((entry) => (
-              <li key={entry.id}>{entry.user_label} — {formatMoney(entry.stake)}</li>
+              <li key={entry.id}>
+                <Link to={accountPath(entry.user_label)} className="hover:underline">
+                  @{entry.user_label}
+                </Link>
+                {' — '}
+                {formatMoney(entry.stake)}
+              </li>
             ))}
           </ul>
         </div>
@@ -152,7 +174,13 @@ export default function BetPage({ userId, userLabel, authenticated, onLogin }) {
         </p>
       )}
 
-      {isOpen && (
+      {bet.status === 'open' && !canJoin && (
+        <p className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 mb-4">
+          Event already started — new joins are closed.
+        </p>
+      )}
+
+      {canJoin && (
         <section className="rounded-2xl border border-gray-900/20 bg-white p-5">
           <h2 className="text-lg font-medium text-gray-900 mb-4">Join this bet</h2>
           {!authenticated ? (
@@ -203,7 +231,7 @@ export default function BetPage({ userId, userLabel, authenticated, onLogin }) {
         </section>
       )}
 
-      {!isOpen && (
+      {bet.status !== 'open' && (
         <p className="text-sm text-gray-600">
           Settled:{' '}
           {bet.winner === 'side1'

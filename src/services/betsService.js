@@ -1,4 +1,11 @@
 import { getSupabase } from '../lib/supabase'
+import { isBetJoinable, isValidNewEventDate } from '../utils/profileUtils'
+import {
+  adjustBalance,
+  deductBalance,
+  fetchProfileByUserId,
+  settleBetBalances,
+} from './profileService'
 
 function groupEntries(entries = []) {
   const side1 = entries.filter((entry) => entry.side === 1)
@@ -15,6 +22,15 @@ function groupEntries(entries = []) {
   }
 }
 
+function attachGrouped(bet, allEntries) {
+  const entries = allEntries.filter((entry) => entry.bet_id === bet.id)
+  return {
+    ...bet,
+    entries,
+    ...groupEntries(entries),
+  }
+}
+
 export async function fetchAllBets() {
   const supabase = getSupabase()
   if (!supabase) throw new Error('Database not configured')
@@ -27,14 +43,9 @@ export async function fetchAllBets() {
   if (error) throw error
 
   const { data: entries, error: entriesError } = await supabase.from('bet_entries').select('*')
-
   if (entriesError) throw entriesError
 
-  return bets.map((bet) => ({
-    ...bet,
-    entries: entries.filter((entry) => entry.bet_id === bet.id),
-    ...groupEntries(entries.filter((entry) => entry.bet_id === bet.id)),
-  }))
+  return bets.map((bet) => attachGrouped(bet, entries))
 }
 
 export async function fetchBet(betId) {
@@ -42,7 +53,6 @@ export async function fetchBet(betId) {
   if (!supabase) throw new Error('Database not configured')
 
   const { data: bet, error } = await supabase.from('bets').select('*').eq('id', betId).single()
-
   if (error) throw error
 
   const { data: entries, error: entriesError } = await supabase
@@ -59,28 +69,39 @@ export async function fetchBet(betId) {
   }
 }
 
+export async function fetchUserBets(userId) {
+  const all = await fetchAllBets()
+  return all.filter(
+    (bet) =>
+      bet.created_by_id === userId ||
+      bet.entries.some((entry) => entry.user_id === userId),
+  )
+}
+
 export async function createBet(payload) {
   const supabase = getSupabase()
   if (!supabase) throw new Error('Database not configured')
 
-  const { data, error } = await supabase.from('bets').insert(payload).select().single()
+  const eventDate = new Date(payload.event_date)
+  if (!isValidNewEventDate(eventDate)) {
+    throw new Error('Event must be between now and 7 days ahead.')
+  }
 
-  if (error) throw error
-  return data
-}
-
-export async function joinBet({ betId, userId, userLabel, side, stake }) {
-  const supabase = getSupabase()
-  if (!supabase) throw new Error('Database not configured')
+  const profile = await fetchProfileByUserId(payload.created_by_id)
+  if (!profile) throw new Error('Profile not found.')
 
   const { data, error } = await supabase
-    .from('bet_entries')
+    .from('bets')
     .insert({
-      bet_id: betId,
-      user_id: userId,
-      user_label: userLabel,
-      side,
-      stake,
+      title: payload.title,
+      event_type: payload.event_type,
+      event_date: payload.event_date,
+      side1_label: payload.side1_label,
+      side2_label: payload.side2_label,
+      rules: payload.rules,
+      created_by_id: payload.created_by_id,
+      created_by_label: profile.username,
+      creator_username: profile.username,
     })
     .select()
     .single()
@@ -89,11 +110,51 @@ export async function joinBet({ betId, userId, userLabel, side, stake }) {
   return data
 }
 
+export async function joinBet({ betId, userId, side, stake }) {
+  const supabase = getSupabase()
+  if (!supabase) throw new Error('Database not configured')
+
+  const bet = await fetchBet(betId)
+  if (!isBetJoinable(bet)) {
+    throw new Error('This bet is closed — the event already started or bet is settled.')
+  }
+
+  const profile = await fetchProfileByUserId(userId)
+  if (!profile) throw new Error('Profile not found.')
+  if (Number(profile.balance) < stake) {
+    throw new Error('Insufficient balance.')
+  }
+
+  await deductBalance(userId, stake)
+
+  const { data, error } = await supabase
+    .from('bet_entries')
+    .insert({
+      bet_id: betId,
+      user_id: userId,
+      user_label: profile.username,
+      side,
+      stake,
+    })
+    .select()
+    .single()
+
+  if (error) {
+    await adjustBalance(userId, stake)
+    throw error
+  }
+
+  return data
+}
+
 export async function resolveBet(betId, winner) {
   const supabase = getSupabase()
   if (!supabase) throw new Error('Database not configured')
 
+  const bet = await fetchBet(betId)
   const status = winner === 'scratch' ? 'scratch' : 'resolved'
+
+  await settleBetBalances(bet, bet.entries, winner)
 
   const { data, error } = await supabase
     .from('bets')
@@ -113,3 +174,5 @@ export function formatMoney(amount) {
 export function getBetShareUrl(betId) {
   return `${window.location.origin}/bet/${betId}`
 }
+
+export { isBetJoinable }

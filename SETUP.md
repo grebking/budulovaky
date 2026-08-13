@@ -2,12 +2,13 @@
 
 No local testing required. Supabase keys are in the app (anon key is public-safe).
 
-## Step 1 — Supabase SQL (one time)
+## Step 1 — Supabase SQL
 
-1. [supabase.com/dashboard](https://supabase.com/dashboard) → project **lxtfjhypewwnjtccjbsl**
-2. **SQL Editor** → **New query**
-3. Paste all of `supabase/schema.sql` → **Run**
-4. **Table Editor** → confirm `bets` and `bet_entries` exist
+Run **both** files in SQL Editor (if you already ran `schema.sql`, only run `schema-v2.sql`):
+
+1. `supabase/schema.sql` (bets tables)
+2. `supabase/schema-v2.sql` (profiles, balances, win/loss graph)
+
 
 ## Step 2 — Privy domains (one time)
 
@@ -16,7 +17,6 @@ No local testing required. Supabase keys are in the app (anon key is public-safe
 3. Add:
    - `https://tenniszone.xyz`
    - `https://www.tenniszone.xyz`
-4. Save
 
 ## Step 3 — Push to deploy
 

@@ -1,21 +1,14 @@
 import React, { useState } from 'react'
+import { EVENT_TYPES } from '../constants/eventTypes'
 import { createBet, joinBet } from '../services/betsService'
+import { isValidNewEventDate } from '../utils/profileUtils'
+import EventDateTimePicker from './EventDateTimePicker'
 
-const EVENT_TYPES = [
-  'Soccer',
-  'Tennis',
-  'Basketball',
-  'Concert',
-  'Esports',
-  'Politics',
-  'Other',
-]
-
-export default function CreateBetForm({ userId, userLabel, onCreated }) {
+export default function CreateBetForm({ userId, onCreated }) {
   const [form, setForm] = useState({
     eventType: 'Tennis',
     title: '',
-    eventDate: '',
+    eventDateIso: '',
     side1Label: '',
     side2Label: '',
     rules: '',
@@ -34,8 +27,12 @@ export default function CreateBetForm({ userId, userLabel, onCreated }) {
       setError('Describe the event.')
       return
     }
-    if (!form.eventDate) {
-      setError('Pick when it happens.')
+    if (!form.eventDateIso) {
+      setError('Pick date and start time.')
+      return
+    }
+    if (!isValidNewEventDate(new Date(form.eventDateIso))) {
+      setError('Event must be between now and 7 days from today.')
       return
     }
     if (!form.side1Label.trim() || !form.side2Label.trim()) {
@@ -56,18 +53,16 @@ export default function CreateBetForm({ userId, userLabel, onCreated }) {
       const bet = await createBet({
         title: form.title.trim(),
         event_type: form.eventType,
-        event_date: new Date(form.eventDate).toISOString(),
+        event_date: form.eventDateIso,
         side1_label: form.side1Label.trim(),
         side2_label: form.side2Label.trim(),
         rules: form.rules.trim(),
         created_by_id: userId,
-        created_by_label: userLabel,
       })
 
       await joinBet({
         betId: bet.id,
         userId,
-        userLabel,
         side,
         stake,
       })
@@ -76,7 +71,7 @@ export default function CreateBetForm({ userId, userLabel, onCreated }) {
       setForm({
         eventType: form.eventType,
         title: '',
-        eventDate: '',
+        eventDateIso: '',
         side1Label: '',
         side2Label: '',
         rules: '',
@@ -92,9 +87,9 @@ export default function CreateBetForm({ userId, userLabel, onCreated }) {
 
   return (
     <section className="rounded-2xl border-2 border-gray-900 bg-white p-6 shadow-sm">
-      <h2 className="text-xl font-semibold text-gray-900 mb-1">Custom bet</h2>
+      <h2 className="text-xl font-semibold text-gray-900 mb-1">Make a bet</h2>
       <p className="text-sm text-gray-500 mb-5">
-        Virtual money only — share the link so anyone can join either side.
+        Virtual money — pick date within the next week, then start time.
       </p>
 
       {error && (
@@ -105,7 +100,7 @@ export default function CreateBetForm({ userId, userLabel, onCreated }) {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="block text-xs uppercase text-gray-400 mb-1.5">Type</label>
+          <label className="block text-xs uppercase text-gray-400 mb-1.5">Flair / type</label>
           <select
             value={form.eventType}
             onChange={(e) => setForm({ ...form, eventType: e.target.value })}
@@ -116,22 +111,19 @@ export default function CreateBetForm({ userId, userLabel, onCreated }) {
             ))}
           </select>
         </div>
-        <div>
-          <label className="block text-xs uppercase text-gray-400 mb-1.5">When</label>
-          <input
-            type="datetime-local"
-            value={form.eventDate}
-            onChange={(e) => setForm({ ...form, eventDate: e.target.value })}
-            className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
-          />
-        </div>
         <div className="sm:col-span-2">
           <label className="block text-xs uppercase text-gray-400 mb-1.5">What is it?</label>
           <input
             value={form.title}
             onChange={(e) => setForm({ ...form, title: e.target.value })}
-            placeholder="US Open — player steps, concert outcome, etc."
+            placeholder="Match, concert, political outcome…"
             className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+          />
+        </div>
+        <div className="sm:col-span-2">
+          <EventDateTimePicker
+            value={form.eventDateIso}
+            onChange={(iso) => setForm({ ...form, eventDateIso: iso })}
           />
         </div>
         <div>
@@ -139,7 +131,6 @@ export default function CreateBetForm({ userId, userLabel, onCreated }) {
           <input
             value={form.side1Label}
             onChange={(e) => setForm({ ...form, side1Label: e.target.value })}
-            placeholder="Over 25,000 steps"
             className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
           />
         </div>
@@ -148,7 +139,6 @@ export default function CreateBetForm({ userId, userLabel, onCreated }) {
           <input
             value={form.side2Label}
             onChange={(e) => setForm({ ...form, side2Label: e.target.value })}
-            placeholder="Under 25,000 steps"
             className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
           />
         </div>
@@ -158,7 +148,6 @@ export default function CreateBetForm({ userId, userLabel, onCreated }) {
             value={form.rules}
             onChange={(e) => setForm({ ...form, rules: e.target.value })}
             rows={3}
-            placeholder="Side 1 wins if over. Side 2 wins if under. Scratch = nobody wins, virtual funds returned."
             className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm resize-y"
           />
         </div>
