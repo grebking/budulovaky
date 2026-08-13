@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { usePrivy } from '@privy-io/react-auth'
-import { useCreateWallet } from '@privy-io/react-auth/solana'
+import { usePrivy, useCreateWallet } from '@privy-io/react-auth'
 
 function App() {
   const { login, logout, authenticated, user } = usePrivy()

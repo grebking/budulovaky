@@ -1,0 +1,1703 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\WINDOWS\system32> cd "c:\Users\Sára\Downloads\privy game"
+PS C:\Users\Sára\Downloads\privy game> git add .
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/App.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'vite.config.js', LF will be replaced by CRLF the next time Git touches it
+PS C:\Users\Sára\Downloads\privy game> git commit -m "Fix deployment configuration"
+[main a6fd4aa] Fix deployment configuration
+ 6 files changed, 85 insertions(+), 6 deletions(-)
+ create mode 100644 errormessage.txt
+PS C:\Users\Sára\Downloads\privy game> git push
+Enumerating objects: 16, done.
+Counting objects: 100% (16/16), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), 2.41 KiB | 247.00 KiB/s, done.
+Total 9 (delta 3), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/grebking/budulovaky.git
+   ce9ddde..a6fd4aa  main -> main
+PS C:\Users\Sára\Downloads\privy game> cd "c:\Users\Sára\Downloads\privy game"
+PS C:\Users\Sára\Downloads\privy game> git add .
+PS C:\Users\Sára\Downloads\privy game> git commit -m "Fix deployment configuration"
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+PS C:\Users\Sára\Downloads\privy game> git push
+Everything up-to-date
+PS C:\Users\Sára\Downloads\privy game> cd "c:\Users\Sára\Downloads\privy game"
+PS C:\Users\Sára\Downloads\privy game> git add .
+warning: in the working copy of 'package.json', LF will be replaced by CRLF the next time Git touches it
+PS C:\Users\Sára\Downloads\privy game> git commit -m "Fix Render deployment memory and port issues"
+[main 4c2c3aa] Fix Render deployment memory and port issues
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+PS C:\Users\Sára\Downloads\privy game> git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 382 bytes | 127.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/grebking/budulovaky.git
+   a6fd4aa..4c2c3aa  main -> main
+PS C:\Users\Sára\Downloads\privy game> cd "c:\Users\Sára\Downloads\privy game"
+PS C:\Users\Sára\Downloads\privy game> npm run build
+
+> coming-soon@1.0.0 build
+> vite build
+
+vite v5.4.21 building for production...
+node_modules/@privy-io/react-auth/dist/esm/components/Captcha.mjs (1:652): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/Captcha.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/privy-provider-CoCxAge0.mjs (1:104629): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/privy-provider-CoCxAge0.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/LoginModal.mjs (1:23561): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/LoginModal.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/hooks/captcha-context.mjs (1:1093): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/hooks/captcha-context.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/hooks/modal-context.mjs (1:2652): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/hooks/modal-context.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/PrefetchedImage.mjs (1:65): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/PrefetchedImage.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/wallet-connect.mjs (1:1785): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/wallet-connect.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/plugins/context/PrivyPluginContext.mjs (1:220): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/plugins/context/PrivyPluginContext.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/AccountNotFoundScreen.mjs (1:2430): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/AccountNotFoundScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ModalHeader.mjs (1:2765): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ModalHeader.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/AccountTransferScreen/LinkConflictScreen.mjs (1:5046): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/AccountTransferScreen/LinkConflictScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/AccountTransferScreen/EmbeddedWalletInfoView.mjs (1:3282): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/AccountTransferScreen/EmbeddedWalletInfoView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/protected-by-privy.mjs (1:54): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/protected-by-privy.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/AffirmativeConsentScreen.mjs (1:3065): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/AffirmativeConsentScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ModalFooter.mjs (1:545): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ModalFooter.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ModalFooter.mjs (2:31): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ModalFooter.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/AllowlistRejectionScreen.mjs (1:2602): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/AllowlistRejectionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/CaptchaScreen.mjs (1:4456): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/CaptchaScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/ConnectOnlyAuthenticatedScreen.mjs (1:3996): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/ConnectOnlyAuthenticatedScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/AwaitingPasswordlessCodeScreen.mjs (2:395): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/AwaitingPasswordlessCodeScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ui/chips/Chip.mjs (1:947): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ui/chips/Chip.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/WalletButton.mjs (1:3441): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/WalletButton.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/ConnectOnlyLandingScreen.mjs (1:4234): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/ConnectOnlyLandingScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/ConnectionStatusScreen.mjs (1:9545): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/ConnectionStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/ConnectionStatusScreen.mjs (1:11295): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/ConnectionStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/EmbeddedWalletPasswordUpdateScreen.mjs (1:4756): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/EmbeddedWalletPasswordUpdateScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/CrossAppAuthScreen.mjs (1:4726): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/CrossAppAuthScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/EmbeddedWalletKeyExportScreen.mjs (1:5546): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/EmbeddedWalletKeyExportScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/SetWalletPasswordForm/SaveWalletPassword.mjs (1:3531): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/SetWalletPasswordForm/SaveWalletPassword.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/SetWalletPasswordForm/ConfimWalletPasswordSaved.mjs (1:2957): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/SetWalletPasswordForm/ConfimWalletPasswordSaved.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/ErrorScreen.mjs (1:5530): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/ErrorScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/ErrorScreen.mjs (1:5743): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/ErrorScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/SetWalletPasswordForm/CreateWalletPassword.mjs (1:3679): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/SetWalletPasswordForm/CreateWalletPassword.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/CopyToClipboard.mjs (1:241): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/CopyToClipboard.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/OpenLink.mjs (1:143): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/OpenLink.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/FarcasterSignerStatusScreen.mjs (1:4405): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/FarcasterSignerStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingEvmToSolBridgingScreen.mjs (1:10417): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingEvmToSolBridgingScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/FundWalletMethodHeader.mjs (1:2281): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/FundWalletMethodHeader.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs (2:688): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs (2:827): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs (2:1087): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs (2:1996): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ui/wallet/NetworkIcon.mjs (1:1255): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ui/wallet/NetworkIcon.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ui/wallet/NetworkIcon.mjs (1:1298): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ui/wallet/NetworkIcon.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/BridgeNetworkSelectionView.mjs (1:5194): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/BridgeNetworkSelectionView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingExternalSolanaTransferScreen.mjs (1:7463): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingExternalSolanaTransferScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingExternalTransferScreen.mjs (1:11414): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingExternalTransferScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LinkPasskeyScreen.mjs (1:2991): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LinkPasskeyScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LinkPasskeyScreen.mjs (1:3125): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LinkPasskeyScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LinkPasskeyScreen.mjs (1:4770): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LinkPasskeyScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/CoinbaseOnrampStatusScreen.mjs (1:4640): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/CoinbaseOnrampStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/CoinbaseOnrampStatusScreen.mjs (1:5172): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/CoinbaseOnrampStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/CoinbaseOnrampStatusScreen.mjs (1:5510): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/CoinbaseOnrampStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingSolToEvmBridgingScreen.mjs (1:8085): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingSolToEvmBridgingScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingSolToEvmBridgingScreen.mjs (1:8589): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingSolToEvmBridgingScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingSolToEvmBridgingScreen.mjs (1:8824): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingSolToEvmBridgingScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/FundingEditAmountScreen.mjs (1:4084): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/FundingEditAmountScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/ManualTransferScreen.mjs (1:6569): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/ManualTransferScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/FundingMethodSelectionScreen.mjs (1:6599): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/FundingMethodSelectionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/InstallPhantomScreen.mjs (1:2831): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/InstallPhantomScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/InstallPhantomScreen.mjs (1:3607): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/InstallPhantomScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/InAppBrowserLoginNotPossible.mjs (1:2459): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/InAppBrowserLoginNotPossible.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs (1:3067): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs (1:3859): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs (1:4468): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs (1:4975): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/CustomLandingScreenView.mjs (1:7554): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/CustomLandingScreenView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/EmailButton.mjs (1:2864): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/EmailButton.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ConnectEmailForm.mjs (1:3803): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ConnectEmailForm.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/PasskeyLink.mjs (1:2366): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/PasskeyLink.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/FarcasterButton.mjs (1:2848): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/FarcasterButton.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/SmsButton.mjs (1:3084): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/SmsButton.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/SocialButton.mjs (1:3807): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/SocialButton.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/tiktok.mjs (1:64): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/tiktok.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/linkedin.mjs (1:67): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/linkedin.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/spotify.mjs (1:64): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/spotify.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/TelegramButton.mjs (1:2933): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/TelegramButton.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/telegram.mjs (1:64): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/telegram.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/instagram.mjs (1:64): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/instagram.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/LandingScreenView.mjs (1:8633): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/LandingScreenView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LinkEmailScreen.mjs (1:3146): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LinkEmailScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LinkWalletScreen.mjs (1:4210): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LinkWalletScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LinkPhoneScreen.mjs (1:2975): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LinkPhoneScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LoginFailedScreen.mjs (1:2631): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LoginFailedScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs (1:6036): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs (1:6248): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs (1:6814): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs (1:7411): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs (1:8067): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/EnrollPasskey.mjs (1:5921): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/EnrollPasskey.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/EnrollLandingScreen.mjs (1:3267): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/EnrollLandingScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/EnrollTotp.mjs (1:3945): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/EnrollTotp.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/PinInput.mjs (1:1284): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/PinInput.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaVerifyFlowScreen.mjs (1:7060): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaVerifyFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaVerifyFlowScreen.mjs (1:7728): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaVerifyFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/TransactionDetails.mjs (1:2906): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/TransactionDetails.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/PriceDisplay.mjs (1:921): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/PriceDisplay.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/PriceDisplay.mjs (1:1052): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/PriceDisplay.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/PriceDisplay.mjs (2:263): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/PriceDisplay.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/TransactionTotal.mjs (1:1217): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/TransactionTotal.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/VerifyWithPasskey.mjs (1:4094): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/VerifyWithPasskey.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs (1:360): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs (1:565): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs (1:778): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs (2:294): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs (2:438): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/PasskeySelectSignupOrLogin.mjs (1:2992): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/PasskeySelectSignupOrLogin.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/PasskeyStatusScreen.mjs (1:4563): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/PasskeyStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/PasskeyStatusScreen.mjs (1:4649): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/PasskeyStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/PasswordRecoveryScreen.mjs (1:3934): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/PasswordRecoveryScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoveryOAuthStatusScreen.mjs (1:4667): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoveryOAuthStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoveryPasswordCreateScreen.mjs (1:4962): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoveryPasswordCreateScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoverySelectionScreen.mjs (1:5646): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoverySelectionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoverySelectionScreen.mjs (1:5821): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoverySelectionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoverySelectionScreen.mjs (1:5997): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoverySelectionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/SetAutomaticRecoveryScreen.mjs (1:3505): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/SetAutomaticRecoveryScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/TransactionDetail.mjs (1:963): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/TransactionDetail.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendSolanaTransactionScreen/SendSolanaTransactionScreen.mjs (1:8201): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendSolanaTransactionScreen/SendSolanaTransactionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreenView.mjs (1:4268): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreenView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreenView.mjs (1:7064): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreenView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreen.mjs (1:7282): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreen.mjs (1:9688): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreen.mjs (1:10031): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/TransactionErrorView.mjs (1:3680): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/TransactionErrorView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/UserLimitReachedScreen.mjs (1:2393): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/UserLimitReachedScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/UpdateEmailForm.mjs (1:3425): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/UpdateEmailForm.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/UpdatePhoneScreen.mjs (1:3042): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/UpdatePhoneScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SignRequestScreen.mjs (1:3574): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SignRequestScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SignRequestScreen.mjs (1:3670): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SignRequestScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@walletconnect/utils/node_modules/ox/_esm/core/Base64.js (6:27): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@walletconnect/utils/node_modules/ox/_esm/core/Base64.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@reown/appkit/node_modules/ox/_esm/core/Base64.js (6:27): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@reown/appkit/node_modules/ox/_esm/core/Base64.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@reown/appkit-controllers/node_modules/ox/_esm/core/Base64.js (6:27): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@reown/appkit-controllers/node_modules/ox/_esm/core/Base64.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+✓ 4029 modules transformed.
+dist/index.html                                   0.40 kB │ gzip:   0.27 kB
+dist/assets/index-gixODy3H.css                    6.44 kB │ gzip:   1.90 kB
+dist/assets/index-Cn5aGd7v.js                     0.59 kB │ gzip:   0.36 kB │ map:     2.52 kB
+dist/assets/PhCaretLeft-_aiyH7n1.js               1.93 kB │ gzip:   0.96 kB │ map:     4.54 kB
+dist/assets/PhCaretDown-78IuKU3V.js               1.99 kB │ gzip:   0.99 kB │ map:     4.59 kB
+dist/assets/PhCaretRight-8zJQEuDX.js              2.01 kB │ gzip:   0.98 kB │ map:     4.62 kB
+dist/assets/PhCaretUp-CiCxKWwN.js                 2.07 kB │ gzip:   0.97 kB │ map:     4.70 kB
+dist/assets/PhArrowUpRight-BpJjRRRh.js            2.12 kB │ gzip:   1.05 kB │ map:     4.73 kB
+dist/assets/PhArrowDown-C4hT9BVu.js               2.15 kB │ gzip:   1.05 kB │ map:     4.78 kB
+dist/assets/PhPlus-BMjcHjsT.js                    2.15 kB │ gzip:   1.00 kB │ map:     4.76 kB
+dist/assets/PhCheck-CcADx8br.js                   2.16 kB │ gzip:   1.02 kB │ map:     4.77 kB
+dist/assets/PhArrowRight-Cp5ZME0F.js              2.16 kB │ gzip:   1.04 kB │ map:     4.79 kB
+dist/assets/PhArrowLeft-Way4Cu-r.js               2.17 kB │ gzip:   1.04 kB │ map:     4.78 kB
+dist/assets/PhArrowUp-Dph6j8rm.js                 2.22 kB │ gzip:   1.04 kB │ map:     4.83 kB
+dist/assets/PhBrowser-dUu2TrC1.js                 2.26 kB │ gzip:   1.01 kB │ map:     4.87 kB
+dist/assets/PhMagnifyingGlass-Mygfryvz.js         2.27 kB │ gzip:   1.11 kB │ map:     4.87 kB
+dist/assets/PhDotsThree-BMXCQl-0.js               2.30 kB │ gzip:   0.98 kB │ map:     4.87 kB
+dist/assets/PhCopy-C-PDgSlZ.js                    2.41 kB │ gzip:   1.05 kB │ map:     5.05 kB
+dist/assets/PhFunnelSimple-Ba7BbWTp.js            2.41 kB │ gzip:   1.04 kB │ map:     5.04 kB
+dist/assets/PhClock-UItiXeJq.js                   2.42 kB │ gzip:   1.07 kB │ map:     5.02 kB
+dist/assets/PhWarningCircle-BqjT745H.js           2.48 kB │ gzip:   1.09 kB │ map:     5.12 kB
+dist/assets/PhX-s-SmVExa.js                       2.54 kB │ gzip:   1.10 kB │ map:     5.15 kB
+dist/assets/PhDeviceMobile-BdsPaATg.js            2.63 kB │ gzip:   1.10 kB │ map:     5.24 kB
+dist/assets/PhArrowClockwise-CJPxQhr_.js          2.64 kB │ gzip:   1.23 kB │ map:     5.27 kB
+dist/assets/PhUser-CAgZSpGe.js                    2.72 kB │ gzip:   1.30 kB │ map:     5.34 kB
+dist/assets/PhEnvelope-yUsis6yU.js                2.73 kB │ gzip:   1.21 kB │ map:     5.34 kB
+dist/assets/PhCircleHalf-BYzSzd2h.js              2.76 kB │ gzip:   1.25 kB │ map:     5.38 kB
+dist/assets/PhSignOut-C5YOWlPT.js                 2.81 kB │ gzip:   1.20 kB │ map:     5.44 kB
+dist/assets/PhInfo-Cr4DhVUE.js                    2.82 kB │ gzip:   1.25 kB │ map:     5.43 kB
+dist/assets/PhPower-CGffGmdb.js                   2.82 kB │ gzip:   1.31 kB │ map:     5.44 kB
+dist/assets/PhDesktop-BBIPrYLl.js                 2.83 kB │ gzip:   1.15 kB │ map:     5.47 kB
+dist/assets/PhArrowsLeftRight-CuLpbKRk.js         2.86 kB │ gzip:   1.22 kB │ map:     5.50 kB
+dist/assets/PhArrowCircleDown-B305t-Sh.js         2.87 kB │ gzip:   1.22 kB │ map:     5.48 kB
+dist/assets/PhWallet-w25D16It.js                  2.88 kB │ gzip:   1.21 kB │ map:     5.50 kB
+dist/assets/PhQuestionMark-BP9EMB6h.js            2.89 kB │ gzip:   1.34 kB │ map:     5.50 kB
+dist/assets/PhArrowSquareOut-NnrK69c5.js          2.98 kB │ gzip:   1.29 kB │ map:     5.61 kB
+dist/assets/PhArrowsDownUp-BjBI4ckC.js            2.98 kB │ gzip:   1.21 kB │ map:     5.58 kB
+dist/assets/PhBank-Dchr4XQJ.js                    2.98 kB │ gzip:   1.29 kB │ map:     5.60 kB
+dist/assets/PhCreditCard-CWRaUT6F.js              2.98 kB │ gzip:   1.19 kB │ map:     5.61 kB
+dist/assets/PhVault-l2PHF38a.js                   3.01 kB │ gzip:   1.23 kB │ map:     5.63 kB
+dist/assets/PhCompass-CUy3uA7t.js                 3.03 kB │ gzip:   1.31 kB │ map:     5.67 kB
+dist/assets/ccip-BwDyOFYC.js                      3.10 kB │ gzip:   1.44 kB │ map:    11.37 kB
+dist/assets/PhPaperPlaneRight-BeuCA660.js         3.15 kB │ gzip:   1.46 kB │ map:     5.77 kB
+dist/assets/PhTrash-Biq6rmmL.js                   3.16 kB │ gzip:   1.23 kB │ map:     5.76 kB
+dist/assets/PhCurrencyDollar-Cqla3AXT.js          3.30 kB │ gzip:   1.37 kB │ map:     5.94 kB
+dist/assets/PhQuestion-M09j2U0T.js                3.36 kB │ gzip:   1.48 kB │ map:     5.94 kB
+dist/assets/PhImage-BAJ_erz6.js                   3.48 kB │ gzip:   1.48 kB │ map:     6.09 kB
+dist/assets/PhArrowsClockwise-CFUT8X7R.js         3.92 kB │ gzip:   1.63 kB │ map:     6.54 kB
+dist/assets/PhWarning-DPEydIPw.js                 3.95 kB │ gzip:   1.53 kB │ map:     6.58 kB
+dist/assets/PhIdentificationCard-Czjmq9Z3.js      4.28 kB │ gzip:   1.69 kB │ map:     6.89 kB
+dist/assets/PhSpinner-BXooDYzU.js                 4.50 kB │ gzip:   1.68 kB │ map:     7.10 kB
+dist/assets/PhLightbulb-BX_7duTr.js               4.97 kB │ gzip:   1.89 kB │ map:     7.60 kB
+dist/assets/PhQrCode-DRwRzXCH.js                  4.97 kB │ gzip:   1.51 kB │ map:     7.61 kB
+dist/assets/PhPuzzlePiece-wm_GpVSi.js             5.42 kB │ gzip:   2.00 kB │ map:     8.05 kB
+dist/assets/PhGlobe-DgLxBk5U.js                   5.76 kB │ gzip:   1.96 kB │ map:     8.34 kB
+dist/assets/features-O3JwrypF.js                  5.99 kB │ gzip:   2.39 kB │ map:    19.93 kB
+dist/assets/index-Bjltdz_y.js                     7.64 kB │ gzip:   2.64 kB │ map:    22.48 kB
+dist/assets/index-pyQ0_uET.js                     9.14 kB │ gzip:   3.53 kB │ map:     1.32 kB
+dist/assets/PhSealCheck-BfG80yKn.js              12.15 kB │ gzip:   4.06 kB │ map:    14.75 kB
+dist/assets/index-Cnq6xilB.js                    13.27 kB │ gzip:   4.93 kB │ map:    49.78 kB
+dist/assets/property-C9JG5tag.js                 17.96 kB │ gzip:   6.57 kB │ map:    49.18 kB
+dist/assets/index-DPiCFyAc.js                    98.64 kB │ gzip:  27.25 kB │ map:   195.51 kB
+dist/assets/basic-D8VmrAza.js                   106.75 kB │ gzip:  27.82 kB │ map:   344.82 kB
+dist/assets/index-C6e94XOE.js                   136.58 kB │ gzip:  43.28 kB │ map:   403.22 kB
+dist/assets/w3m-modal-CG5wXKMv.js               169.19 kB │ gzip:  35.67 kB │ map:   446.98 kB
+dist/assets/core-DJEwFP07.js                    616.09 kB │ gzip: 180.90 kB │ map: 2,005.62 kB
+dist/assets/index-BxB4XA3-.js                 2,634.60 kB │ gzip: 813.90 kB │ map: 9,160.18 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 32.08s
+PS C:\Users\Sára\Downloads\privy game> git add .
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhArrowCircleDown-B305t-Sh.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhArrowClockwise-CJPxQhr_.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhArrowDown-C4hT9BVu.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhArrowLeft-Way4Cu-r.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhArrowRight-Cp5ZME0F.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhArrowSquareOut-NnrK69c5.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhArrowUp-Dph6j8rm.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhArrowUpRight-BpJjRRRh.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhArrowsClockwise-CFUT8X7R.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhArrowsDownUp-BjBI4ckC.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhArrowsLeftRight-CuLpbKRk.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhBank-Dchr4XQJ.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhBrowser-dUu2TrC1.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhCaretDown-78IuKU3V.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhCaretLeft-_aiyH7n1.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhCaretRight-8zJQEuDX.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhCaretUp-CiCxKWwN.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhCheck-CcADx8br.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhCircleHalf-BYzSzd2h.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhClock-UItiXeJq.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhCompass-CUy3uA7t.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhCopy-C-PDgSlZ.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhCreditCard-CWRaUT6F.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhCurrencyDollar-Cqla3AXT.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhDesktop-BBIPrYLl.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhDeviceMobile-BdsPaATg.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhDotsThree-BMXCQl-0.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhEnvelope-yUsis6yU.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhFunnelSimple-Ba7BbWTp.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhGlobe-DgLxBk5U.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhIdentificationCard-Czjmq9Z3.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhImage-BAJ_erz6.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhInfo-Cr4DhVUE.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhLightbulb-BX_7duTr.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhMagnifyingGlass-Mygfryvz.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhPaperPlaneRight-BeuCA660.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhPlus-BMjcHjsT.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhPower-CGffGmdb.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhPuzzlePiece-wm_GpVSi.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhQrCode-DRwRzXCH.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhQuestion-M09j2U0T.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhQuestionMark-BP9EMB6h.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhSealCheck-BfG80yKn.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhSignOut-C5YOWlPT.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhSpinner-BXooDYzU.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhTrash-Biq6rmmL.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhUser-CAgZSpGe.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhVault-l2PHF38a.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhWallet-w25D16It.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhWarning-DPEydIPw.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhWarningCircle-BqjT745H.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/PhX-s-SmVExa.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/basic-D8VmrAza.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/ccip-BwDyOFYC.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/core-DJEwFP07.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/features-O3JwrypF.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/index-Bjltdz_y.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/index-BxB4XA3-.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/index-C6e94XOE.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/index-Cn5aGd7v.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/index-Cnq6xilB.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/index-DPiCFyAc.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/index-gixODy3H.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/index-pyQ0_uET.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/property-C9JG5tag.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/assets/w3m-modal-CG5wXKMv.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dist/index.html', LF will be replaced by CRLF the next time Git touches it
+PS C:\Users\Sára\Downloads\privy game> git commit -m "Add pre-built dist folder and fix deployment"
+[main 7ab091f] Add pre-built dist folder and fix deployment
+ 135 files changed, 7030 insertions(+), 3 deletions(-)
+ create mode 100644 Deployerror.txt
+ create mode 100644 dist/assets/PhArrowCircleDown-B305t-Sh.js
+ create mode 100644 dist/assets/PhArrowCircleDown-B305t-Sh.js.map
+ create mode 100644 dist/assets/PhArrowClockwise-CJPxQhr_.js
+ create mode 100644 dist/assets/PhArrowClockwise-CJPxQhr_.js.map
+ create mode 100644 dist/assets/PhArrowDown-C4hT9BVu.js
+ create mode 100644 dist/assets/PhArrowDown-C4hT9BVu.js.map
+ create mode 100644 dist/assets/PhArrowLeft-Way4Cu-r.js
+ create mode 100644 dist/assets/PhArrowLeft-Way4Cu-r.js.map
+ create mode 100644 dist/assets/PhArrowRight-Cp5ZME0F.js
+ create mode 100644 dist/assets/PhArrowRight-Cp5ZME0F.js.map
+ create mode 100644 dist/assets/PhArrowSquareOut-NnrK69c5.js
+ create mode 100644 dist/assets/PhArrowSquareOut-NnrK69c5.js.map
+ create mode 100644 dist/assets/PhArrowUp-Dph6j8rm.js
+ create mode 100644 dist/assets/PhArrowUp-Dph6j8rm.js.map
+ create mode 100644 dist/assets/PhArrowUpRight-BpJjRRRh.js
+ create mode 100644 dist/assets/PhArrowUpRight-BpJjRRRh.js.map
+ create mode 100644 dist/assets/PhArrowsClockwise-CFUT8X7R.js
+ create mode 100644 dist/assets/PhArrowsClockwise-CFUT8X7R.js.map
+ create mode 100644 dist/assets/PhArrowsDownUp-BjBI4ckC.js
+ create mode 100644 dist/assets/PhArrowsDownUp-BjBI4ckC.js.map
+ create mode 100644 dist/assets/PhArrowsLeftRight-CuLpbKRk.js
+ create mode 100644 dist/assets/PhArrowsLeftRight-CuLpbKRk.js.map
+ create mode 100644 dist/assets/PhBank-Dchr4XQJ.js
+ create mode 100644 dist/assets/PhBank-Dchr4XQJ.js.map
+ create mode 100644 dist/assets/PhBrowser-dUu2TrC1.js
+ create mode 100644 dist/assets/PhBrowser-dUu2TrC1.js.map
+ create mode 100644 dist/assets/PhCaretDown-78IuKU3V.js
+ create mode 100644 dist/assets/PhCaretDown-78IuKU3V.js.map
+ create mode 100644 dist/assets/PhCaretLeft-_aiyH7n1.js
+ create mode 100644 dist/assets/PhCaretLeft-_aiyH7n1.js.map
+ create mode 100644 dist/assets/PhCaretRight-8zJQEuDX.js
+ create mode 100644 dist/assets/PhCaretRight-8zJQEuDX.js.map
+ create mode 100644 dist/assets/PhCaretUp-CiCxKWwN.js
+ create mode 100644 dist/assets/PhCaretUp-CiCxKWwN.js.map
+ create mode 100644 dist/assets/PhCheck-CcADx8br.js
+ create mode 100644 dist/assets/PhCheck-CcADx8br.js.map
+ create mode 100644 dist/assets/PhCircleHalf-BYzSzd2h.js
+ create mode 100644 dist/assets/PhCircleHalf-BYzSzd2h.js.map
+ create mode 100644 dist/assets/PhClock-UItiXeJq.js
+ create mode 100644 dist/assets/PhClock-UItiXeJq.js.map
+ create mode 100644 dist/assets/PhCompass-CUy3uA7t.js
+ create mode 100644 dist/assets/PhCompass-CUy3uA7t.js.map
+ create mode 100644 dist/assets/PhCopy-C-PDgSlZ.js
+ create mode 100644 dist/assets/PhCopy-C-PDgSlZ.js.map
+ create mode 100644 dist/assets/PhCreditCard-CWRaUT6F.js
+ create mode 100644 dist/assets/PhCreditCard-CWRaUT6F.js.map
+ create mode 100644 dist/assets/PhCurrencyDollar-Cqla3AXT.js
+ create mode 100644 dist/assets/PhCurrencyDollar-Cqla3AXT.js.map
+ create mode 100644 dist/assets/PhDesktop-BBIPrYLl.js
+ create mode 100644 dist/assets/PhDesktop-BBIPrYLl.js.map
+ create mode 100644 dist/assets/PhDeviceMobile-BdsPaATg.js
+ create mode 100644 dist/assets/PhDeviceMobile-BdsPaATg.js.map
+ create mode 100644 dist/assets/PhDotsThree-BMXCQl-0.js
+ create mode 100644 dist/assets/PhDotsThree-BMXCQl-0.js.map
+ create mode 100644 dist/assets/PhEnvelope-yUsis6yU.js
+ create mode 100644 dist/assets/PhEnvelope-yUsis6yU.js.map
+ create mode 100644 dist/assets/PhFunnelSimple-Ba7BbWTp.js
+ create mode 100644 dist/assets/PhFunnelSimple-Ba7BbWTp.js.map
+ create mode 100644 dist/assets/PhGlobe-DgLxBk5U.js
+ create mode 100644 dist/assets/PhGlobe-DgLxBk5U.js.map
+ create mode 100644 dist/assets/PhIdentificationCard-Czjmq9Z3.js
+ create mode 100644 dist/assets/PhIdentificationCard-Czjmq9Z3.js.map
+ create mode 100644 dist/assets/PhImage-BAJ_erz6.js
+ create mode 100644 dist/assets/PhImage-BAJ_erz6.js.map
+ create mode 100644 dist/assets/PhInfo-Cr4DhVUE.js
+ create mode 100644 dist/assets/PhInfo-Cr4DhVUE.js.map
+ create mode 100644 dist/assets/PhLightbulb-BX_7duTr.js
+ create mode 100644 dist/assets/PhLightbulb-BX_7duTr.js.map
+ create mode 100644 dist/assets/PhMagnifyingGlass-Mygfryvz.js
+ create mode 100644 dist/assets/PhMagnifyingGlass-Mygfryvz.js.map
+ create mode 100644 dist/assets/PhPaperPlaneRight-BeuCA660.js
+ create mode 100644 dist/assets/PhPaperPlaneRight-BeuCA660.js.map
+ create mode 100644 dist/assets/PhPlus-BMjcHjsT.js
+ create mode 100644 dist/assets/PhPlus-BMjcHjsT.js.map
+ create mode 100644 dist/assets/PhPower-CGffGmdb.js
+ create mode 100644 dist/assets/PhPower-CGffGmdb.js.map
+ create mode 100644 dist/assets/PhPuzzlePiece-wm_GpVSi.js
+ create mode 100644 dist/assets/PhPuzzlePiece-wm_GpVSi.js.map
+ create mode 100644 dist/assets/PhQrCode-DRwRzXCH.js
+ create mode 100644 dist/assets/PhQrCode-DRwRzXCH.js.map
+ create mode 100644 dist/assets/PhQuestion-M09j2U0T.js
+ create mode 100644 dist/assets/PhQuestion-M09j2U0T.js.map
+ create mode 100644 dist/assets/PhQuestionMark-BP9EMB6h.js
+ create mode 100644 dist/assets/PhQuestionMark-BP9EMB6h.js.map
+ create mode 100644 dist/assets/PhSealCheck-BfG80yKn.js
+ create mode 100644 dist/assets/PhSealCheck-BfG80yKn.js.map
+ create mode 100644 dist/assets/PhSignOut-C5YOWlPT.js
+ create mode 100644 dist/assets/PhSignOut-C5YOWlPT.js.map
+ create mode 100644 dist/assets/PhSpinner-BXooDYzU.js
+ create mode 100644 dist/assets/PhSpinner-BXooDYzU.js.map
+ create mode 100644 dist/assets/PhTrash-Biq6rmmL.js
+ create mode 100644 dist/assets/PhTrash-Biq6rmmL.js.map
+ create mode 100644 dist/assets/PhUser-CAgZSpGe.js
+ create mode 100644 dist/assets/PhUser-CAgZSpGe.js.map
+ create mode 100644 dist/assets/PhVault-l2PHF38a.js
+ create mode 100644 dist/assets/PhVault-l2PHF38a.js.map
+ create mode 100644 dist/assets/PhWallet-w25D16It.js
+ create mode 100644 dist/assets/PhWallet-w25D16It.js.map
+ create mode 100644 dist/assets/PhWarning-DPEydIPw.js
+ create mode 100644 dist/assets/PhWarning-DPEydIPw.js.map
+ create mode 100644 dist/assets/PhWarningCircle-BqjT745H.js
+ create mode 100644 dist/assets/PhWarningCircle-BqjT745H.js.map
+ create mode 100644 dist/assets/PhX-s-SmVExa.js
+ create mode 100644 dist/assets/PhX-s-SmVExa.js.map
+ create mode 100644 dist/assets/basic-D8VmrAza.js
+ create mode 100644 dist/assets/basic-D8VmrAza.js.map
+ create mode 100644 dist/assets/ccip-BwDyOFYC.js
+ create mode 100644 dist/assets/ccip-BwDyOFYC.js.map
+ create mode 100644 dist/assets/core-DJEwFP07.js
+ create mode 100644 dist/assets/core-DJEwFP07.js.map
+ create mode 100644 dist/assets/features-O3JwrypF.js
+ create mode 100644 dist/assets/features-O3JwrypF.js.map
+ create mode 100644 dist/assets/index-Bjltdz_y.js
+ create mode 100644 dist/assets/index-Bjltdz_y.js.map
+ create mode 100644 dist/assets/index-BxB4XA3-.js
+ create mode 100644 dist/assets/index-BxB4XA3-.js.map
+ create mode 100644 dist/assets/index-C6e94XOE.js
+ create mode 100644 dist/assets/index-C6e94XOE.js.map
+ create mode 100644 dist/assets/index-Cn5aGd7v.js
+ create mode 100644 dist/assets/index-Cn5aGd7v.js.map
+ create mode 100644 dist/assets/index-Cnq6xilB.js
+ create mode 100644 dist/assets/index-Cnq6xilB.js.map
+ create mode 100644 dist/assets/index-DPiCFyAc.js
+ create mode 100644 dist/assets/index-DPiCFyAc.js.map
+ create mode 100644 dist/assets/index-gixODy3H.css
+ create mode 100644 dist/assets/index-pyQ0_uET.js
+ create mode 100644 dist/assets/index-pyQ0_uET.js.map
+ create mode 100644 dist/assets/property-C9JG5tag.js
+ create mode 100644 dist/assets/property-C9JG5tag.js.map
+ create mode 100644 dist/assets/w3m-modal-CG5wXKMv.js
+ create mode 100644 dist/assets/w3m-modal-CG5wXKMv.js.map
+ create mode 100644 dist/index.html
+PS C:\Users\Sára\Downloads\privy game> git push
+Enumerating objects: 142, done.
+Counting objects: 100% (142/142), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (139/139), done.
+Writing objects: 100% (139/139), 4.09 MiB | 1.62 MiB/s, done.
+Total 139 (delta 44), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (44/44), completed with 3 local objects.
+To https://github.com/grebking/budulovaky.git
+   4c2c3aa..7ab091f  main -> main
+PS C:\Users\Sára\Downloads\privy game> cd "c:\Users\Sára\Downloads\privy game"
+PS C:\Users\Sára\Downloads\privy game> npm run build
+
+> coming-soon@1.0.0 build
+> vite build
+
+vite v5.4.21 building for production...
+node_modules/@privy-io/react-auth/dist/esm/components/Captcha.mjs (1:652): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/Captcha.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/privy-provider-CoCxAge0.mjs (1:104629): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/privy-provider-CoCxAge0.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/LoginModal.mjs (1:23561): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/LoginModal.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/hooks/captcha-context.mjs (1:1093): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/hooks/captcha-context.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/PrefetchedImage.mjs (1:65): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/PrefetchedImage.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/wallet-connect.mjs (1:1785): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/wallet-connect.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/hooks/modal-context.mjs (1:2652): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/hooks/modal-context.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/plugins/context/PrivyPluginContext.mjs (1:220): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/plugins/context/PrivyPluginContext.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/AccountNotFoundScreen.mjs (1:2430): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/AccountNotFoundScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ModalHeader.mjs (1:2765): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ModalHeader.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/AccountTransferScreen/LinkConflictScreen.mjs (1:5046): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/AccountTransferScreen/LinkConflictScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ModalFooter.mjs (1:545): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ModalFooter.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ModalFooter.mjs (2:31): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ModalFooter.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/protected-by-privy.mjs (1:54): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/protected-by-privy.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/AccountTransferScreen/EmbeddedWalletInfoView.mjs (1:3282): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/AccountTransferScreen/EmbeddedWalletInfoView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/AffirmativeConsentScreen.mjs (1:3065): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/AffirmativeConsentScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/AllowlistRejectionScreen.mjs (1:2602): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/AllowlistRejectionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/ConnectOnlyAuthenticatedScreen.mjs (1:3996): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/ConnectOnlyAuthenticatedScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/AwaitingPasswordlessCodeScreen.mjs (2:395): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/AwaitingPasswordlessCodeScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/CaptchaScreen.mjs (1:4456): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/CaptchaScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ui/chips/Chip.mjs (1:947): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ui/chips/Chip.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/WalletButton.mjs (1:3441): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/WalletButton.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/ConnectOnlyLandingScreen.mjs (1:4234): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/ConnectOnlyLandingScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/ConnectionStatusScreen.mjs (1:9545): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/ConnectionStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/ConnectionStatusScreen.mjs (1:11295): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/ConnectionStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/CrossAppAuthScreen.mjs (1:4726): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/CrossAppAuthScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/EmbeddedWalletKeyExportScreen.mjs (1:5546): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/EmbeddedWalletKeyExportScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/EmbeddedWalletPasswordUpdateScreen.mjs (1:4756): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/EmbeddedWalletPasswordUpdateScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/SetWalletPasswordForm/ConfimWalletPasswordSaved.mjs (1:2957): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/SetWalletPasswordForm/ConfimWalletPasswordSaved.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/SetWalletPasswordForm/CreateWalletPassword.mjs (1:3679): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/SetWalletPasswordForm/CreateWalletPassword.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/SetWalletPasswordForm/SaveWalletPassword.mjs (1:3531): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/SetWalletPasswordForm/SaveWalletPassword.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/ErrorScreen.mjs (1:5530): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/ErrorScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/ErrorScreen.mjs (1:5743): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/ErrorScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/OpenLink.mjs (1:143): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/OpenLink.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs (2:688): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs (2:827): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs (2:1087): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs (2:1996): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/QrCode.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/FarcasterSignerStatusScreen.mjs (1:4405): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/FarcasterSignerStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/FundWalletMethodHeader.mjs (1:2281): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/FundWalletMethodHeader.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingEvmToSolBridgingScreen.mjs (1:10417): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingEvmToSolBridgingScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/BridgeNetworkSelectionView.mjs (1:5194): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/BridgeNetworkSelectionView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/CopyToClipboard.mjs (1:241): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/CopyToClipboard.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LinkPasskeyScreen.mjs (1:2991): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LinkPasskeyScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LinkPasskeyScreen.mjs (1:3125): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LinkPasskeyScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LinkPasskeyScreen.mjs (1:4770): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LinkPasskeyScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingExternalTransferScreen.mjs (1:11414): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingExternalTransferScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingExternalSolanaTransferScreen.mjs (1:7463): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingExternalSolanaTransferScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/FundingEditAmountScreen.mjs (1:4084): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/FundingEditAmountScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingSolToEvmBridgingScreen.mjs (1:8085): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingSolToEvmBridgingScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingSolToEvmBridgingScreen.mjs (1:8589): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingSolToEvmBridgingScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingSolToEvmBridgingScreen.mjs (1:8824): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/AwaitingSolToEvmBridgingScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/FundingMethodSelectionScreen.mjs (1:6599): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/FundingMethodSelectionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/ManualTransferScreen.mjs (1:6569): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/ManualTransferScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/CoinbaseOnrampStatusScreen.mjs (1:4640): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/CoinbaseOnrampStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/CoinbaseOnrampStatusScreen.mjs (1:5172): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/CoinbaseOnrampStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/CoinbaseOnrampStatusScreen.mjs (1:5510): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/CoinbaseOnrampStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs (1:3067): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs (1:3859): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs (1:4468): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs (1:4975): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Funding/MoonpayStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ui/wallet/NetworkIcon.mjs (1:1255): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ui/wallet/NetworkIcon.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ui/wallet/NetworkIcon.mjs (1:1298): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ui/wallet/NetworkIcon.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/InAppBrowserLoginNotPossible.mjs (1:2459): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/InAppBrowserLoginNotPossible.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/InstallPhantomScreen.mjs (1:2831): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/InstallPhantomScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/InstallPhantomScreen.mjs (1:3607): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/InstallPhantomScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/CustomLandingScreenView.mjs (1:7554): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/CustomLandingScreenView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/EmailButton.mjs (1:2864): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/EmailButton.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/ConnectEmailForm.mjs (1:3803): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/ConnectEmailForm.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/FarcasterButton.mjs (1:2848): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/FarcasterButton.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/SmsButton.mjs (1:3084): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/SmsButton.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/PasskeyLink.mjs (1:2366): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/PasskeyLink.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/instagram.mjs (1:64): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/instagram.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/linkedin.mjs (1:67): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/linkedin.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/spotify.mjs (1:64): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/spotify.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/tiktok.mjs (1:64): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/tiktok.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/TelegramButton.mjs (1:2933): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/TelegramButton.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/svg/telegram.mjs (1:64): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/svg/telegram.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LinkWalletScreen.mjs (1:4210): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LinkWalletScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LinkEmailScreen.mjs (1:3146): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LinkEmailScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LinkPhoneScreen.mjs (1:2975): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LinkPhoneScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LoginFailedScreen.mjs (1:2631): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LoginFailedScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/LandingScreenView.mjs (1:8633): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/LandingScreenView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs (1:6036): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs (1:6248): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs (1:6814): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs (1:7411): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs (1:8067): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaEnrollmentFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/EnrollLandingScreen.mjs (1:3267): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/EnrollLandingScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/PinInput.mjs (1:1284): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/PinInput.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/EnrollTotp.mjs (1:3945): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/EnrollTotp.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/EnrollPasskey.mjs (1:5921): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/EnrollPasskey.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/TransactionDetails.mjs (1:2906): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/TransactionDetails.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaVerifyFlowScreen.mjs (1:7060): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaVerifyFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaVerifyFlowScreen.mjs (1:7728): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/MfaVerifyFlowScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/SocialButton.mjs (1:3807): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/LandingScreen/SocialButton.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/PriceDisplay.mjs (1:921): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/PriceDisplay.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/PriceDisplay.mjs (1:1052): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/PriceDisplay.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/PriceDisplay.mjs (2:263): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/PriceDisplay.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/VerifyWithPasskey.mjs (1:4094): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/MfaScreens/VerifyWithPasskey.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/TransactionTotal.mjs (1:1217): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/embedded-wallets/TransactionTotal.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/PasskeyStatusScreen.mjs (1:4563): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/PasskeyStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/PasskeyStatusScreen.mjs (1:4649): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/PasskeyStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/PasskeySelectSignupOrLogin.mjs (1:2992): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/PasskeySelectSignupOrLogin.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs (1:360): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs (1:565): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs (1:778): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs (2:294): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs (2:438): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/primitives/Accordion/index.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/PasswordRecoveryScreen.mjs (1:3934): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/PasswordRecoveryScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoverySelectionScreen.mjs (1:5646): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoverySelectionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoverySelectionScreen.mjs (1:5821): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoverySelectionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoverySelectionScreen.mjs (1:5997): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoverySelectionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/SetAutomaticRecoveryScreen.mjs (1:3505): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/SetAutomaticRecoveryScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoveryPasswordCreateScreen.mjs (1:4962): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoveryPasswordCreateScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoveryOAuthStatusScreen.mjs (1:4667): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/Recovery/RecoveryOAuthStatusScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/TransactionDetail.mjs (1:963): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/TransactionDetail.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendSolanaTransactionScreen/SendSolanaTransactionScreen.mjs (1:8201): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendSolanaTransactionScreen/SendSolanaTransactionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreenView.mjs (1:4268): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreenView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreenView.mjs (1:7064): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreenView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/TransactionErrorView.mjs (1:3680): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/TransactionErrorView.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreen.mjs (1:7282): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreen.mjs (1:9688): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreen.mjs (1:10031): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SendTransactionScreen/SendTransactionScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SignRequestScreen.mjs (1:3574): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SignRequestScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/SignRequestScreen.mjs (1:3670): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/SignRequestScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/components/UpdateEmailForm.mjs (1:3425): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/components/UpdateEmailForm.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/UserLimitReachedScreen.mjs (1:2393): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/UserLimitReachedScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@privy-io/react-auth/dist/esm/screens/UpdatePhoneScreen.mjs (1:3042): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@privy-io/react-auth/dist/esm/screens/UpdatePhoneScreen.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@walletconnect/utils/node_modules/ox/_esm/core/Base64.js (6:27): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@walletconnect/utils/node_modules/ox/_esm/core/Base64.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@reown/appkit/node_modules/ox/_esm/core/Base64.js (6:27): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@reown/appkit/node_modules/ox/_esm/core/Base64.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@reown/appkit-controllers/node_modules/ox/_esm/core/Base64.js (6:27): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@reown/appkit-controllers/node_modules/ox/_esm/core/Base64.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+✓ 4109 modules transformed.
+x Build failed in 15.37s
+error during build:
+src/App.jsx (3:9): "useCreateWallet" is not exported by "node_modules/@privy-io/react-auth/dist/esm/solana.mjs", imported by "src/App.jsx".
+file: C:/Users/Sára/Downloads/privy game/src/App.jsx:3:9
+
+1: import React, { useState } from 'react'
+2: import { usePrivy } from '@privy-io/react-auth'
+3: import { useCreateWallet } from '@privy-io/react-auth/solana'
+            ^
+4:
+5: function App() {
+
+    at getRollupError (file:///C:/Users/S%C3%A1ra/Downloads/privy%20game/node_modules/rollup/dist/es/shared/parseAst.js:317:41)
+    at error (file:///C:/Users/S%C3%A1ra/Downloads/privy%20game/node_modules/rollup/dist/es/shared/parseAst.js:313:42)
+    at Module.error (file:///C:/Users/S%C3%A1ra/Downloads/privy%20game/node_modules/rollup/dist/es/shared/node-entry.js:17154:16)
+    at Module.traceVariable (file:///C:/Users/S%C3%A1ra/Downloads/privy%20game/node_modules/rollup/dist/es/shared/node-entry.js:17587:29)
+    at ModuleScope.findVariable (file:///C:/Users/S%C3%A1ra/Downloads/privy%20game/node_modules/rollup/dist/es/shared/node-entry.js:15177:39)
+    at FunctionScope.findVariable (file:///C:/Users/S%C3%A1ra/Downloads/privy%20game/node_modules/rollup/dist/es/shared/node-entry.js:5397:38)
+    at FunctionBodyScope.findVariable (file:///C:/Users/S%C3%A1ra/Downloads/privy%20game/node_modules/rollup/dist/es/shared/node-entry.js:5397:38)
+    at Identifier.bind (file:///C:/Users/S%C3%A1ra/Downloads/privy%20game/node_modules/rollup/dist/es/shared/node-entry.js:5164:40)
+    at CallExpression.bind (file:///C:/Users/S%C3%A1ra/Downloads/privy%20game/node_modules/rollup/dist/es/shared/node-entry.js:2546:23)
+    at CallExpression.bind (file:///C:/Users/S%C3%A1ra/Downloads/privy%20game/node_modules/rollup/dist/es/shared/node-entry.js:12286:15)
+PS C:\Users\Sára\Downloads\privy game> git add .
+warning: in the working copy of 'src/App.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main.jsx', LF will be replaced by CRLF the next time Git touches it
+PS C:\Users\Sára\Downloads\privy game> git commit -m "Add manual Solana wallet creation after login"
+[main b161b19] Add manual Solana wallet creation after login
+ 2 files changed, 32 insertions(+), 9 deletions(-)
+PS C:\Users\Sára\Downloads\privy game> git push
