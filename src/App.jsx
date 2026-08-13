@@ -1,29 +1,14 @@
-import React, { useState } from 'react'
-import { usePrivy, useCreateWallet } from '@privy-io/react-auth'
+import React from 'react'
+import { usePrivy } from '@privy-io/react-auth'
 
 function App() {
   const { login, logout, authenticated, user } = usePrivy()
-  const { createWallet } = useCreateWallet()
-  const [isCreatingWallet, setIsCreatingWallet] = useState(false)
 
   const handleLogin = async () => {
     try {
       await login()
-      // Create Solana wallet after successful login
-      await createSolanaWallet()
     } catch (error) {
       console.error('Login failed:', error)
-    }
-  }
-
-  const createSolanaWallet = async () => {
-    try {
-      setIsCreatingWallet(true)
-      await createWallet({ createAdditional: false })
-    } catch (error) {
-      console.error('Wallet creation failed:', error)
-    } finally {
-      setIsCreatingWallet(false)
     }
   }
 
@@ -59,21 +44,9 @@ function App() {
         {authenticated && (
           <div className="mt-8 p-4 bg-gray-50 rounded-lg">
             <p className="text-sm text-gray-600 mb-2">Your Solana Wallet:</p>
-            {isCreatingWallet ? (
-              <p className="text-sm text-gray-600">Creating wallet...</p>
-            ) : (
-              <p className="text-sm font-mono text-gray-800 break-all">
-                {getSolanaAddress() || 'No wallet found'}
-              </p>
-            )}
-            {!getSolanaAddress() && !isCreatingWallet && (
-              <button 
-                onClick={createSolanaWallet}
-                className="mt-4 px-4 py-2 bg-gray-900 text-white text-sm rounded hover:bg-gray-700 transition-colors"
-              >
-                Create Solana Wallet
-              </button>
-            )}
+            <p className="text-sm font-mono text-gray-800 break-all">
+              {getSolanaAddress() || 'Creating wallet...'}
+            </p>
           </div>
         )}
       </div>

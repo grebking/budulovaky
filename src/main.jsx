@@ -11,6 +11,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       clientId="client-WY6cEKbhNMHsx3W68bSBvHmzm8vTHH3UvEjrxa4VwyoJ1"
       config={{
         loginMethods: ['email', 'google', 'twitter', 'discord', 'github'],
+        embeddedWallets: {
+          solana: {
+            createOnLogin: 'all-users'
+          }
+        },
         appearance: {
           theme: 'light',
           accentColor: '#676FFF'
