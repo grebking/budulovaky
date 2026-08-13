@@ -1,0 +1,8 @@
+PS C:\Users\Sára> cd "c:\Users\Sára\Downloads\privy game"
+PS C:\Users\Sára\Downloads\privy game> npm install
+npm warn deprecated yaeti@0.0.6: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn deprecated @simplewebauthn/types@9.0.1: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn deprecated @walletconnect/modal@2.7.0: Please follow the migration guide on https://docs.reown.com/appkit/upgrade/wcm
+npm warn deprecated @motionone/vue@10.16.4: Motion One for Vue is deprecated. Use Oku Motion instead https://oku-ui.com/motion
+npm warn deprecated uuid@8.3.2: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+|
