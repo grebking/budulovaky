@@ -10,16 +10,21 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       appId="cmsqukzij01a40cl5fqa0nli6"
       clientId="client-WY6cEKbhNMHsx3W68bSBvHmzm8vTHH3UvEjrxa4VwyoJ1"
       config={{
-        loginMethods: ['email', 'google', 'twitter', 'discord', 'github'],
+        loginMethods: ['email', 'google', 'twitter', 'discord', 'github', 'wallet'],
         appearance: {
-          theme: 'light',
-          accentColor: '#676FFF',
+          theme: 'dark',
+          accentColor: '#8B5CF6',
           walletChainType: 'solana-only',
+          showWalletLoginFirst: false,
         },
         embeddedWallets: {
+          ethereum: {
+            createOnLogin: 'off',
+          },
           solana: {
             createOnLogin: 'users-without-wallets',
           },
+          showWalletUIs: true,
         },
       }}
     >

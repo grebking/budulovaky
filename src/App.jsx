@@ -1,48 +1,55 @@
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { usePrivy } from '@privy-io/react-auth'
+import { useFundWallet, useSolanaWallets } from '@privy-io/react-auth/solana'
 
-function getWalletLabel(account) {
-  if (account.type === 'smart_wallet') return 'Smart Wallet'
-  if (account.walletClientType === 'privy') return 'Embedded Wallet'
-  if (account.walletClientType) return account.walletClientType
-  return 'Wallet'
+function shortenAddress(address) {
+  if (!address || address.length < 10) return address
+  return `${address.slice(0, 4)}...${address.slice(-4)}`
 }
 
-function getChainLabel(chainType) {
-  if (chainType === 'solana') return 'Solana'
-  if (chainType === 'ethereum') return 'Ethereum'
-  return chainType || 'Unknown'
+function getSolanaWalletAccounts(user) {
+  return (
+    user?.linkedAccounts?.filter(
+      (account) =>
+        (account.type === 'wallet' || account.type === 'smart_wallet') &&
+        account.chainType === 'solana',
+    ) ?? []
+  )
 }
 
 function App() {
   const { login, logout, authenticated, ready, user } = usePrivy()
-  const [showDeposit, setShowDeposit] = useState(false)
-  const [copiedAddress, setCopiedAddress] = useState(null)
+  const { ready: solanaReady, wallets, createWallet, exportWallet } = useSolanaWallets()
+  const { fundWallet } = useFundWallet()
+  const [showWalletMenu, setShowWalletMenu] = useState(false)
+  const [walletActionLoading, setWalletActionLoading] = useState(false)
 
-  const walletAddresses = useMemo(() => {
-    const byAddress = new Map()
+  const solanaAddress = useMemo(() => {
+    if (wallets[0]?.address) return wallets[0].address
+    const linked = getSolanaWalletAccounts(user)
+    return (
+      linked[0]?.address ??
+      (user?.wallet?.chainType === 'solana' ? user?.wallet?.address : null)
+    )
+  }, [user, wallets])
 
-    user?.linkedAccounts
-      ?.filter((account) => account.type === 'wallet' || account.type === 'smart_wallet')
-      .forEach((account) => {
-        byAddress.set(account.address, {
-          address: account.address,
-          label: getWalletLabel(account),
-          chain: getChainLabel(account.chainType),
-        })
-      })
+  const hasSolanaWallet = Boolean(solanaAddress)
 
-    if (user?.wallet?.address && !byAddress.has(user.wallet.address)) {
-      byAddress.set(user.wallet.address, {
-        address: user.wallet.address,
-        label: 'Wallet',
-        chain: getChainLabel(user.wallet.chainType),
-      })
-    }
+  useEffect(() => {
+    if (!ready || !authenticated || !solanaReady || hasSolanaWallet) return
 
-    return Array.from(byAddress.values())
-  }, [user])
+    createWallet().catch((error) => {
+      console.error('Failed to create Solana wallet:', error)
+    })
+  }, [ready, authenticated, solanaReady, hasSolanaWallet, createWallet])
+
+  const ensureSolanaWallet = useCallback(async () => {
+    if (solanaAddress) return solanaAddress
+
+    const wallet = await createWallet()
+    return wallet.address
+  }, [createWallet, solanaAddress])
 
   const handleLogin = async () => {
     try {
@@ -54,53 +61,157 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      setShowDeposit(false)
+      setShowWalletMenu(false)
       await logout()
     } catch (error) {
       console.error('Logout failed:', error)
     }
   }
 
-  const handleDepositClick = async () => {
+  const handleDeposit = async () => {
     if (!authenticated) {
       await handleLogin()
       return
     }
-    setShowDeposit(true)
+
+    setWalletActionLoading(true)
+    try {
+      const address = await ensureSolanaWallet()
+      await fundWallet(address, {
+        defaultFundingMethod: 'manual',
+        uiConfig: {
+          receiveFundsTitle: 'Deposit to your wallet',
+          receiveFundsSubtitle:
+            'Scan the QR code or copy your Solana address to receive funds.',
+        },
+      })
+    } catch (error) {
+      console.error('Deposit flow failed:', error)
+    } finally {
+      setWalletActionLoading(false)
+      setShowWalletMenu(false)
+    }
   }
 
-  const handleCopyAddress = async (address) => {
+  const handleFundWithOptions = async () => {
+    if (!authenticated) return
+
+    setWalletActionLoading(true)
     try {
-      await navigator.clipboard.writeText(address)
-      setCopiedAddress(address)
-      window.setTimeout(() => setCopiedAddress(null), 2000)
+      const address = await ensureSolanaWallet()
+      await fundWallet(address)
     } catch (error) {
-      console.error('Copy failed:', error)
+      console.error('Funding flow failed:', error)
+    } finally {
+      setWalletActionLoading(false)
+      setShowWalletMenu(false)
+    }
+  }
+
+  const handleExportKey = async () => {
+    if (!authenticated) return
+
+    setWalletActionLoading(true)
+    try {
+      const address = await ensureSolanaWallet()
+      await exportWallet({ address })
+    } catch (error) {
+      console.error('Export wallet failed:', error)
+    } finally {
+      setWalletActionLoading(false)
+      setShowWalletMenu(false)
     }
   }
 
   const topBar = createPortal(
-    <div className="fixed top-0 left-0 right-0 z-[99999] flex items-center justify-end gap-3 px-6 py-6 pointer-events-none">
-      {authenticated && (
-        <button
-          type="button"
-          onClick={handleDepositClick}
-          disabled={!ready}
-          className="pointer-events-auto px-8 py-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 shadow-lg"
-        >
-          Deposit
-        </button>
-      )}
+    <header className="fixed top-0 left-0 right-0 z-[99999] px-4 sm:px-6 py-4 pointer-events-none">
+      <div className="max-w-6xl mx-auto flex items-center justify-between glass-nav rounded-2xl px-4 sm:px-6 py-3 pointer-events-auto">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-blue-600 flex items-center justify-center text-sm font-bold shadow-lg">
+            P
+          </div>
+          <span className="text-white/90 font-medium tracking-wide hidden sm:inline">
+            Privy Game
+          </span>
+        </div>
 
-      <button
-        type="button"
-        onClick={authenticated ? handleLogout : handleLogin}
-        disabled={!ready}
-        className="pointer-events-auto px-6 py-2 bg-gray-900 text-white font-light rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 shadow-lg"
-      >
-        {!ready ? 'Loading...' : authenticated ? 'Logout' : 'Login'}
-      </button>
-    </div>,
+        <div className="flex items-center gap-2 sm:gap-3">
+          {authenticated && solanaAddress && (
+            <span className="hidden md:inline text-xs text-white/50 font-mono bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
+              {shortenAddress(solanaAddress)}
+            </span>
+          )}
+
+          {authenticated && (
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setShowWalletMenu((open) => !open)}
+                disabled={!ready || walletActionLoading}
+                className="btn-primary"
+              >
+                {walletActionLoading ? 'Opening...' : 'Deposit'}
+              </button>
+
+              {showWalletMenu && (
+                <>
+                  <div
+                    className="fixed inset-0 z-[99998]"
+                    onClick={() => setShowWalletMenu(false)}
+                  />
+                  <div className="absolute right-0 top-full mt-2 w-64 glass-card rounded-xl shadow-2xl overflow-hidden z-[99999]">
+                    <div className="p-3 border-b border-white/10">
+                      <p className="text-xs text-white/50 uppercase tracking-wider mb-1">
+                        Wallet
+                      </p>
+                      {solanaAddress ? (
+                        <p className="text-xs font-mono text-white/80 break-all">
+                          {solanaAddress}
+                        </p>
+                      ) : (
+                        <p className="text-xs text-white/50">Creating Solana wallet...</p>
+                      )}
+                    </div>
+                    <div className="p-2 flex flex-col gap-1">
+                      <button
+                        type="button"
+                        onClick={handleDeposit}
+                        className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/10 text-sm text-white/90 transition-colors"
+                      >
+                        Receive / Deposit
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleFundWithOptions}
+                        className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/10 text-sm text-white/90 transition-colors"
+                      >
+                        Buy crypto
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleExportKey}
+                        className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/10 text-sm text-white/90 transition-colors"
+                      >
+                        Export private key
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
+          <button
+            type="button"
+            onClick={authenticated ? handleLogout : handleLogin}
+            disabled={!ready}
+            className="btn-secondary"
+          >
+            {!ready ? 'Loading...' : authenticated ? 'Logout' : 'Login'}
+          </button>
+        </div>
+      </div>
+    </header>,
     document.body,
   )
 
@@ -108,77 +219,83 @@ function App() {
     <>
       {topBar}
 
-      <div className="min-h-screen bg-white flex items-center justify-center relative">
-        <div className="text-center px-6">
-          <h1 className="text-6xl font-light text-gray-800 tracking-wide mb-4">
-            Coming Soon
-          </h1>
-          <p className="text-xl text-gray-600 font-light">
-            The Future of Decentralized Gaming
-          </p>
+      <main className="min-h-screen hero-glow flex flex-col items-center justify-center relative px-6 pt-24 pb-16">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-violet-600/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl" />
         </div>
-      </div>
 
-      {showDeposit && authenticated && (
-        <div
-          className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-[100000]"
-          onClick={() => setShowDeposit(false)}
-        >
-          <div
-            className="bg-white rounded-xl shadow-xl w-full max-w-md p-6 text-left"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-light text-gray-800">Deposit</h2>
+        <div className="relative text-center max-w-3xl">
+          <div className="inline-flex items-center gap-2 glass-card rounded-full px-4 py-1.5 mb-8 text-sm text-white/60">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            Solana-powered gaming platform
+          </div>
+
+          <h1 className="text-5xl sm:text-7xl font-light text-white tracking-tight mb-6">
+            Coming{' '}
+            <span className="bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent">
+              Soon
+            </span>
+          </h1>
+
+          <p className="text-lg sm:text-xl text-white/50 font-light mb-10 max-w-xl mx-auto leading-relaxed">
+            The future of decentralized gaming. Log in, get your Solana wallet, and deposit in one
+            click.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            {!authenticated ? (
+              <button type="button" onClick={handleLogin} disabled={!ready} className="btn-primary text-lg px-8 py-3">
+                Get started
+              </button>
+            ) : (
               <button
                 type="button"
-                onClick={() => setShowDeposit(false)}
-                className="text-gray-500 hover:text-gray-800 text-2xl leading-none"
-                aria-label="Close"
+                onClick={handleDeposit}
+                disabled={!ready || walletActionLoading}
+                className="btn-primary text-lg px-8 py-3"
               >
-                ×
+                {walletActionLoading ? 'Opening wallet...' : 'Deposit now'}
               </button>
-            </div>
-            <p className="text-sm text-gray-600 mb-4">
-              Send crypto to any of your wallet addresses below.
-            </p>
-
-            {!ready ? (
-              <p className="text-sm text-gray-500">Loading wallets...</p>
-            ) : walletAddresses.length === 0 ? (
-              <p className="text-sm text-gray-500">
-                No wallet addresses found on this account yet.
-              </p>
-            ) : (
-              <div className="space-y-3">
-                {walletAddresses.map((wallet) => (
-                  <div
-                    key={wallet.address}
-                    className="rounded-lg border border-gray-200 p-4"
-                  >
-                    <div className="flex items-center justify-between gap-3 mb-2">
-                      <div>
-                        <p className="text-sm font-medium text-gray-800">{wallet.label}</p>
-                        <p className="text-xs text-gray-500">{wallet.chain}</p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => handleCopyAddress(wallet.address)}
-                        className="px-3 py-1.5 text-sm bg-gray-900 text-white rounded-md hover:bg-gray-700 transition-colors"
-                      >
-                        {copiedAddress === wallet.address ? 'Copied' : 'Copy'}
-                      </button>
-                    </div>
-                    <p className="text-sm text-gray-700 break-all font-mono">
-                      {wallet.address}
-                    </p>
-                  </div>
-                ))}
-              </div>
             )}
           </div>
+
+          {authenticated && (
+            <div className="mt-12 glass-card rounded-2xl p-6 text-left max-w-md mx-auto">
+              <h2 className="text-sm font-medium text-white/70 mb-3">Your account</h2>
+              {solanaAddress ? (
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/40">Network</span>
+                    <span className="text-violet-300">Solana</span>
+                  </div>
+                  <div className="flex justify-between text-sm gap-4">
+                    <span className="text-white/40 shrink-0">Address</span>
+                    <span className="font-mono text-white/70 text-xs break-all text-right">
+                      {solanaAddress}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-sm text-white/40">Setting up your Solana wallet...</p>
+              )}
+            </div>
+          )}
         </div>
-      )}
+
+        <div className="relative mt-20 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl w-full">
+          {[
+            { title: 'Easy login', desc: 'Email, social, or wallet — powered by Privy' },
+            { title: 'Solana wallet', desc: 'Embedded wallet created automatically on signup' },
+            { title: 'Secure deposits', desc: 'Privy handles addresses, keys, and funding' },
+          ].map((item) => (
+            <div key={item.title} className="glass-card rounded-xl p-5 text-left">
+              <h3 className="text-white/90 font-medium mb-1">{item.title}</h3>
+              <p className="text-sm text-white/40">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </main>
     </>
   )
 }
