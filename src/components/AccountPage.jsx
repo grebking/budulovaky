@@ -20,41 +20,108 @@ import {
   daysUntilNameChange,
   sanitizeUsername,
 } from '../utils/profileUtils'
+import EditProfileModal from './EditProfileModal'
 import WinLossChart from './WinLossChart'
+
+function friendlyDbError(err) {
+  const msg = String(err?.message ?? err ?? '')
+  if (msg.includes('profiles') && msg.includes('does not exist')) {
+    return 'Profiles table missing — run supabase/schema-v2.sql in Supabase SQL Editor.'
+  }
+  if (msg.includes('bet_results') && msg.includes('does not exist')) {
+    return 'Results table missing — run supabase/schema-v2.sql in Supabase SQL Editor.'
+  }
+  if (msg.includes('filled_stake') || msg.includes('bet_entries')) {
+    return 'Database needs an update — run supabase/schema-v3.sql in Supabase SQL Editor.'
+  }
+  if (msg.includes('Database not configured')) {
+    return 'Database not configured — add Supabase keys to your .env file.'
+  }
+  return msg || 'Something went wrong.'
+}
 
 function formatJoined(dateStr) {
   if (!dateStr) return ''
   return new Date(dateStr).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })
 }
 
-function PositionRow({ bet, entry, userId, onCancel, cancelLoadingId }) {
+function FillBar({ filled, stake, isEstimate }) {
+  const ordered = Number(stake) || 0
+  const amount = Number(filled) || 0
+  const pct = ordered > 0 ? Math.min(100, Math.round((amount / ordered) * 100)) : 0
+
+  return (
+    <div className="mt-1.5">
+      <div className="flex items-center justify-between text-xs mb-1">
+        <span className="text-gray-500">
+          {formatMoney(amount)} / {formatMoney(ordered)}
+        </span>
+        <span className={`font-medium ${pct >= 100 ? 'text-green-600' : 'text-amber-600'}`}>
+          {pct}%{isEstimate && pct < 100 ? ' est.' : ''}
+        </span>
+      </div>
+      <div className="h-1.5 rounded-full bg-gray-100 overflow-hidden">
+        <div
+          className={`h-full rounded-full transition-all ${
+            pct >= 100 ? 'bg-green-500' : 'bg-amber-400'
+          }`}
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+    </div>
+  )
+}
+
+function PositionRow({ bet, entry, profit, isOwner, onCancel, cancelLoadingId, isClosed }) {
   const sideLabel = entry.side === 1 ? bet.side1_label : bet.side2_label
   const isSettled = bet.status !== 'open'
   const filled = isSettled ? Number(entry.filled_stake) : estimateFill(entry, bet.entries)
-  const canCancel = isBetJoinable(bet) && entry.status === 'active'
+  const canCancel = isOwner && isBetJoinable(bet) && entry.status === 'active'
+  const stake = Number(entry.stake)
 
   return (
-    <tr className="border-b border-gray-100 last:border-0 hover:bg-gray-50/50">
-      <td className="py-4 pr-4">
-        <Link to={`/bet/${bet.id}`} className="group">
-          <p className="font-medium text-gray-900 group-hover:text-blue-600 line-clamp-2">
-            {bet.title}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">
-            {sideLabel} · {bet.event_type}
-          </p>
+    <tr className="border-b border-gray-100 last:border-0 hover:bg-gray-50/60 transition-colors">
+      <td className="py-4 pr-4 pl-4 sm:pl-6">
+        <Link to={`/bet/${bet.id}`} className="group flex items-start gap-3">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 shrink-0 flex items-center justify-center text-xs font-semibold text-gray-500 uppercase">
+            {bet.event_type?.slice(0, 2) ?? 'MK'}
+          </div>
+          <div className="min-w-0">
+            <p className="font-medium text-gray-900 group-hover:text-blue-600 line-clamp-2 leading-snug">
+              {bet.title}
+            </p>
+            <p className="text-xs text-gray-500 mt-1">
+              <span className="font-medium text-gray-700">{sideLabel}</span>
+              {' · '}
+              {bet.event_type}
+            </p>
+          </div>
         </Link>
       </td>
-      <td className="py-4 px-3 text-sm text-gray-600 whitespace-nowrap">
-        {formatMoney(entry.stake)}
+      <td className="py-4 px-3 text-sm text-gray-600 whitespace-nowrap align-top">
+        {formatMoney(stake)}
       </td>
-      <td className="py-4 px-3 text-sm whitespace-nowrap">
-        <span className="font-medium text-gray-900">{formatMoney(filled)}</span>
-        {!isSettled && filled < Number(entry.stake) && (
-          <p className="text-xs text-amber-600 mt-0.5">est. at close</p>
+      <td className="py-4 px-3 align-top min-w-[140px]">
+        <FillBar filled={filled} stake={stake} isEstimate={!isSettled} />
+      </td>
+      <td className="py-4 px-3 text-sm whitespace-nowrap align-top">
+        {isClosed ? (
+          profit != null ? (
+            <div>
+              <p className={`font-semibold ${profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {profit >= 0 ? '+' : '-'}
+                {formatMoney(Math.abs(profit))}
+              </p>
+              <p className="text-xs text-gray-400 mt-0.5 capitalize">{bet.status}</p>
+            </div>
+          ) : (
+            <span className="text-xs text-gray-400 capitalize">{bet.status}</span>
+          )
+        ) : (
+          <p className="font-medium text-gray-900">{formatMoney(filled)}</p>
         )}
       </td>
-      <td className="py-4 pl-3 text-right whitespace-nowrap">
+      <td className="py-4 pl-3 pr-4 sm:pr-6 text-right whitespace-nowrap align-top">
         {canCancel ? (
           <button
             type="button"
@@ -64,32 +131,47 @@ function PositionRow({ bet, entry, userId, onCancel, cancelLoadingId }) {
           >
             {cancelLoadingId === entry.id ? '…' : 'Cancel'}
           </button>
-        ) : (
-          <span className="text-xs text-gray-400 capitalize">{bet.status}</span>
-        )}
+        ) : isClosed ? (
+          <Link
+            to={`/bet/${bet.id}`}
+            className="text-xs text-gray-400 hover:text-gray-600 underline"
+          >
+            View
+          </Link>
+        ) : null}
       </td>
     </tr>
   )
 }
 
-export default function AccountPage({ username, viewerUserId, isOwner }) {
+export default function AccountPage({ username, viewerUserId }) {
   const navigate = useNavigate()
   const [profile, setProfile] = useState(null)
   const [results, setResults] = useState([])
   const [bets, setBets] = useState([])
   const [tab, setTab] = useState('active')
+  const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [betsError, setBetsError] = useState(null)
+  const [resultsError, setResultsError] = useState(null)
   const [editOpen, setEditOpen] = useState(false)
   const [editBio, setEditBio] = useState('')
   const [editUsername, setEditUsername] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
   const [saveMsg, setSaveMsg] = useState(null)
+  const [saveError, setSaveError] = useState(null)
+  const [saving, setSaving] = useState(false)
   const [cancelLoadingId, setCancelLoadingId] = useState(null)
+  const [copied, setCopied] = useState(false)
+
+  const isOwner = Boolean(viewerUserId && profile?.user_id === viewerUserId)
 
   const load = useCallback(async () => {
     setLoading(true)
     setError(null)
+    setBetsError(null)
+    setResultsError(null)
     try {
       const p = await fetchProfileByUsername(username)
       if (!p) {
@@ -101,13 +183,23 @@ export default function AccountPage({ username, viewerUserId, isOwner }) {
       setEditUsername(p.username)
       setAvatarUrl(p.avatar_url ?? '')
 
-      const userBets = await fetchUserBets(p.user_id)
-      setBets(userBets)
+      try {
+        const userBets = await fetchUserBets(p.user_id)
+        setBets(userBets)
+      } catch (err) {
+        setBets([])
+        setBetsError(friendlyDbError(err))
+      }
 
-      const r = await fetchBetResults(p.user_id)
-      setResults(r)
+      try {
+        const r = await fetchBetResults(p.user_id)
+        setResults(r)
+      } catch (err) {
+        setResults([])
+        setResultsError(friendlyDbError(err))
+      }
     } catch (err) {
-      setError(err.message ?? 'Could not load account.')
+      setError(friendlyDbError(err))
     } finally {
       setLoading(false)
     }
@@ -117,6 +209,14 @@ export default function AccountPage({ username, viewerUserId, isOwner }) {
     load()
   }, [load])
 
+  const profitByBet = useMemo(() => {
+    const map = {}
+    for (const row of results) {
+      map[row.bet_id] = (map[row.bet_id] ?? 0) + Number(row.profit)
+    }
+    return map
+  }, [results])
+
   const positions = useMemo(() => {
     const rows = []
     for (const bet of bets) {
@@ -125,9 +225,7 @@ export default function AccountPage({ username, viewerUserId, isOwner }) {
         rows.push({ bet, entry })
       }
     }
-    return rows.sort(
-      (a, b) => new Date(b.bet.event_date) - new Date(a.bet.event_date),
-    )
+    return rows.sort((a, b) => new Date(b.bet.event_date) - new Date(a.bet.event_date))
   }, [bets, profile?.user_id])
 
   const activePositions = useMemo(
@@ -146,16 +244,34 @@ export default function AccountPage({ username, viewerUserId, isOwner }) {
     }, 0)
   }, [activePositions])
 
+  const totalProfit = useMemo(
+    () => results.reduce((sum, r) => sum + Number(r.profit), 0),
+    [results],
+  )
+
   const biggestWin = useMemo(() => {
     if (!results.length) return 0
     return Math.max(0, ...results.map((r) => Number(r.profit)))
   }, [results])
 
-  const list = tab === 'active' ? activePositions : closedPositions
+  const list = useMemo(() => {
+    const base = tab === 'active' ? activePositions : closedPositions
+    const q = search.trim().toLowerCase()
+    if (!q) return base
+    return base.filter(({ bet, entry }) => {
+      const side = entry.side === 1 ? bet.side1_label : bet.side2_label
+      return (
+        bet.title.toLowerCase().includes(q) ||
+        side.toLowerCase().includes(q) ||
+        bet.event_type?.toLowerCase().includes(q)
+      )
+    })
+  }, [tab, activePositions, closedPositions, search])
 
   const saveProfile = async () => {
     setSaveMsg(null)
-    setError(null)
+    setSaveError(null)
+    setSaving(true)
     try {
       if (editUsername !== profile.username) {
         if (!canChangeUsername(profile)) {
@@ -181,7 +297,9 @@ export default function AccountPage({ username, viewerUserId, isOwner }) {
       setEditOpen(false)
       await load()
     } catch (err) {
-      setError(err.message ?? 'Could not save.')
+      setSaveError(friendlyDbError(err))
+    } finally {
+      setSaving(false)
     }
   }
 
@@ -189,9 +307,10 @@ export default function AccountPage({ username, viewerUserId, isOwner }) {
     const file = event.target.files?.[0]
     if (!file) return
     if (file.size > 200000) {
-      setError('Image must be under 200KB.')
+      setSaveError('Image must be under 200KB.')
       return
     }
+    setSaveError(null)
     const reader = new FileReader()
     reader.onload = () => setAvatarUrl(String(reader.result))
     reader.readAsDataURL(file)
@@ -211,208 +330,246 @@ export default function AccountPage({ username, viewerUserId, isOwner }) {
     }
   }
 
-  if (loading) {
-    return <p className="p-6 text-sm text-gray-500">Loading profile…</p>
+  const copyProfileLink = async () => {
+    try {
+      await navigator.clipboard.writeText(`${window.location.origin}${accountPath(profile.username)}`)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      setError('Could not copy link.')
+    }
   }
 
-  if (!profile) {
+  if (loading) {
     return (
-      <div className="p-6">
-        <p className="text-gray-600">Account @{username} not found.</p>
-        <Link to="/" className="text-sm underline mt-4 inline-block">
-          Home
-        </Link>
+      <div className="flex-1 flex items-center justify-center">
+        <p className="text-sm text-gray-500">Loading profile…</p>
       </div>
     )
   }
 
+  if (!profile) {
+    return (
+      <div className="flex-1 flex items-center justify-center p-6">
+        <div className="text-center">
+          <p className="text-gray-600">Account @{username} not found.</p>
+          <Link to="/" className="text-sm underline mt-4 inline-block text-blue-600">
+            Back to home
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  const isClosedTab = tab === 'closed'
+
   return (
-    <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 min-h-0 bg-gray-50/50">
-      <div className="max-w-5xl mx-auto space-y-6">
-        {/* Profile header — Polymarket-style */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="rounded-2xl border border-gray-200 bg-white p-6">
+    <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 min-h-0 bg-[#f8f9fb]">
+      <div className="max-w-6xl mx-auto space-y-5">
+        {/* Profile + chart row — Polymarket-style */}
+        <div className="grid lg:grid-cols-2 gap-4">
+          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
             <div className="flex gap-4 items-start">
               {profile.avatar_url ? (
                 <img
                   src={profile.avatar_url}
                   alt=""
-                  className="w-16 h-16 rounded-full object-cover border border-gray-200 shrink-0"
+                  className="w-[72px] h-[72px] rounded-full object-cover border-2 border-gray-100 shrink-0"
                 />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border border-gray-200 flex items-center justify-center text-xl font-semibold text-white shrink-0">
+                <div className="w-[72px] h-[72px] rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 border-2 border-gray-100 flex items-center justify-center text-2xl font-semibold text-white shrink-0">
                   {profile.username.slice(0, 1).toUpperCase()}
                 </div>
               )}
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h1 className="text-xl font-semibold text-gray-900">{profile.username}</h1>
+                    <h1 className="text-xl font-bold text-gray-900 tracking-tight">
+                      {profile.username}
+                    </h1>
                     <p className="text-xs text-gray-400 mt-1">
                       Joined {formatJoined(profile.created_at)}
                     </p>
                   </div>
-                  {isOwner && (
+                  <div className="flex gap-1.5 shrink-0">
                     <button
                       type="button"
-                      onClick={() => setEditOpen((v) => !v)}
-                      className="shrink-0 text-sm px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 font-medium text-gray-700"
+                      onClick={copyProfileLink}
+                      title="Share profile"
+                      className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg border border-transparent hover:border-gray-200"
                     >
-                      {editOpen ? 'Close' : 'Edit account'}
+                      {copied ? (
+                        <span className="text-xs text-green-600 font-medium">Copied!</span>
+                      ) : (
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+                          />
+                        </svg>
+                      )}
                     </button>
-                  )}
+                    {isOwner && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSaveMsg(null)
+                          setSaveError(null)
+                          setEditOpen(true)
+                        }}
+                        className="text-sm px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 font-medium text-gray-700"
+                      >
+                        Edit
+                      </button>
+                    )}
+                  </div>
                 </div>
-                {(profile.bio || isOwner) && (
-                  <p className="text-sm text-gray-600 mt-3 whitespace-pre-wrap">
-                    {profile.bio || (isOwner ? 'Add a bio in Edit account.' : '')}
-                  </p>
-                )}
+                <p className="text-sm text-gray-600 mt-3 whitespace-pre-wrap leading-relaxed">
+                  {profile.bio ||
+                    (isOwner ? 'No bio yet — click Edit to add one.' : 'No bio yet.')}
+                </p>
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-100">
               <div>
-                <p className="text-xs text-gray-400">Positions value</p>
-                <p className="text-lg font-semibold text-gray-900 mt-0.5">
+                <p className="text-[11px] text-gray-400 uppercase tracking-wide">Positions value</p>
+                <p className="text-xl font-semibold text-gray-900 mt-1">
                   {formatMoney(positionsValue)}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-gray-400">Biggest win</p>
-                <p className="text-lg font-semibold text-gray-900 mt-0.5">
+                <p className="text-[11px] text-gray-400 uppercase tracking-wide">Biggest win</p>
+                <p className="text-xl font-semibold text-gray-900 mt-1">
                   {formatMoney(biggestWin)}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-gray-400">Predictions</p>
-                <p className="text-lg font-semibold text-gray-900 mt-0.5">{positions.length}</p>
+                <p className="text-[11px] text-gray-400 uppercase tracking-wide">Predictions</p>
+                <p className="text-xl font-semibold text-gray-900 mt-1">{positions.length}</p>
               </div>
             </div>
 
-            <p className="text-xs text-gray-400 mt-4">
-              Balance: {formatMoney(profile.balance)} · Winners paid {WIN_MULTIPLIER}× on filled
-              stake
-            </p>
+            {isOwner && (
+              <p className="text-xs text-gray-400 mt-4 pt-4 border-t border-gray-100">
+                Balance: {formatMoney(profile.balance)} · Winners paid {WIN_MULTIPLIER}× on filled
+                stake · Total P/L:{' '}
+                <span className={totalProfit >= 0 ? 'text-green-600' : 'text-red-600'}>
+                  {totalProfit >= 0 ? '+' : '-'}
+                  {formatMoney(Math.abs(totalProfit))}
+                </span>
+              </p>
+            )}
           </div>
 
           <WinLossChart results={results} />
         </div>
 
-        {/* Edit account panel */}
-        {isOwner && editOpen && (
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 space-y-4">
-            <p className="text-sm font-medium text-gray-900">Edit account</p>
-            <div>
-              <label className="block text-xs text-gray-400 mb-1">Display name (URL)</label>
-              <input
-                value={editUsername}
-                onChange={(e) => setEditUsername(sanitizeUsername(e.target.value))}
-                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
-              />
-              <p className="text-xs text-gray-400 mt-1">
-                {canChangeUsername(profile)
-                  ? 'You can change your name once per month.'
-                  : `Next change in ${daysUntilNameChange(profile)} days.`}
-              </p>
-            </div>
-            <div>
-              <label className="block text-xs text-gray-400 mb-1">Bio</label>
-              <textarea
-                value={editBio}
-                onChange={(e) => setEditBio(e.target.value)}
-                rows={3}
-                maxLength={280}
-                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm resize-y"
-              />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-400 mb-1">Profile picture</label>
-              <input type="file" accept="image/*" onChange={onAvatarFile} className="text-sm" />
-              <input
-                value={avatarUrl.startsWith('data:') ? '' : avatarUrl}
-                onChange={(e) => setAvatarUrl(e.target.value)}
-                placeholder="Or paste image URL"
-                className="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
-              />
-            </div>
-            <div className="flex gap-3">
-              <button
-                type="button"
-                onClick={saveProfile}
-                className="px-5 py-2 bg-gray-900 text-white text-sm rounded-lg hover:bg-gray-700"
-              >
-                Save changes
-              </button>
-              <button
-                type="button"
-                onClick={() => setEditOpen(false)}
-                className="px-5 py-2 text-sm border border-gray-200 rounded-lg hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-            </div>
-            {saveMsg && <p className="text-sm text-green-700">{saveMsg}</p>}
-          </div>
-        )}
-
-        {/* Positions */}
-        <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden">
-          <div className="px-4 sm:px-6 py-4 border-b border-gray-100 flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-sm font-medium text-gray-900">Positions</h2>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => setTab('active')}
-                className={`px-4 py-1.5 text-sm rounded-lg font-medium ${
-                  tab === 'active' ? 'bg-gray-900 text-white' : 'border border-gray-200'
-                }`}
-              >
-                Active
-              </button>
-              <button
-                type="button"
-                onClick={() => setTab('closed')}
-                className={`px-4 py-1.5 text-sm rounded-lg font-medium ${
-                  tab === 'closed' ? 'bg-gray-900 text-white' : 'border border-gray-200'
-                }`}
-              >
-                Closed
-              </button>
+        {/* Positions panel */}
+        <div className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+          <div className="px-4 sm:px-6 py-4 border-b border-gray-100">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-base font-semibold text-gray-900">Positions</h2>
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="relative">
+                  <svg
+                    className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                  <input
+                    type="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search positions"
+                    className="pl-9 pr-3 py-1.5 text-sm border border-gray-200 rounded-lg w-44 sm:w-52 focus:outline-none focus:ring-2 focus:ring-gray-900/10"
+                  />
+                </div>
+                <div className="flex rounded-lg border border-gray-200 p-0.5 bg-gray-50">
+                  <button
+                    type="button"
+                    onClick={() => setTab('active')}
+                    className={`px-4 py-1.5 text-sm rounded-md font-medium transition-colors ${
+                      tab === 'active'
+                        ? 'bg-white text-gray-900 shadow-sm'
+                        : 'text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    Active
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setTab('closed')}
+                    className={`px-4 py-1.5 text-sm rounded-md font-medium transition-colors ${
+                      tab === 'closed'
+                        ? 'bg-white text-gray-900 shadow-sm'
+                        : 'text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    Closed
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
           {error && (
-            <p className="text-sm text-red-600 bg-red-50 border-b border-red-200 px-4 py-3">
+            <p className="text-sm text-red-600 bg-red-50 border-b border-red-100 px-4 sm:px-6 py-3">
               {error}
             </p>
           )}
 
-          {list.length === 0 ? (
-            <p className="text-sm text-gray-400 py-12 text-center">
-              {tab === 'active' ? 'No active positions.' : 'No closed positions yet.'}
+          {(betsError || resultsError) && (
+            <p className="text-sm text-amber-800 bg-amber-50 border-b border-amber-100 px-4 sm:px-6 py-3">
+              {betsError || resultsError}
             </p>
+          )}
+
+          {list.length === 0 ? (
+            <div className="py-16 text-center">
+              <p className="text-sm text-gray-400">
+                {search
+                  ? 'No positions match your search.'
+                  : tab === 'active'
+                    ? 'No active positions.'
+                    : 'No closed positions yet.'}
+              </p>
+            </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[520px] text-left">
+              <table className="w-full min-w-[640px] text-left">
                 <thead>
-                  <tr className="text-xs text-gray-400 border-b border-gray-100">
-                    <th className="py-3 px-4 sm:px-6 font-medium">Market</th>
+                  <tr className="text-[11px] text-gray-400 uppercase tracking-wide border-b border-gray-100 bg-gray-50/50">
+                    <th className="py-3 pl-4 sm:pl-6 pr-4 font-medium">Market</th>
                     <th className="py-3 px-3 font-medium">Ordered</th>
                     <th className="py-3 px-3 font-medium">Filled</th>
+                    <th className="py-3 px-3 font-medium">{isClosedTab ? 'P / L' : 'Value'}</th>
                     <th className="py-3 pl-3 pr-4 sm:pr-6 font-medium text-right">
-                      {tab === 'active' ? 'Action' : 'Status'}
+                      {tab === 'active' && isOwner ? 'Action' : ''}
                     </th>
                   </tr>
                 </thead>
-                <tbody className="px-4">
+                <tbody>
                   {list.map(({ bet, entry }) => (
                     <PositionRow
                       key={entry.id}
                       bet={bet}
                       entry={entry}
-                      userId={profile.user_id}
+                      profit={profitByBet[bet.id]}
+                      isOwner={isOwner}
                       onCancel={handleCancel}
                       cancelLoadingId={cancelLoadingId}
+                      isClosed={isClosedTab}
                     />
                   ))}
                 </tbody>
@@ -421,10 +578,28 @@ export default function AccountPage({ username, viewerUserId, isOwner }) {
           )}
         </div>
 
-        <p className="text-xs text-gray-400 text-center pb-4">
-          {window.location.origin}{accountPath(profile.username)}
+        <p className="text-xs text-gray-400 text-center pb-2">
+          Public profile · {window.location.origin}
+          {accountPath(profile.username)}
         </p>
       </div>
+
+      <EditProfileModal
+        open={editOpen}
+        onClose={() => setEditOpen(false)}
+        editUsername={editUsername}
+        setEditUsername={setEditUsername}
+        editBio={editBio}
+        setEditBio={setEditBio}
+        avatarUrl={avatarUrl}
+        setAvatarUrl={setAvatarUrl}
+        onAvatarFile={onAvatarFile}
+        profile={profile}
+        onSave={saveProfile}
+        saveMsg={saveMsg}
+        saveError={saveError}
+        saving={saving}
+      />
     </div>
   )
 }

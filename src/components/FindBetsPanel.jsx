@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { EVENT_TYPES } from '../constants/eventTypes'
 import { fetchAllBets, formatMoney, isBetJoinable } from '../services/betsService'
+import { accountPath } from '../utils/profileUtils'
 
 export default function FindBetsPanel({ refreshKey }) {
   const [bets, setBets] = useState([])
@@ -78,31 +79,33 @@ export default function FindBetsPanel({ refreshKey }) {
       )}
 
       <ul className="space-y-3">
-        {filtered.map((bet) => (
-          <li key={bet.id}>
-            <Link
-              to={`/bet/${bet.id}`}
-              className="block rounded-xl border border-gray-200 p-4 hover:border-gray-400 hover:bg-gray-50/50"
-            >
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">
-                  {bet.event_type}
-                </span>
-                <span className="text-xs text-gray-400">
-                  by @{bet.creator_username ?? bet.created_by_label}
-                </span>
+        {filtered.map((bet) => {
+          const creator = bet.creator_username ?? bet.created_by_label
+          return (
+            <li key={bet.id}>
+              <div className="rounded-xl border border-gray-200 p-4 hover:border-gray-400 hover:bg-gray-50/50">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">
+                    {bet.event_type}
+                  </span>
+                  <Link to={accountPath(creator)} className="text-xs text-gray-400 hover:text-blue-600">
+                    by @{creator}
+                  </Link>
+                </div>
+                <Link to={`/bet/${bet.id}`} className="block">
+                  <p className="font-medium text-gray-900 hover:text-blue-600">{bet.title}</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {new Date(bet.event_date).toLocaleString()}
+                  </p>
+                  <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-600">
+                    <span>Side 1: {formatMoney(bet.side1Total)} ({bet.side1.length})</span>
+                    <span>Side 2: {formatMoney(bet.side2Total)} ({bet.side2.length})</span>
+                  </div>
+                </Link>
               </div>
-              <p className="font-medium text-gray-900">{bet.title}</p>
-              <p className="text-xs text-gray-500 mt-1">
-                {new Date(bet.event_date).toLocaleString()}
-              </p>
-              <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-600">
-                <span>Side 1: {formatMoney(bet.side1Total)} ({bet.side1.length})</span>
-                <span>Side 2: {formatMoney(bet.side2Total)} ({bet.side2.length})</span>
-              </div>
-            </Link>
-          </li>
-        ))}
+            </li>
+          )
+        })}
       </ul>
     </section>
   )

@@ -118,12 +118,46 @@ export async function fetchBet(betId) {
 }
 
 export async function fetchUserBets(userId) {
-  const all = await fetchAllBets()
-  return all.filter(
-    (bet) =>
-      bet.created_by_id === userId ||
-      bet.entries.some((entry) => entry.user_id === userId && entry.status !== 'cancelled'),
-  )
+  const supabase = getSupabase()
+  if (!supabase) throw new Error('Database not configured')
+
+  const { data: userEntries, error: userEntriesError } = await supabase
+    .from('bet_entries')
+    .select('bet_id')
+    .eq('user_id', userId)
+    .neq('status', 'cancelled')
+
+  if (userEntriesError) throw userEntriesError
+
+  const { data: createdBets, error: createdError } = await supabase
+    .from('bets')
+    .select('id')
+    .eq('created_by_id', userId)
+
+  if (createdError) throw createdError
+
+  const betIds = [
+    ...new Set([
+      ...(userEntries ?? []).map((entry) => entry.bet_id),
+      ...(createdBets ?? []).map((bet) => bet.id),
+    ]),
+  ]
+
+  if (betIds.length === 0) return []
+
+  const { data: bets, error: betsError } = await supabase.from('bets').select('*').in('id', betIds)
+  if (betsError) throw betsError
+
+  const { data: entries, error: entriesError } = await supabase
+    .from('bet_entries')
+    .select('*')
+    .in('bet_id', betIds)
+
+  if (entriesError) throw entriesError
+
+  return (bets ?? [])
+    .map((bet) => attachGrouped(bet, entries ?? []))
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
 }
 
 export async function createBet(payload) {

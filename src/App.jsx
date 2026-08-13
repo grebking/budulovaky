@@ -24,16 +24,9 @@ function getSolanaWalletAccounts(user) {
   )
 }
 
-function AccountRouteWrapper({ viewerUserId, profile }) {
+function AccountRouteWrapper({ viewerUserId }) {
   const { username } = useParams()
-  const isOwner = profile?.username === username?.toLowerCase()
-  return (
-    <AccountPage
-      username={username}
-      viewerUserId={viewerUserId}
-      isOwner={isOwner}
-    />
-  )
+  return <AccountPage username={username} viewerUserId={viewerUserId} />
 }
 
 function App() {
@@ -164,7 +157,7 @@ function App() {
         <Route
           path="/account/@:username"
           element={
-            <AccountRouteWrapper viewerUserId={userId} profile={profile} />
+            <AccountRouteWrapper viewerUserId={userId} />
           }
         />
         <Route
