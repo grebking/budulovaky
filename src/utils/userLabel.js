@@ -9,3 +9,7 @@ export function getUserLabel(user, walletAddress) {
   if (walletAddress) return `${walletAddress.slice(0, 4)}…${walletAddress.slice(-4)}`
   return 'Player'
 }
+
+export function getUserEmails(user) {
+  return [user?.email?.address, user?.google?.email].filter(Boolean)
+}
