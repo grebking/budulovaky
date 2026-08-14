@@ -180,6 +180,7 @@ export default function AccountPage({ username, viewerUserId }) {
   const [cancelLoadingId, setCancelLoadingId] = useState(null)
   const [sellLoadingId, setSellLoadingId] = useState(null)
   const [copied, setCopied] = useState(false)
+  const [renderError, setRenderError] = useState(null)
 
   const isOwner = Boolean(viewerUserId && profile?.user_id === viewerUserId)
 
@@ -417,8 +418,27 @@ export default function AccountPage({ username, viewerUserId }) {
 
   const isClosedTab = tab === 'closed'
 
-  return (
-    <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 min-h-0 bg-[#f8f9fb]">
+  if (renderError) {
+    return (
+      <div className="flex-1 flex items-center justify-center p-6">
+        <div className="text-center">
+          <p className="text-red-600 mb-2">Error loading portfolio:</p>
+          <p className="text-sm text-gray-600">{renderError}</p>
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 bg-gray-900 text-white rounded-lg"
+          >
+            Reload
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  try {
+    return (
+      <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 min-h-0 bg-[#f8f9fb]">
       <div className="max-w-6xl mx-auto space-y-5">
         {/* Profile + chart row — Polymarket-style */}
         <div className="grid lg:grid-cols-2 gap-4">
@@ -659,5 +679,10 @@ export default function AccountPage({ username, viewerUserId }) {
         getBioChangesRemaining={getBioChangesRemaining}
       />
     </div>
-  )
+    )
+  } catch (err) {
+    console.error('Portfolio render error:', err)
+    setRenderError(err.message || 'Unknown error')
+    return null
+  }
 }
