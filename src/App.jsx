@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Link, Route, Routes, useParams } from 'react-router-dom'
+import { Link, Route, Routes } from 'react-router-dom'
 import { usePrivy } from '@privy-io/react-auth'
 import { useSolanaWallets } from '@privy-io/react-auth/solana'
 import AccountPage from './components/AccountPage'
@@ -12,7 +12,6 @@ import { isAdminUser } from './config'
 import { WIN_MULTIPLIER, PLATFORM_FEE_PERCENT } from './constants/eventTypes'
 import { formatMoney } from './services/betsService'
 import { ensureProfile, fetchProfileByUserId } from './services/profileService'
-import { accountPath } from './utils/profileUtils'
 import { getUserId, getUserLabel } from './utils/userLabel'
 import logo from '../logo.png'
 
@@ -24,11 +23,6 @@ function getSolanaWalletAccounts(user) {
         account.chainType === 'solana',
     ) ?? []
   )
-}
-
-function AccountRouteWrapper({ viewerUserId }) {
-  const { username } = useParams()
-  return <AccountPage username={username} viewerUserId={viewerUserId} />
 }
 
 function App() {
@@ -94,7 +88,7 @@ function App() {
     <div className="h-full bg-white flex flex-col min-h-0">
       <header className="flex items-center justify-between gap-4 p-4 shrink-0 border-b border-gray-100">
         <Link to="/" className="flex items-center gap-3">
-          <img src="/newlogo.png" alt="TennisZone" className="h-10 w-auto" />
+          <img src="/newlogo.png" alt="TennisZone" className="h-20 w-auto" />
         </Link>
 
         <div className="flex items-center gap-3 shrink-0">
@@ -121,10 +115,10 @@ function App() {
           {authenticated && profile ? (
             <>
               <Link
-                to={accountPath(profile.username)}
+                to="/account"
                 className="px-4 py-2 text-sm font-medium bg-gray-900 text-white rounded-lg hover:bg-gray-700"
               >
-                Portfolio
+                Account
               </Link>
               <button
                 type="button"
@@ -254,12 +248,7 @@ function App() {
         />
         <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/admin" element={<AdminPage isAdmin={isAdmin} />} />
-        <Route
-          path="/portfolio/@:username"
-          element={
-            <AccountRouteWrapper viewerUserId={userId} />
-          }
-        />
+        <Route path="/account" element={<AccountPage userId={userId} />} />
         <Route
           path="/"
           element={
