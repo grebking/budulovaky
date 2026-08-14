@@ -112,7 +112,7 @@ function App() {
               Admin
             </Link>
           )}
-          {authenticated && profile ? (
+          {authenticated ? (
             <>
               <Link
                 to="/account"

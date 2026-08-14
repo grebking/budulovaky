@@ -12,8 +12,6 @@ import {
   joinBet,
   sellBetEntry,
 } from '../services/betsService'
-import { accountPath } from '../utils/profileUtils'
-import BetComments from './BetComments'
 
 function quickAdd(current, amount) {
   const base = Number(current) || 0
@@ -324,15 +322,6 @@ export default function BetPage({ userId, authenticated, onLogin, onBalanceChang
                 Winners paid {WIN_MULTIPLIER}× on filled amount
               </p>
             )}
-
-            <BetComments
-              betId={betId}
-              userId={userId}
-              authenticated={authenticated}
-              userLabel={user?.linkedAccounts?.[0]?.address?.slice(0, 8) || 'User'}
-              myEntries={myEntries}
-              bet={bet}
-            />
           </div>
 
           {/* Trading panel */}
