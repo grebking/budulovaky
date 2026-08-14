@@ -94,10 +94,8 @@ function App() {
     <div className="h-full bg-white flex flex-col min-h-0">
       <header className="flex items-center justify-between gap-4 p-4 shrink-0 border-b border-gray-100">
         <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="TennisZone" className="h-10 w-auto" />
           <div>
             <h1 className="text-xl font-semibold text-gray-900 tracking-tight">TennisZone</h1>
-            <p className="text-xs text-gray-500">Prediction markets · {WIN_MULTIPLIER}× payout</p>
           </div>
         </Link>
 
