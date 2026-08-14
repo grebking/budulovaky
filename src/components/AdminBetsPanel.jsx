@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   fetchAllBets,
   formatMoney,
@@ -44,7 +44,7 @@ function BetAdminCard({ bet, onResolved }) {
         <div className="rounded-xl border border-gray-200 p-4 bg-gray-50">
           <p className="text-xs uppercase text-gray-400 mb-1">Side 1 — {bet.side1_label}</p>
           <p className="text-lg font-semibold text-gray-900">
-            {formatMoney(bet.side1Total)} ordered
+            {formatMoney(bet.realSide1Total || bet.side1Total)} ordered (real)
             {bet.side1Filled > 0 && (
               <span className="text-sm font-normal text-gray-500">
                 {' '}
@@ -67,7 +67,7 @@ function BetAdminCard({ bet, onResolved }) {
         <div className="rounded-xl border border-gray-200 p-4 bg-gray-50">
           <p className="text-xs uppercase text-gray-400 mb-1">Side 2 — {bet.side2_label}</p>
           <p className="text-lg font-semibold text-gray-900">
-            {formatMoney(bet.side2Total)} ordered
+            {formatMoney(bet.realSide2Total || bet.side2Total)} ordered (real)
             {bet.side2Filled > 0 && (
               <span className="text-sm font-normal text-gray-500">
                 {' '}
@@ -144,7 +144,7 @@ export default function AdminBetsPanel() {
   const [bets, setBets] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [filter, setFilter] = useState('active')
+  const [filter, setFilter] = useState('not_started')
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -165,10 +165,29 @@ export default function AdminBetsPanel() {
     return () => clearInterval(interval)
   }, [load])
 
-  const visible =
-    filter === 'active'
-      ? bets.filter((bet) => bet.status === 'open')
-      : bets
+  const visible = useMemo(() => {
+    const now = new Date()
+    return bets.filter((bet) => {
+      const eventDate = new Date(bet.event_date)
+      
+      if (filter === 'not_started') {
+        return bet.status === 'open' && eventDate > now
+      }
+      if (filter === 'in_play') {
+        return bet.status === 'open' && eventDate <= now
+      }
+      if (filter === 'finished') {
+        return bet.status !== 'open' && !bet.winner
+      }
+      if (filter === 'archive') {
+        return bet.status !== 'open' && bet.winner && bet.is_archived
+      }
+      if (filter === 'all') {
+        return bets
+      }
+      return true
+    })
+  }, [bets, filter])
 
   return (
     <div>
@@ -182,12 +201,39 @@ export default function AdminBetsPanel() {
         <div className="flex gap-2">
           <button
             type="button"
-            onClick={() => setFilter('active')}
+            onClick={() => setFilter('not_started')}
             className={`px-3 py-1.5 text-sm rounded-lg ${
-              filter === 'active' ? 'bg-gray-900 text-white' : 'border border-gray-200'
+              filter === 'not_started' ? 'bg-gray-900 text-white' : 'border border-gray-200'
             }`}
           >
-            Active
+            Not Started
+          </button>
+          <button
+            type="button"
+            onClick={() => setFilter('in_play')}
+            className={`px-3 py-1.5 text-sm rounded-lg ${
+              filter === 'in_play' ? 'bg-gray-900 text-white' : 'border border-gray-200'
+            }`}
+          >
+            In Play
+          </button>
+          <button
+            type="button"
+            onClick={() => setFilter('finished')}
+            className={`px-3 py-1.5 text-sm rounded-lg ${
+              filter === 'finished' ? 'bg-gray-900 text-white' : 'border border-gray-200'
+            }`}
+          >
+            Finished
+          </button>
+          <button
+            type="button"
+            onClick={() => setFilter('archive')}
+            className={`px-3 py-1.5 text-sm rounded-lg ${
+              filter === 'archive' ? 'bg-gray-900 text-white' : 'border border-gray-200'
+            }`}
+          >
+            Archive
           </button>
           <button
             type="button"

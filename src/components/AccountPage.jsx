@@ -7,6 +7,7 @@ import {
   fetchUserBets,
   formatMoney,
   isBetJoinable,
+  sellBetEntry,
 } from '../services/betsService'
 import {
   changeUsername,
@@ -72,11 +73,12 @@ function FillBar({ filled, stake, isEstimate }) {
   )
 }
 
-function PositionRow({ bet, entry, profit, isOwner, onCancel, cancelLoadingId, isClosed }) {
+function PositionRow({ bet, entry, profit, isOwner, onCancel, onSell, cancelLoadingId, sellLoadingId, isClosed, canSellPosition }) {
   const sideLabel = entry.side === 1 ? bet.side1_label : bet.side2_label
   const isSettled = bet.status !== 'open'
   const filled = isSettled ? Number(entry.filled_stake) : estimateFill(entry, bet.entries)
   const canCancel = isOwner && isBetJoinable(bet) && entry.status === 'active'
+  const canSell = isOwner && canSellPosition(entry, bet)
   const stake = Number(entry.stake)
 
   return (
@@ -122,23 +124,36 @@ function PositionRow({ bet, entry, profit, isOwner, onCancel, cancelLoadingId, i
         )}
       </td>
       <td className="py-4 pl-3 pr-4 sm:pr-6 text-right whitespace-nowrap align-top">
-        {canCancel ? (
-          <button
-            type="button"
-            disabled={cancelLoadingId === entry.id}
-            onClick={() => onCancel(entry.id)}
-            className="text-sm px-3 py-1.5 text-red-600 border border-red-200 rounded-lg hover:bg-red-50 disabled:opacity-50"
-          >
-            {cancelLoadingId === entry.id ? '…' : 'Cancel'}
-          </button>
-        ) : isClosed ? (
-          <Link
-            to={`/bet/${bet.id}`}
-            className="text-xs text-gray-400 hover:text-gray-600 underline"
-          >
-            View
-          </Link>
-        ) : null}
+        <div className="flex gap-2 justify-end">
+          {canSell && (
+            <button
+              type="button"
+              disabled={sellLoadingId === entry.id}
+              onClick={() => onSell(entry.id)}
+              className="text-sm px-3 py-1.5 text-red-600 border border-red-200 rounded-lg hover:bg-red-50 disabled:opacity-50"
+            >
+              {sellLoadingId === entry.id ? '…' : 'Sell'}
+            </button>
+          )}
+          {canCancel && (
+            <button
+              type="button"
+              disabled={cancelLoadingId === entry.id}
+              onClick={() => onCancel(entry.id)}
+              className="text-sm px-3 py-1.5 text-red-600 border border-red-200 rounded-lg hover:bg-red-50 disabled:opacity-50"
+            >
+              {cancelLoadingId === entry.id ? '…' : 'Cancel'}
+            </button>
+          )}
+          {isClosed && (
+            <Link
+              to={`/bet/${bet.id}`}
+              className="text-xs text-gray-400 hover:text-gray-600 underline"
+            >
+              View
+            </Link>
+          )}
+        </div>
       </td>
     </tr>
   )
@@ -163,6 +178,7 @@ export default function AccountPage({ username, viewerUserId }) {
   const [saveError, setSaveError] = useState(null)
   const [saving, setSaving] = useState(false)
   const [cancelLoadingId, setCancelLoadingId] = useState(null)
+  const [sellLoadingId, setSellLoadingId] = useState(null)
   const [copied, setCopied] = useState(false)
 
   const isOwner = Boolean(viewerUserId && profile?.user_id === viewerUserId)
@@ -276,7 +292,7 @@ export default function AccountPage({ username, viewerUserId }) {
       if (editUsername !== profile.username) {
         if (!canChangeUsername(profile)) {
           throw new Error(
-            `Username can only be changed once per month. Wait ${daysUntilNameChange(profile)} more days.`,
+            `Username can only be changed once per month. Wait ${daysUntilNameChange(profile)} more days.`
           )
         }
         const updated = await changeUsername(profile.user_id, editUsername)
@@ -301,6 +317,21 @@ export default function AccountPage({ username, viewerUserId }) {
     } finally {
       setSaving(false)
     }
+  }
+
+  const getBioChangesRemaining = () => {
+    if (!profile) return 3
+    const now = new Date()
+    const lastChanged = profile.bio_last_changed_at ? new Date(profile.bio_last_changed_at) : null
+    const hoursSinceLastChange = lastChanged ? (now - lastChanged) / (1000 * 60 * 60) : 25
+    
+    // Reset count if 24 hours have passed
+    let count = profile.bio_change_count || 0
+    if (hoursSinceLastChange >= 24) {
+      count = 0
+    }
+    
+    return 3 - count
   }
 
   const onAvatarFile = (event) => {
@@ -328,6 +359,29 @@ export default function AccountPage({ username, viewerUserId }) {
     } finally {
       setCancelLoadingId(null)
     }
+  }
+
+  const handleSell = async (entryId) => {
+    if (!isOwner || !viewerUserId) return
+    setSellLoadingId(entryId)
+    setError(null)
+    try {
+      await sellBetEntry({ entryId, userId: viewerUserId })
+      await load()
+    } catch (err) {
+      setError(err.message ?? 'Could not sell position.')
+    } finally {
+      setSellLoadingId(null)
+    }
+  }
+
+  const canSellPosition = (entry, bet) => {
+    if (entry.status !== 'active') return false
+    if (entry.is_sell_position) return false
+    const eventDate = new Date(bet.event_date)
+    const now = new Date()
+    const minutesUntilClose = (eventDate - now) / (1000 * 60)
+    return minutesUntilClose >= 15
   }
 
   const copyProfileLink = async () => {
@@ -568,8 +622,11 @@ export default function AccountPage({ username, viewerUserId }) {
                       profit={profitByBet[bet.id]}
                       isOwner={isOwner}
                       onCancel={handleCancel}
+                      onSell={handleSell}
                       cancelLoadingId={cancelLoadingId}
+                      sellLoadingId={sellLoadingId}
                       isClosed={isClosedTab}
+                      canSellPosition={canSellPosition}
                     />
                   ))}
                 </tbody>
@@ -599,6 +656,7 @@ export default function AccountPage({ username, viewerUserId }) {
         saveMsg={saveMsg}
         saveError={saveError}
         saving={saving}
+        getBioChangesRemaining={getBioChangesRemaining}
       />
     </div>
   )

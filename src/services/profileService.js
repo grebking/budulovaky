@@ -82,6 +82,30 @@ export async function ensureProfile(userId, seedLabel) {
 
 export async function updateProfile(userId, updates) {
   const supabase = getSupabase()
+  
+  // Check bio change limit if bio is being updated
+  if (updates.bio !== undefined) {
+    const profile = await fetchProfileByUserId(userId)
+    if (!profile) throw new Error('Profile not found.')
+    
+    const now = new Date()
+    const lastChanged = profile.bio_last_changed_at ? new Date(profile.bio_last_changed_at) : null
+    const hoursSinceLastChange = lastChanged ? (now - lastChanged) / (1000 * 60 * 60) : 25
+    
+    // Reset count if 24 hours have passed
+    let newCount = profile.bio_change_count || 0
+    if (hoursSinceLastChange >= 24) {
+      newCount = 0
+    }
+    
+    if (newCount >= 3) {
+      throw new Error('You can only change your bio 3 times per 24 hours. Please wait.')
+    }
+    
+    updates.bio_change_count = newCount + 1
+    updates.bio_last_changed_at = now.toISOString()
+  }
+  
   const { data, error } = await supabase
     .from('profiles')
     .update(updates)

@@ -15,19 +15,28 @@ function sumFilled(list) {
   return list.reduce((total, entry) => total + Number(entry.filled_stake ?? 0), 0)
 }
 
-function groupEntries(entries = []) {
+function groupEntries(entries = [], bet = {}) {
   const active = entries.filter((entry) => entry.status !== 'cancelled')
   const side1 = active.filter((entry) => entry.side === 1)
   const side2 = active.filter((entry) => entry.side === 2)
 
+  const realSide1Total = sumStake(side1)
+  const realSide2Total = sumStake(side2)
+  
+  // Add fake balance to totals for display (visual only)
+  const fakeSide1 = Number(bet.fake_balance_side1) || 0
+  const fakeSide2 = Number(bet.fake_balance_side2) || 0
+
   return {
     side1,
     side2,
-    side1Total: sumStake(side1),
-    side2Total: sumStake(side2),
+    side1Total: realSide1Total + fakeSide1,
+    side2Total: realSide2Total + fakeSide2,
     side1Filled: sumFilled(side1),
     side2Filled: sumFilled(side2),
-    totalPool: sumStake(active),
+    realSide1Total,
+    realSide2Total,
+    totalPool: sumStake(active) + fakeSide1 + fakeSide2,
     totalFilled: sumFilled(active),
     totalPeople: active.length,
   }
@@ -75,7 +84,7 @@ function attachGrouped(bet, allEntries) {
   return {
     ...bet,
     entries,
-    ...groupEntries(entries),
+    ...groupEntries(entries, bet),
   }
 }
 
@@ -93,7 +102,61 @@ export async function fetchAllBets() {
   const { data: entries, error: entriesError } = await supabase.from('bet_entries').select('*')
   if (entriesError) throw entriesError
 
-  return bets.map((bet) => attachGrouped(bet, entries))
+  // Update fake balances for active bets
+  const updatedBets = await Promise.all(
+    bets.map(async (bet) => {
+      if (bet.status === 'open') {
+        return await updateFakeBalance(bet.id)
+      }
+      return bet
+    })
+  )
+
+  return updatedBets.map((bet) => attachGrouped(bet, entries))
+}
+
+async function updateFakeBalance(betId) {
+  const supabase = getSupabase()
+  if (!supabase) throw new Error('Database not configured')
+
+  const { data: bet, error } = await supabase
+    .from('bets')
+    .select('*')
+    .eq('id', betId)
+    .single()
+
+  if (error || !bet) return bet
+
+  const now = new Date()
+  const lastUpdated = bet.fake_balance_last_updated ? new Date(bet.fake_balance_last_updated) : bet.created_at
+  const minutesSinceUpdate = (now - lastUpdated) / (1000 * 60)
+
+  if (minutesSinceUpdate < 1) return bet // Only update every minute
+
+  const target = Number(bet.fake_balance_target) || 0
+  const currentSide1 = Number(bet.fake_balance_side1) || 0
+  const currentSide2 = Number(bet.fake_balance_side2) || 0
+  const currentTotal = currentSide1 + currentSide2
+
+  if (currentTotal >= target) return bet // Already reached target
+
+  // Add $5 to each side per minute
+  const increment = Math.floor(minutesSinceUpdate) * 5
+  const newSide1 = Math.min(currentSide1 + increment, target / 2)
+  const newSide2 = Math.min(currentSide2 + increment, target / 2)
+
+  const { error: updateError } = await supabase
+    .from('bets')
+    .update({
+      fake_balance_side1: newSide1,
+      fake_balance_side2: newSide2,
+      fake_balance_last_updated: now.toISOString(),
+    })
+    .eq('id', betId)
+
+  if (updateError) return bet
+
+  return { ...bet, fake_balance_side1: newSide1, fake_balance_side2: newSide2 }
 }
 
 export async function fetchBet(betId) {
@@ -169,6 +232,18 @@ export async function createBet(payload) {
     throw new Error('Event must be between now and 7 days ahead.')
   }
 
+  // Check if user has more than 2 active bets
+  const { data: activeBets, error: countError } = await supabase
+    .from('bets')
+    .select('id')
+    .eq('created_by_id', payload.created_by_id)
+    .eq('status', 'open')
+
+  if (countError) throw countError
+  if (activeBets && activeBets.length >= 2) {
+    throw new Error('You can only have 2 active bets at a time. Wait for some to finish or be resolved.')
+  }
+
   const profile = await fetchProfileByUserId(payload.created_by_id)
   if (!profile) throw new Error('Profile not found.')
 
@@ -184,6 +259,8 @@ export async function createBet(payload) {
       created_by_id: payload.created_by_id,
       created_by_label: profile.username,
       creator_username: profile.username,
+      fake_balance_target: Math.floor(Math.random() * (3000 - 250 + 1)) + 250, // Random target between 250-3000
+      fake_balance_last_updated: new Date().toISOString(),
     })
     .select()
     .single()
@@ -265,6 +342,50 @@ export async function cancelBetEntry({ entryId, userId }) {
   return entry
 }
 
+export async function sellBetEntry({ entryId, userId }) {
+  const supabase = getSupabase()
+  if (!supabase) throw new Error('Database not configured')
+
+  const { data: entry, error } = await supabase
+    .from('bet_entries')
+    .select('*')
+    .eq('id', entryId)
+    .single()
+
+  if (error) throw error
+  if (entry.user_id !== userId) throw new Error('Not your order.')
+  if (entry.status === 'cancelled') throw new Error('Order already cancelled.')
+  if (entry.is_sell_position) throw new Error('Already a sell position.')
+
+  const bet = await fetchBet(entry.bet_id)
+  const eventDate = new Date(bet.event_date)
+  const now = new Date()
+  const minutesUntilClose = (eventDate - now) / (1000 * 60)
+
+  if (minutesUntilClose < 15) {
+    throw new Error('Cannot sell within 15 minutes of event closing.')
+  }
+
+  const filledAmount = Number(entry.filled_stake) > 0 ? Number(entry.filled_stake) : estimateFill(entry, bet.entries)
+  const sellPrice = filledAmount * 0.9 // Sell at 90% of current value
+
+  const { error: updateError } = await supabase
+    .from('bet_entries')
+    .update({
+      is_sell_position: true,
+      sold_at: new Date().toISOString(),
+      sell_price: sellPrice,
+      status: 'cancelled',
+      cancelled_at: new Date().toISOString(),
+    })
+    .eq('id', entryId)
+
+  if (updateError) throw updateError
+
+  await adjustBalance(userId, sellPrice)
+  return { ...entry, sell_price: sellPrice }
+}
+
 export async function finalizeBetMatching(betId) {
   const supabase = getSupabase()
   const bet = await fetchBet(betId)
@@ -280,6 +401,7 @@ export async function finalizeBetMatching(betId) {
 
     if (error) throw error
 
+    // Automatic refund for unfilled orders after closing time
     if (entry.refund > 0) {
       await adjustBalance(entry.user_id, entry.refund)
     }

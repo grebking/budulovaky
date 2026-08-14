@@ -23,6 +23,16 @@ export default function AdminLayout({ children }) {
         >
           Bets
         </NavLink>
+        <NavLink
+          to="/admin/archive"
+          className={({ isActive }) =>
+            `px-3 py-2 text-sm rounded-lg font-medium ${
+              isActive ? 'bg-gray-900 text-white' : 'text-gray-700 hover:bg-white'
+            }`
+          }
+        >
+          Archive
+        </NavLink>
       </aside>
       <div className="flex-1 overflow-y-auto p-6 min-h-0">{children}</div>
     </div>

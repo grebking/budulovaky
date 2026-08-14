@@ -17,6 +17,7 @@ export default function EditProfileModal({
   saveMsg,
   saveError,
   saving,
+  getBioChangesRemaining,
 }) {
   if (!open) return null
 
@@ -88,7 +89,12 @@ export default function EditProfileModal({
             placeholder="Tell others about yourself…"
             className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm resize-y focus:outline-none focus:ring-2 focus:ring-gray-900/10"
           />
-          <p className="text-xs text-gray-400 mt-1 text-right">{editBio.length}/280</p>
+          <div className="flex justify-between mt-1">
+            <p className="text-xs text-gray-400">{editBio.length}/280</p>
+            <p className="text-xs text-gray-400">
+              {getBioChangesRemaining?.()} changes remaining today
+            </p>
+          </div>
         </div>
 
         <div>

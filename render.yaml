@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: privy-game
+    name: tenniszone
     runtime: node
     plan: free
     buildCommand: npm install && npm run build
@@ -8,3 +8,11 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 20
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false
+      - key: VITE_ADMIN_EMAILS
+        sync: false
+domains:
+  - domain: tenniszone.xyz

@@ -5,14 +5,16 @@ import { useSolanaWallets } from '@privy-io/react-auth/solana'
 import AccountPage from './components/AccountPage'
 import AdminPage from './components/AdminPage'
 import BetPage from './components/BetPage'
+import CategoryPage from './components/CategoryPage'
 import HomePage from './components/HomePage'
 import SetupBanner from './components/SetupBanner'
 import { isAdminUser } from './config'
-import { WIN_MULTIPLIER } from './constants/eventTypes'
+import { WIN_MULTIPLIER, PLATFORM_FEE_PERCENT } from './constants/eventTypes'
 import { formatMoney } from './services/betsService'
 import { ensureProfile, fetchProfileByUserId } from './services/profileService'
 import { accountPath } from './utils/profileUtils'
 import { getUserId, getUserLabel } from './utils/userLabel'
+import logo from '../logo.png'
 
 function getSolanaWalletAccounts(user) {
   return (
@@ -33,6 +35,7 @@ function App() {
   const { login, logout, authenticated, ready, user } = usePrivy()
   const { wallets } = useSolanaWallets()
   const [profile, setProfile] = useState(null)
+  const [showHowItWorks, setShowHowItWorks] = useState(false)
 
   const solanaAddress = useMemo(() => {
     if (wallets[0]?.address) return wallets[0].address
@@ -89,13 +92,23 @@ function App() {
 
   return (
     <div className="h-full bg-white flex flex-col min-h-0">
-      <header className="flex items-center justify-between gap-4 p-6 shrink-0 border-b border-gray-100">
-        <Link to="/" className="block">
-          <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">Cx Mrkt</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Prediction markets · {WIN_MULTIPLIER}× payout</p>
+      <header className="flex items-center justify-between gap-4 p-4 shrink-0 border-b border-gray-100">
+        <Link to="/" className="flex items-center gap-3">
+          <img src={logo} alt="TennisZone" className="h-10 w-auto" />
+          <div>
+            <h1 className="text-xl font-semibold text-gray-900 tracking-tight">TennisZone</h1>
+            <p className="text-xs text-gray-500">Prediction markets · {WIN_MULTIPLIER}× payout</p>
+          </div>
         </Link>
 
         <div className="flex items-center gap-3 shrink-0">
+          <button
+            type="button"
+            onClick={() => setShowHowItWorks(true)}
+            className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50"
+          >
+            How it works
+          </button>
           {authenticated && profile && (
             <span className="text-sm font-medium text-gray-700 hidden sm:inline">
               {formatMoney(profile.balance)}
@@ -139,6 +152,96 @@ function App() {
         </div>
       </header>
 
+      {/* Category Navigation */}
+      <nav className="flex items-center gap-2 px-6 py-3 border-b border-gray-100 overflow-x-auto">
+        <Link
+          to="/category/Soccer"
+          className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg whitespace-nowrap"
+        >
+          Soccer
+        </Link>
+        <Link
+          to="/category/Tennis"
+          className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg whitespace-nowrap"
+        >
+          Tennis
+        </Link>
+        <Link
+          to="/category/Basketball"
+          className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg whitespace-nowrap"
+        >
+          Basketball
+        </Link>
+        <Link
+          to="/category/Concert"
+          className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg whitespace-nowrap"
+        >
+          Concert
+        </Link>
+        <Link
+          to="/category/Esports"
+          className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg whitespace-nowrap"
+        >
+          Esports
+        </Link>
+        <Link
+          to="/category/Politics"
+          className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg whitespace-nowrap"
+        >
+          Politics
+        </Link>
+        <Link
+          to="/category/Other"
+          className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg whitespace-nowrap"
+        >
+          Other
+        </Link>
+      </nav>
+
+      {/* How it works modal */}
+      {showHowItWorks && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold text-gray-900">How it works</h2>
+              <button
+                type="button"
+                onClick={() => setShowHowItWorks(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="space-y-4 text-sm text-gray-600">
+              <p>
+                <strong className="text-gray-900">Join or create bets</strong> on anything - sports, politics, concerts, and more.
+              </p>
+              <p>
+                <strong className="text-gray-900">Place your prediction</strong> by choosing a side and staking virtual money.
+              </p>
+              <p>
+                <strong className="text-gray-900">Win 2x your stake</strong> minus platform fees ({PLATFORM_FEE_PERCENT}%) when your prediction is correct.
+              </p>
+              <p>
+                <strong className="text-gray-900">Sell positions</strong> anytime up to 15 minutes before the event closes.
+              </p>
+              <p>
+                <strong className="text-gray-900">Unfilled orders</strong> are automatically refunded after the event closes.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowHowItWorks(false)}
+              className="mt-6 w-full py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-700"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
+
       <SetupBanner />
 
       <Routes>
@@ -153,6 +256,7 @@ function App() {
             />
           }
         />
+        <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/admin" element={<AdminPage isAdmin={isAdmin} />} />
         <Route
           path="/account/@:username"

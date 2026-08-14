@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { WIN_MULTIPLIER } from '../constants/eventTypes'
+import { usePrivy } from '@privy-io/react-auth'
+import { WIN_MULTIPLIER, PLATFORM_FEE_PERCENT } from '../constants/eventTypes'
 import {
   cancelBetEntry,
   estimateFill,
@@ -9,8 +10,10 @@ import {
   getBetShareUrl,
   isBetJoinable,
   joinBet,
+  sellBetEntry,
 } from '../services/betsService'
 import { accountPath } from '../utils/profileUtils'
+import BetComments from './BetComments'
 
 function quickAdd(current, amount) {
   const base = Number(current) || 0
@@ -19,6 +22,7 @@ function quickAdd(current, amount) {
 
 export default function BetPage({ userId, authenticated, onLogin, onBalanceChange }) {
   const { betId } = useParams()
+  const { user } = usePrivy()
   const [bet, setBet] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -26,6 +30,7 @@ export default function BetPage({ userId, authenticated, onLogin, onBalanceChang
   const [joinStake, setJoinStake] = useState('')
   const [joinLoading, setJoinLoading] = useState(false)
   const [cancelLoadingId, setCancelLoadingId] = useState(null)
+  const [sellLoadingId, setSellLoadingId] = useState(null)
   const [copied, setCopied] = useState(false)
 
   const load = useCallback(async () => {
@@ -104,6 +109,29 @@ export default function BetPage({ userId, authenticated, onLogin, onBalanceChang
     }
   }
 
+  const handleSell = async (entryId) => {
+    setSellLoadingId(entryId)
+    setError(null)
+    try {
+      await sellBetEntry({ entryId, userId })
+      await load()
+      onBalanceChange?.()
+    } catch (err) {
+      setError(err.message ?? 'Could not sell position.')
+    } finally {
+      setSellLoadingId(null)
+    }
+  }
+
+  const canSellPosition = (entry, bet) => {
+    if (entry.status !== 'active') return false
+    if (entry.is_sell_position) return false
+    const eventDate = new Date(bet.event_date)
+    const now = new Date()
+    const minutesUntilClose = (eventDate - now) / (1000 * 60)
+    return minutesUntilClose >= 15
+  }
+
   if (loading) {
     return <p className="p-6 text-sm text-gray-500">Loading market…</p>
   }
@@ -167,6 +195,9 @@ export default function BetPage({ userId, authenticated, onLogin, onBalanceChang
               <p className="text-xs text-gray-400 mt-2">
                 {formatMoney(bet.totalPool)} total orders · {formatMoney(matchedPool)} matched at
                 close · {bet.totalPeople} participants
+              </p>
+              <p className="text-xs text-gray-500 mt-1">
+                Win is {WIN_MULTIPLIER}× - platform fees ({PLATFORM_FEE_PERCENT}%)
               </p>
             </div>
 
@@ -252,16 +283,28 @@ export default function BetPage({ userId, authenticated, onLogin, onBalanceChang
                             )}
                           </p>
                         </div>
-                        {canJoin && (
-                          <button
-                            type="button"
-                            disabled={cancelLoadingId === entry.id}
-                            onClick={() => handleCancel(entry.id)}
-                            className="text-sm px-3 py-1.5 text-red-600 border border-red-200 rounded-lg hover:bg-red-50 disabled:opacity-50"
-                          >
-                            {cancelLoadingId === entry.id ? 'Cancelling…' : 'Cancel'}
-                          </button>
-                        )}
+                        <div className="flex gap-2">
+                          {canSellPosition(entry, bet) && (
+                            <button
+                              type="button"
+                              disabled={sellLoadingId === entry.id}
+                              onClick={() => handleSell(entry.id)}
+                              className="text-sm px-3 py-1.5 text-red-600 border border-red-200 rounded-lg hover:bg-red-50 disabled:opacity-50"
+                            >
+                              {sellLoadingId === entry.id ? 'Selling…' : 'Sell'}
+                            </button>
+                          )}
+                          {canJoin && (
+                            <button
+                              type="button"
+                              disabled={cancelLoadingId === entry.id}
+                              onClick={() => handleCancel(entry.id)}
+                              className="text-sm px-3 py-1.5 text-red-600 border border-red-200 rounded-lg hover:bg-red-50 disabled:opacity-50"
+                            >
+                              {cancelLoadingId === entry.id ? 'Cancelling…' : 'Cancel'}
+                            </button>
+                          )}
+                        </div>
                       </li>
                     )
                   })}
@@ -281,6 +324,15 @@ export default function BetPage({ userId, authenticated, onLogin, onBalanceChang
                 Winners paid {WIN_MULTIPLIER}× on filled amount
               </p>
             )}
+
+            <BetComments
+              betId={betId}
+              userId={userId}
+              authenticated={authenticated}
+              userLabel={user?.linkedAccounts?.[0]?.address?.slice(0, 8) || 'User'}
+              myEntries={myEntries}
+              bet={bet}
+            />
           </div>
 
           {/* Trading panel */}
