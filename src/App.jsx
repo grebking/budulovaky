@@ -259,7 +259,7 @@ function App() {
         <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/admin" element={<AdminPage isAdmin={isAdmin} />} />
         <Route
-          path="/account/@:username"
+          path="/portfolio/@:username"
           element={
             <AccountRouteWrapper viewerUserId={userId} />
           }

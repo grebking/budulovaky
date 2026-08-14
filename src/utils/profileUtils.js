@@ -72,5 +72,5 @@ export function normalizeUsernameParam(raw) {
 
 export function accountPath(username) {
   const clean = normalizeUsernameParam(username)
-  return `/account/@${clean}`
+  return `/portfolio/@${clean}`
 }
